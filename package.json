@@ -1,0 +1,47 @@
+{
+  "name": "@entur/create-offer-configurations-from-offer-to-buy",
+  "version": "1.0.0",
+  "description": "Creates the OfferConfigurations prescribed by OfferToBuy with some additional features",
+  "main": "dist/index.js",
+  "repository": "https://github.com/entur/create-offer-configurations-from-offer-to-buy",
+  "author": "Eirik Vageskar <eirik.vageskar@knowit.no>",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://www.npmjs.com/package/@entur/create-offer-configurations-from-offer-to-buy",
+  "scripts": {
+    "build": "rm -rf dist && npx tsc",
+    "update-types": "npx swagger-typescript-api --path https://api.staging.entur.io/sales/v1/offers/api-docs/swagger.json --output source/types  -n offersTypes.ts --no-client && npx swagger-typescript-api --path https://api.staging.entur.io/api-docs/reserve-offer?group=public --output source/types  -n reserveOfferTypes.ts --no-client",
+    "test": "jest",
+    "lint": "npx prettier --check *.{md,json} .*.js; xo",
+    "lint:fix": "npx prettier --write *.{md,json} .*.js; xo --fix",
+    "prepublishOnly": "npx tsc && npm run test",
+    "prepare": "husky install",
+    "publish": "npx np"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.8",
+    "@babel/preset-env": "^7.14.8",
+    "@babel/preset-typescript": "^7.14.5",
+    "@sindresorhus/tsconfig": "^1.0.2",
+    "@types/babel__core": "^7.1.15",
+    "@types/babel__preset-env": "^7.9.2",
+    "@types/eslint-plugin-prettier": "^3.1.0",
+    "@types/jest": "^26.0.24",
+    "@types/prettier": "^2.3.2",
+    "@types/xo": "^0.39.1",
+    "babel-jest": "^27.0.6",
+    "eslint-plugin-jsdoc": "^36.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "eslint-plugin-sort-keys": "^2.3.5",
+    "husky": "^7.0.1",
+    "jest": "^27.0.6",
+    "np": "^7.5.0",
+    "prettier": "^2.3.2",
+    "type-fest": "^0.21.3",
+    "typescript": "^4.4.3",
+    "xo": "^0.42.0"
+  }
+}

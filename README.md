@@ -14,7 +14,7 @@ npm install @entur/create-offer-configurations-from-offer-to-buy
 Install with yarn
 
 ```bash
-npm install @entur/create-offer-configurations-from-offer-to-buy
+yarn add @entur/create-offer-configurations-from-offer-to-buy
 ```
 
 ## Usage/Examples

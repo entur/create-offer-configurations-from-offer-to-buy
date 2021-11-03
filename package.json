@@ -1,11 +1,11 @@
 {
   "name": "@entur/create-offer-configurations-from-offer-to-buy",
   "version": "1.0.0",
-  "description": "Creates the OfferConfigurations prescribed by OfferToBuy with some additional features",
+  "description": "Create an array of offer configurations exactly as prescribed by the possibleTravellerIds field in an OfferToBuy",
   "main": "dist/index.js",
   "repository": "https://github.com/entur/create-offer-configurations-from-offer-to-buy",
   "author": "Eirik Vageskar <eirik.vageskar@knowit.no>",
-  "license": "MIT",
+  "license": "EUPL-1.2",
   "files": [
     "dist"
   ],

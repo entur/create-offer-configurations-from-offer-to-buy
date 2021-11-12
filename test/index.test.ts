@@ -6,7 +6,6 @@ describe('createOfferConfigurationFromOfferToBuy', () => {
       id: '08b47e1e-b2d0-49d6-8a8d-7ab059732e85',
       numberToBuy: 1,
       possibleTravellerIds: [['ADULT-0-anonymous']],
-      withUpgradeProduct: 'XXX:SupplementProduct:Something',
       withUpgradeProducts: []
     };
 
@@ -31,7 +30,6 @@ describe('createOfferConfigurationFromOfferToBuy', () => {
         ['ADULT-1-anonymous'],
         ['ADULT-2-anonymous']
       ],
-      withUpgradeProduct: 'XXX:SupplementProduct:Something',
       withUpgradeProducts: []
     };
 
@@ -67,7 +65,6 @@ describe('createOfferConfigurationFromOfferToBuy', () => {
       id: 'a15347d8-75ae-44ef-877c-297984c73b07',
       numberToBuy: 1,
       possibleTravellerIds: [['3518762', '3543283']],
-      withUpgradeProduct: 'XXX:SupplementProduct:Something',
       withUpgradeProducts: []
     };
 

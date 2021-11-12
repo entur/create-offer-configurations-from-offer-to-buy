@@ -2963,7 +2963,7 @@ export interface OfferToBuy {
   numberToBuy: number;
 
   /** NetexId of the supplement products which upgrades a product. */
-  withUpgradeProduct: string;
+  withUpgradeProduct?: string;
 
   /** NetexId of the supplement products which upgrades a product. */
   withUpgradeProducts: string[];

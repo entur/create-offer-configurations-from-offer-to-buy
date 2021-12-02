@@ -72,4 +72,14 @@ describe('createOfferConfigurationFromOfferToBuy', () => {
       createOfferConfigurationsFromOfferToBuy(offerToBuy);
     expect(offerConfigurations).toEqual(expectedOfferConfigurations);
   });
+
+  describe('withUpgradeProducts', () => {
+    test.todo(
+      'Adds Netex IDs from withUpgradeProducts to selectableProductIds'
+    );
+
+    test.todo(
+      'Translates the added Netex IDs to selectableProductIds if the offer is supplied'
+    );
+  });
 });

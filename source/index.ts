@@ -1,11 +1,11 @@
 import {SetRequired} from 'type-fest';
 
-import {OfferToBuy} from './types/offersTypes';
+import {FareProductConfiguration, Offer, OfferToBuy} from './types/offersTypes';
 import {OfferConfiguration} from './types/reserveOfferTypes';
 
 type OfferConfigurationWithCountOne = SetRequired<
   OfferConfiguration,
-  'selectedTravellerIds'
+  'selectedTravellerIds' | 'selectableProductIds'
 > & {count?: 1};
 
 /**
@@ -18,13 +18,41 @@ type OfferConfigurationWithCountOne = SetRequired<
  * We just avoid setting the count field, because 1 is the default value.
  */
 export function createOfferConfigurationsFromOfferToBuy(
-  offerToBuy: OfferToBuy
+  offerToBuy: OfferToBuy,
+  offer?: Offer
 ): OfferConfigurationWithCountOne[] {
-  return offerToBuy.possibleTravellerIds.map(
-    (travellerIds): OfferConfigurationWithCountOne => ({
-      offerId: offerToBuy.id,
-      selectableProductIds: offerToBuy.withUpgradeProducts,
-      selectedTravellerIds: travellerIds
+  const netexIds = offerToBuy.withUpgradeProducts;
+  const offerConfigurationsWithOnlyNetexIdsAsSelectableProductIds =
+    offerToBuy.possibleTravellerIds.map(
+      (travellerIds): OfferConfigurationWithCountOne => ({
+        offerId: offerToBuy.id,
+        selectableProductIds: netexIds,
+        selectedTravellerIds: travellerIds
+      })
+    );
+  if (!offer) {
+    return offerConfigurationsWithOnlyNetexIdsAsSelectableProductIds;
+  }
+
+  return offerConfigurationsWithOnlyNetexIdsAsSelectableProductIds.map(
+    (offerConfiguration) => ({
+      ...offerConfiguration,
+      selectableProductIds: offerConfiguration.selectableProductIds.flatMap(
+        (netexId) =>
+          getSelectableProductIdsMatchingNetexIdFromOffer(
+            offer.salesPackageConfig.fareProducts,
+            netexId
+          )
+      )
     })
   );
+}
+
+export function getSelectableProductIdsMatchingNetexIdFromOffer(
+  fareProducts: FareProductConfiguration[],
+  netexId: string
+): string[] {
+  return fareProducts
+    .filter((fareProduct) => fareProduct.id === netexId)
+    .map((fareProduct) => fareProduct.selectableId);
 }

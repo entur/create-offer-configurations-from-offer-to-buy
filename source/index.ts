@@ -23,6 +23,7 @@ export function createOfferConfigurationsFromOfferToBuy(
   return offerToBuy.possibleTravellerIds.map(
     (travellerIds): OfferConfigurationWithCountOne => ({
       offerId: offerToBuy.id,
+      selectableProductIds: offerToBuy.withUpgradeProducts,
       selectedTravellerIds: travellerIds
     })
   );

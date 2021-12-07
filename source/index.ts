@@ -1,8 +1,9 @@
-import {SetRequired} from 'type-fest';
-
 import {OptionalProduct} from './types/offers2Types';
 import {FareProductConfiguration, OfferToBuy} from './types/offersTypes';
 import {OfferConfiguration} from './types/reserveOfferTypes';
+
+export type SetRequired<T, K extends keyof T> = Required<Pick<T, K>> &
+  Omit<T, K>; // eslint-disable-line @typescript-eslint/ban-types
 
 /**
  * This is a stripped down version of the Offer types,

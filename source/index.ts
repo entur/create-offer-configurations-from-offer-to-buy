@@ -40,7 +40,7 @@ type OfferConfigurationWithCountOne = SetRequired<
  */
 export function createOfferConfigurationsFromOfferToBuy(
   offerToBuy: OfferToBuy,
-  offerOrOptionalProducts?: StrippedOffer | StrippedOptionalProduct[]
+  offerOrOptionalProducts: StrippedOffer | StrippedOptionalProduct[]
 ): OfferConfigurationWithCountOne[] {
   const netexIds = offerToBuy.withUpgradeProducts;
   const offerConfigurationsWithOnlyNetexIdsAsSelectableProductIds =
@@ -51,9 +51,6 @@ export function createOfferConfigurationsFromOfferToBuy(
         selectedTravellerIds: travellerIds
       })
     );
-  if (!offerOrOptionalProducts) {
-    return offerConfigurationsWithOnlyNetexIdsAsSelectableProductIds;
-  }
 
   return offerConfigurationsWithOnlyNetexIdsAsSelectableProductIds.map(
     (offerConfiguration) => ({

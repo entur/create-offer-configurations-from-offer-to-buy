@@ -19,8 +19,10 @@ describe('createOfferConfigurationFromOfferToBuy', () => {
       }
     ];
 
-    const offerConfigurations =
-      createOfferConfigurationsFromOfferToBuy(offerToBuy);
+    const offerConfigurations = createOfferConfigurationsFromOfferToBuy(
+      offerToBuy,
+      withUpgradeProductsOffer
+    );
     expect(offerConfigurations).toEqual(expectedOfferConfigurations);
   });
 
@@ -54,8 +56,10 @@ describe('createOfferConfigurationFromOfferToBuy', () => {
       }
     ];
 
-    const offerConfigurations =
-      createOfferConfigurationsFromOfferToBuy(offerToBuy);
+    const offerConfigurations = createOfferConfigurationsFromOfferToBuy(
+      offerToBuy,
+      withUpgradeProductsOffer
+    );
     expect(offerConfigurations).toEqual(expectedOfferConfigurations);
   });
 
@@ -75,8 +79,10 @@ describe('createOfferConfigurationFromOfferToBuy', () => {
       withUpgradeProducts: []
     };
 
-    const offerConfigurations =
-      createOfferConfigurationsFromOfferToBuy(offerToBuy);
+    const offerConfigurations = createOfferConfigurationsFromOfferToBuy(
+      offerToBuy,
+      withUpgradeProductsOffer
+    );
     expect(offerConfigurations).toEqual(expectedOfferConfigurations);
   });
 
@@ -88,20 +94,6 @@ describe('createOfferConfigurationFromOfferToBuy', () => {
       withUpgradeProduct: 'SJN:SupplementProduct:Sleeper',
       withUpgradeProducts: ['SJN:SupplementProduct:Sleeper']
     };
-
-    test('Adds Netex IDs from withUpgradeProducts to selectableProductIds', () => {
-      const expectedOfferConfigurations = [
-        {
-          offerId: '7f3d172f-a1db-4479-9c79-b68ffb433318',
-          selectableProductIds: ['SJN:SupplementProduct:Sleeper'],
-          selectedTravellerIds: ['190920e5-e5fc-4b44-a9d0-a81931614d7b']
-        }
-      ];
-
-      const offerConfigurations =
-        createOfferConfigurationsFromOfferToBuy(offerToBuy);
-      expect(offerConfigurations).toEqual(expectedOfferConfigurations);
-    });
 
     test('Translates the added Netex IDs to selectableProductIds if the offer is supplied', () => {
       const expectedOfferConfigurations = [

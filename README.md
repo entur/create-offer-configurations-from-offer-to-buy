@@ -22,12 +22,15 @@ yarn add @entur/create-offer-configurations-from-offer-to-buy
 ```javascript
 import { createOfferConfigurationsFromOfferToBuy } from "@entur/create-offer-configurations-from-offer-to-buy";
 
-createOfferConfigurationsFromOfferToBuy({
-  id: "7048884e-2c16-4305-92cc-b56fb4ea779a",
-  numberToBuy: 2,
-  withUpgradeProducts: [],
-  possibleTravellerIds: [["3543283", "3518762"], ["ADULT-0-anonymous"]],
-});
+createOfferConfigurationsFromOfferToBuy(
+  {
+    id: "7048884e-2c16-4305-92cc-b56fb4ea779a",
+    numberToBuy: 2,
+    withUpgradeProducts: [],
+    possibleTravellerIds: [["3543283", "3518762"], ["ADULT-0-anonymous"]],
+  },
+  offerOrOptionalProducts
+);
 
 /*
  * [

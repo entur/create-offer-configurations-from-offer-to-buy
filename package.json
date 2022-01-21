@@ -1,6 +1,6 @@
 {
   "name": "@entur/create-offer-configurations-from-offer-to-buy",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Create an array of offer configurations exactly as prescribed by the possibleTravellerIds field in an OfferToBuy",
   "main": "dist/index.js",
   "repository": "https://github.com/entur/create-offer-configurations-from-offer-to-buy",

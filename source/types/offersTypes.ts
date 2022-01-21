@@ -15,9 +15,6 @@
 export interface ProductSearchResponse {
   /** Trip pattern offers. */
   tripPatternOffers: TripPatternOffers[];
-
-  /** Debug information with details about what is processed */
-  debug?: OffersDebug;
 }
 
 export type SeqFacilitySetEnumV2 = FacilitySetEnumV2[];
@@ -259,11 +256,6 @@ export interface UserProfileInGroup {
 }
 
 /**
- * The distance info per namespace
- */
-export type MapStringDistanceResponse = Record<string, DistanceResponse>;
-
-/**
  * A set of recommendation for a type of recommendation and fare classes.
  */
 export interface RecommendationByTypeAndPerFareClass {
@@ -283,6 +275,11 @@ export interface OffersError {
   message: string;
   description: string;
 }
+
+/**
+ * The fare class
+ */
+export type FareClassEnum = object;
 
 /**
  * Reference to a Fare Structure Element and its configuration.
@@ -402,20 +399,6 @@ export interface DistributionParameters {
 }
 
 /**
- * Quota information for leg
- */
-export interface LegQuota {
-  /** Quota ids */
-  ids: string[];
-
-  /**
-   * The availability
-   * @format int32
-   */
-  availability: number;
-}
-
-/**
  * EstimatedCall for the quay.
  */
 export interface EstimatedCall {
@@ -424,15 +407,6 @@ export interface EstimatedCall {
 
   /** A place such as platform, stance, or quayside where passengers have access to PT vehicles. */
   quay?: Quay;
-}
-
-/**
- * The distance info per namespace
- */
-export interface DistanceResponse {
-  distance: number;
-  stops: string[];
-  bruttoStops: string[];
 }
 
 /**
@@ -462,8 +436,6 @@ export interface ServiceJourney {
    */
   privateCode?: string;
 }
-
-export type SeqComponent = Component[];
 
 /**
  * A specification of an existing ticket.
@@ -571,19 +543,6 @@ export interface ProductQuery {
   products?: ProductSpec[];
 }
 
-export interface SeatingCapacityRequest {
-  originalDatedServiceJourneyId: string;
-  datedServiceJourneyId: string;
-  origin: string;
-  destination: string;
-}
-
-export interface TripSpec {
-  /** List of legs constituting a suggested sequence of rides and links for a specific trip. */
-  tripPattern: TripPattern;
-  travelScopes: TravelScope[];
-}
-
 /**
  * A recommendation of offers to buy for a facility set.
  */
@@ -608,34 +567,6 @@ export interface MultidimensionalFacilitySetRecommendation {
 
   /** Which offers to buy to get the cheapest option for this facility set. */
   offersToBuy: OfferToBuy[];
-}
-
-/**
- * Seating capacity for leg
- */
-export interface LegSeatingCapacity {
-  /** The id of the product */
-  id: string;
-
-  /**
-   * The availability
-   * @format int32
-   */
-  availability?: number;
-}
-
-/**
- * A list of all zones for a stop place.
- */
-export interface StopPlaceZones {
-  /** ID of the stop place */
-  stopPlaceId?: string;
-
-  /** ID of the topographicPlaceRef */
-  topographicPlaceRef?: string;
-
-  /** ID of zones which the stop place is in, if any */
-  zoneIds?: string[];
 }
 
 export type SeqTypeOfRecommendationEnumV2 = TypeOfRecommendationEnumV2[];
@@ -793,8 +724,6 @@ export interface RecommendationConfigV2 {
   ruleSpec?: RuleSpecV2;
 }
 
-export type SeqTraveler = Traveler[];
-
 /**
  * Organisation that owns the given product.
  */
@@ -817,6 +746,12 @@ export interface RecommendationV2 {
   geographicalValidityCovered?: GeographicalValidityCoveredV2[];
   typeOfRecommendation: TypeOfRecommendationEnumV2;
   durationType?: DurationEnum;
+
+  /** The fare class */
+  fareClass?: FareClassEnum;
+
+  /** The type of accommodation */
+  facilitySet?: AccommodationFacilityForRecommendationsEnum;
 
   /** Recommendations filtered by type of flex */
   offersToBuy?: OfferToBuy[];
@@ -857,46 +792,12 @@ export interface Quay {
   stopPlace?: StopPlace;
 }
 
-/**
- * Debug information for a specific service journey
- */
-export interface LegDebug {
-  /** The ID of the service joruney */
-  serviceJourneyId: string;
-
-  /** The ID of the dated service joruney */
-  datedServiceJourneyId?: string;
-
-  /** The ID of the original dated service joruney */
-  originalDatedServiceJourneyId?: string;
-
-  /** Whether the leg has any offers or not */
-  hasOffer: boolean;
-
-  /** Whether all travellers are covered by offers for this leg or not */
-  hasOfferForAllTravelers: boolean;
-
-  /** List of IDs of supplement products that was removed due to no capacity for leg */
-  supplementProductsRemovedByCapacity: string[];
-
-  /** List of sales package IDs removed because of filtering by recommendation */
-  salesPackagesRemovedByRecommendations: string[];
-
-  /** The quotas for this leg */
-  quotasUsedForLeg: LegQuota[];
-
-  /** The seating capacity for this leg */
-  capacitiesForLeg: LegSeatingCapacity[];
-}
-
 export type SeqRecommendationV2 = RecommendationV2[];
 
 /**
  * A map with set of parameter IDs for the choices
  */
 export type SetString = string[];
-
-export type MapStringListString = Record<string, string[]>;
 
 /**
  * Description of a travel between two places.
@@ -910,259 +811,6 @@ export interface Trip {
 
   /** A list of possible trip patterns. */
   tripPatterns: TripPattern[];
-}
-
-/**
- * A travel scope that describes a detailed version of leg for a trip pattern
- */
-export interface TravelScope {
-  /**
-   * Id
-   * @format uuid
-   */
-  id: string;
-
-  /** The start time of the travel scope */
-  startTime: string;
-
-  /** The end time of the travel scope */
-  endTime: string;
-
-  /**
-   * Duration
-   * @format float
-   */
-  duration?: number;
-
-  /** A list of the via stops */
-  via?: string[];
-
-  /** A list of the operators */
-  operators?: string[];
-
-  /** The authority of the travel scope */
-  authority?: string;
-
-  /** Service journeys of the travel scope */
-  serviceJourneyIds?: string[];
-
-  /** Dated service journeys of the travel scope */
-  datedServiceJourneys?: DatedServiceJourney[];
-
-  /** Transport sub mode for the travel scope */
-  submode?:
-    | "unknown"
-    | "undefined"
-    | "internationalFlight"
-    | "domesticFlight"
-    | "intercontinentalFlight"
-    | "domesticScheduledFlight"
-    | "shuttleFlight"
-    | "intercontinentalCharterFlight"
-    | "internationalCharterFlight"
-    | "roundTripCharterFlight"
-    | "sightseeingFlight"
-    | "helicopterService"
-    | "domesticCharterFlight"
-    | "SchengenAreaFlight"
-    | "airshipService"
-    | "shortHaulInternationalFlight"
-    | "canalBarge"
-    | "localBus"
-    | "regionalBus"
-    | "expressBus"
-    | "nightBus"
-    | "postBus"
-    | "specialNeedsBus"
-    | "mobilityBus"
-    | "mobilityBusForRegisteredDisabled"
-    | "sightseeingBus"
-    | "shuttleBus"
-    | "highFrequencyBus"
-    | "dedicatedLaneBus"
-    | "schoolBus"
-    | "schoolAndPublicServiceBus"
-    | "railReplacementBus"
-    | "demandAndResponseBus"
-    | "airportLinkBus"
-    | "internationalCoach"
-    | "nationalCoach"
-    | "shuttleCoach"
-    | "regionalCoach"
-    | "specialCoach"
-    | "schoolCoach"
-    | "sightseeingCoach"
-    | "touristCoach"
-    | "commuterCoach"
-    | "funicular"
-    | "streetCableCar"
-    | "allFunicularServices"
-    | "undefinedFunicular"
-    | "metro"
-    | "tube"
-    | "urbanRailway"
-    | "cityTram"
-    | "localTram"
-    | "regionalTram"
-    | "sightseeingTram"
-    | "shuttleTram"
-    | "trainTram"
-    | "telecabin"
-    | "cableCar"
-    | "lift"
-    | "chairLift"
-    | "dragLift"
-    | "telecabinLink"
-    | "local"
-    | "highSpeedRail"
-    | "suburbanRailway"
-    | "regionalRail"
-    | "interregionalRail"
-    | "longDistance"
-    | "international"
-    | "sleeperRailService"
-    | "nightRail"
-    | "carTransportRailService"
-    | "touristRailway"
-    | "airportLinkRail"
-    | "railShuttle"
-    | "replacementRailService"
-    | "specialTrain"
-    | "crossCountryRail"
-    | "rackAndPinionRailway"
-    | "internationalCarFerry"
-    | "nationalCarFerry"
-    | "regionalCarFerry"
-    | "localCarFerry"
-    | "internationalPassengerFerry"
-    | "nationalPassengerFerry"
-    | "regionalPassengerFerry"
-    | "localPassengerFerry"
-    | "postBoat"
-    | "trainFerry"
-    | "roadFerryLink"
-    | "airportBoatLink"
-    | "highSpeedVehicleService"
-    | "highSpeedPassengerService"
-    | "sightseeingService"
-    | "schoolBoat"
-    | "cableFerry"
-    | "riverBus"
-    | "scheduledFerry"
-    | "shuttleFerryService"
-    | "communalTaxi"
-    | "charterTaxi"
-    | "waterTaxi"
-    | "railTaxi"
-    | "bikeTaxi"
-    | "blackCab"
-    | "miniCab"
-    | "allTaxiServices"
-    | "hireCar"
-    | "hireVan"
-    | "hireMotorbike"
-    | "hireCycle"
-    | "allHireVehicle";
-
-  /** Transport mode for the travel scope */
-  vehicleMode:
-    | "AIR"
-    | "BUS"
-    | "CABLE_WAY"
-    | "WATER"
-    | "FUNICULAR"
-    | "LIFT"
-    | "RAIL"
-    | "METRO"
-    | "TRAM"
-    | "UNKNOWN";
-
-  /** A list of all zones for a stop place. */
-  fromStopPlaceZones?: StopPlaceZones;
-
-  /** A list of all zones for a stop place. */
-  toStopPlaceZones?: StopPlaceZones;
-
-  /** Zones that intermediate origin and destination */
-  intermediateStopPlaceZones?: StopPlaceZones[];
-
-  /** A group of routes which is generally known to the public by a similar name or number implements */
-  line?: Line;
-
-  /** The available fareQuotaFactors */
-  availableFareQuotaFactors?: FareQuotaFactorAvailability[];
-
-  /** Polyline */
-  polyLine?: string;
-
-  /** Zones in sequence */
-  zonesInSequencePrNameSpace?: Record<string, string[]>;
-
-  /** The distance info per namespace */
-  distanceInfoPrNameSpace?: Record<string, DistanceResponse>;
-
-  /**
-   * The shortest distance between zones
-   * @format int32
-   */
-  zonesShortestDistance?: number;
-
-  /**
-   * The ten distance of the travel scope
-   * @format double
-   */
-  tenDistance?: number;
-
-  /** The distribution channel ID */
-  distributionChannelId?: string;
-
-  /** A flag if the travel scope is a roundt trip */
-  isRoundTrip?: boolean;
-
-  /** Luggage types included in the travel scope */
-  luggageTypes?: (
-    | "HANDBAG"
-    | "HAND_LUGGAGE"
-    | "SMALL_SUITCASE"
-    | "SUITCASE"
-    | "TRUNK"
-    | "OVERSIZE_ITEM"
-    | "BICYCLE"
-    | "SPORTING_EQUIPMENT"
-    | "SKIS"
-    | "MUSICAL_INSTRUMENT"
-    | "PUSH_CHAIR"
-    | "MOTORIZED_WHEELCHAIR"
-    | "LARGE_MOTORIZED_WHEELCHAIR"
-    | "WHEELCHAIR"
-    | "SMALL_ANIMAL"
-    | "ANIMAL"
-    | "GAME"
-    | "MOTORCYCLE"
-    | "OTHER"
-  )[];
-
-  /**
-   * The order of the travel scope in the trip pattern
-   * @format int32
-   */
-  orderInTripPattern?: number;
-
-  /** Used to specify that the vehicle used on this leg is the same that will be used on the next leg */
-  interchangeTo?: InterchangeTo;
-
-  /** A request for seating capacity */
-  seatingCapacityRequests?: SeatingCapacityRequest[];
-
-  /** The shortest distance for the whole travel scope */
-  shortestDistanceForWholePath?: ShortestDistanceForWholePath;
-
-  /** Parameters for an inventory request */
-  inventoryRequestParameters?: InventoryRequestParameters;
-  bruttoZonesInSequencePrNameSpace: Record<string, string[]>;
-  inventoryStock: Component[];
-  actualFromStopPlace?: string;
-  actualToStopPlace?: string;
 }
 
 /**
@@ -1192,25 +840,7 @@ export interface RecommendationByFareClass {
   offersToBuy: OfferToBuy[];
 }
 
-/**
- * The shortest distance for the whole travel scope
- */
-export interface ShortestDistanceForWholePath {
-  idsOfMergedTravelScopes: string[];
-  distance: number;
-  zones: string[];
-}
-
 export type SeqOffer = Offer[];
-
-export interface TravelerOfferContainer {
-  tripId: string;
-  offers: Offer[];
-  travelers: Traveler[];
-
-  /** A configuration of how to group travellers in offers. */
-  maybeGroupConfig?: GroupConfig;
-}
 
 /**
  * Container for specifying which types of recommendations are wanted and what kind of offers to look for.
@@ -1277,8 +907,6 @@ export interface SearchZonesResponse {
   offers: Offer[];
   recommendations?: RecommendationV2[];
 }
-
-export type ListUUID = string[];
 
 export type JValue = object;
 
@@ -1347,29 +975,6 @@ export interface Tag {
    * @format int32
    */
   nrToBuy: number;
-}
-
-/**
- * Debug information with details about what is processed
- */
-export interface OffersDebug {
-  /** The request type when making calls to products */
-  tripSpecs: TripSpec[];
-
-  /** The response from products */
-  productResponse: TravelerOfferContainer[];
-
-  /** The capacities that are aggregated from seating services and inventory */
-  seatingCapacities: SeatingCapacity[];
-
-  /** List of info about what was removed from each offer due to capacity */
-  offersRemovedByCapacity: FilteredOffer[];
-
-  /** List of which offers were removed due to recommendation filtering */
-  offersRemovedByRecommendations: FilteredOffer[];
-
-  /** List of details about each leg */
-  legDebugs: LegDebug[];
 }
 
 /**
@@ -1529,6 +1134,11 @@ export interface PointToPointValidity {
 }
 
 /**
+ * The type of accommodation
+ */
+export type AccommodationFacilityForRecommendationsEnum = object;
+
+/**
  * A set of recommendations for a type of recommendation and fare classes with facility set.
  */
 export interface MultidimensionalTypeOfRecommendationRecommendation {
@@ -1620,14 +1230,6 @@ export interface PricedResourceRef {
 
   /** Name of the resource. */
   resourceType: string;
-}
-
-export interface FareQuotaFactorAvailability {
-  serviceJourneyId: string;
-  netexIds: string[];
-
-  /** @format int32 */
-  availability: number;
 }
 
 /**
@@ -2010,6 +1612,22 @@ export interface FareProductConfiguration {
     | "UNIT_COUPONS"
     | "STORED_VALUE"
     | "OTHER";
+
+  /** Type of supplement product */
+  supplementProductType?:
+    | "SEAT_RESERVATION"
+    | "BICYCLE"
+    | "DOG"
+    | "ANIMAL"
+    | "MEAL"
+    | "WIFI"
+    | "EXTRA_LUGGAGE"
+    | "PENALTY"
+    | "UPGRADE"
+    | "JOURNEY_EXTENSION"
+    | "JOURNEY_ADD_ON"
+    | "EVENT_ADD_ON"
+    | "PARKING";
 }
 
 /**
@@ -2259,17 +1877,6 @@ export interface SearchZonesExtensionRequest {
 }
 
 /**
- * Parameters for an inventory request
- */
-export interface InventoryRequestParameters {
-  /** Part of a trip pattern. Either a ride on a public transport vehicle or access or path link to/from/between places */
-  leg: Leg;
-
-  /** @format int32 */
-  travelGroupSize: number;
-}
-
-/**
  * Zones where the product is valid
  */
 export interface ZonalValidity {
@@ -2290,8 +1897,6 @@ export interface LayeredRecommendation {
   /** Recommendations by type of recommendation and per fare class. */
   recommendations: RecommendationByTypeAndPerFareClass[];
 }
-
-export type SeqTravelScope = TravelScope[];
 
 /**
  * Valid offers for a query.
@@ -2395,60 +2000,6 @@ export interface FutureHttpResponse {
 export type SeqString = string[];
 
 /**
- * Information about what configs is removed from an offer
- */
-export interface FilteredOffer {
-  /**
-   * ID of an offer
-   * @format uuid
-   */
-  id: string;
-
-  /** List of tiny configs */
-  removedConfigs: TinyConfig[];
-}
-
-/**
- * A component for the stock. Can be a root nest, a nest or a product. Specifies availability in regards to counting rules.
- */
-export interface Component {
-  /** The group type, i.e "travel document". */
-  nestingGroup?: string;
-
-  /**
-   * The combined availability of all all components.
-   * @format int32
-   */
-  aggregatedAvailability?: number;
-
-  /** The products for which the component is valid. */
-  products?: string[];
-
-  /**
-   * The quota left for this component.
-   * @format int32
-   */
-  leftInQuota?: number;
-
-  /**
-   * The priority of the component in regards to other components on the same level. Goes from high to low.
-   * @format int32
-   */
-  priority?: number;
-
-  /** The selection rule says something about how the quotas are consumed */
-  selectionRule?: "single" | "combined";
-
-  /** The consumption rule says something about how inventory counts their quotas. */
-  consumptionRule?: string;
-
-  /** The nested components. If it's empty then it is a product, otherwise the component is a nest. */
-  components?: Component[];
-  rootNode?: boolean;
-  leafNode?: boolean;
-}
-
-/**
  * A reference to a user profile and price data.
  */
 export interface PricedUserProfile {
@@ -2473,17 +2024,6 @@ export interface PricedUserProfile {
   /** True if this configuration is optional to buy, false if it's required. */
   optional: boolean;
   typeOfConcession?: string;
-}
-
-/**
- * Tiny representation of a config with just id and service journey ids
- */
-export interface TinyConfig {
-  /** NetEx id of the config */
-  id: string;
-
-  /** Service journeys covered by config */
-  serviceJourneys: string[];
 }
 
 /**
@@ -3052,8 +2592,6 @@ export interface MultidimensionalFareClassWithFacilitySetRecommendation {
   /** Recommendations arranged by facility sets */
   perFacilitySet: MultidimensionalFacilitySetRecommendation[];
 }
-
-export type ListString = string[];
 
 export interface SearchStopPlacesResponse {
   offers: Offer[];

@@ -93,7 +93,7 @@ export interface OfferConfiguration {
   /** If replacing an order line, this is the id of the order line to replace */
   orderLineId?: string;
 
-  /** A list of ids for selected products */
+  /** A list of ids for selected products. Duplicates are only supported for SupplementProducts which does not modify seating assignments for the PreassignedFareProduct */
   selectableProductIds?: string[];
 
   /** This field is used to specify which travellers will be included in the use of this offer. This field cannot be used in combination with count. It is validated against the travellers identified in the travellerMappings property of the selected Offer, as well as the legal number of UserProfiles per compartment when reserving a group product. When reserving a group product, validation is performed against the valid number of UserProfiles per compartment. When reserving regular products, a number of order lines will be made, corresponding to the number of selectedTravellerIds. Each order line will have one of the selectedTravellerIds. */

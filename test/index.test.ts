@@ -1,4 +1,5 @@
 import {createOfferConfigurationsFromOfferToBuy} from '../source';
+import optionalProducts from './optionalProducts.json';
 import withUpgradeProductsOffer from './withUpgradeProductsOffer.json';
 
 describe('createOfferConfigurationFromOfferToBuy', () => {
@@ -113,8 +114,23 @@ describe('createOfferConfigurationFromOfferToBuy', () => {
 
       const offerConfigurations = createOfferConfigurationsFromOfferToBuy(
         offerToBuy,
-        // @ts-expect-error
         withUpgradeProductsOffer
+      );
+      expect(offerConfigurations).toEqual(expectedOfferConfigurations);
+    });
+
+    test('Offers 2.0 Translates the added Netex IDs to selectableProductIds if the offer is supplied', () => {
+      const expectedOfferConfigurations = [
+        {
+          offerId: '7f3d172f-a1db-4479-9c79-b68ffb433318',
+          selectableProductIds: ['3cfBvn'],
+          selectedTravellerIds: ['190920e5-e5fc-4b44-a9d0-a81931614d7b']
+        }
+      ];
+
+      const offerConfigurations = createOfferConfigurationsFromOfferToBuy(
+        offerToBuy,
+        optionalProducts
       );
       expect(offerConfigurations).toEqual(expectedOfferConfigurations);
     });

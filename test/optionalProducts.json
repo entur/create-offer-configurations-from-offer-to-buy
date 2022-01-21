@@ -1,0 +1,92 @@
+[
+  {
+    "id": "SJN:SupplementProduct:Sleeper",
+    "version": "SJN:Version:SUP-Sleeper-1",
+    "selectableId": "3cfBvn",
+    "name": "Sove",
+    "description": "- Reise i egen sovekupé\\n- En kupé består av to oppredde senger på 75 cm bredde",
+    "price": {
+      "amount": "950.00",
+      "currency": "NOK"
+    },
+    "properties": {
+      "accommodations": [
+        {
+          "serviceJourney": {
+            "datedServiceJourneyId": "ENT:DatedServiceJourney:76649045",
+            "serviceJourneyId": "VYG:ServiceJourney:1-248-602-202111291245"
+          },
+          "accommodation": []
+        }
+      ],
+      "reservingRequirements": [
+        {
+          "serviceJourney": {
+            "datedServiceJourneyId": "ENT:DatedServiceJourney:76649045",
+            "serviceJourneyId": "VYG:ServiceJourney:1-248-602-202111291245"
+          },
+          "reservingRequirement": "RESERVATIONS_COMPULSORY",
+          "seatMapIsAvailable": true
+        }
+      ]
+    },
+    "geographicalValidity": {
+      "serviceJourneys": [
+        {
+          "datedServiceJourneyId": "ENT:DatedServiceJourney:76649045",
+          "serviceJourneyId": "VYG:ServiceJourney:1-248-602-202111291245"
+        }
+      ],
+      "pointToPointValidity": {
+        "fromPlace": "NSR:StopPlace:548",
+        "toPlace": "NSR:StopPlace:337"
+      }
+    },
+    "available": 60
+  },
+  {
+    "id": "SJN:SupplementProduct:FamilyArea",
+    "version": "SJN:Version:SUP-FamilyArea-1",
+    "selectableId": "vgJSWZ",
+    "name": "Familie",
+    "description": "- Du får et eget sete i togets familieavdeling",
+    "price": {
+      "amount": "0.00",
+      "currency": "NOK"
+    },
+    "properties": {
+      "accommodations": [
+        {
+          "serviceJourney": {
+            "datedServiceJourneyId": "ENT:DatedServiceJourney:76649045",
+            "serviceJourneyId": "VYG:ServiceJourney:1-248-602-202111291245"
+          },
+          "accommodation": []
+        }
+      ],
+      "reservingRequirements": [
+        {
+          "serviceJourney": {
+            "datedServiceJourneyId": "ENT:DatedServiceJourney:76649045",
+            "serviceJourneyId": "VYG:ServiceJourney:1-248-602-202111291245"
+          },
+          "reservingRequirement": "RESERVATIONS_COMPULSORY",
+          "seatMapIsAvailable": true
+        }
+      ]
+    },
+    "geographicalValidity": {
+      "serviceJourneys": [
+        {
+          "datedServiceJourneyId": "ENT:DatedServiceJourney:76649045",
+          "serviceJourneyId": "VYG:ServiceJourney:1-248-602-202111291245"
+        }
+      ],
+      "pointToPointValidity": {
+        "fromPlace": "NSR:StopPlace:548",
+        "toPlace": "NSR:StopPlace:337"
+      }
+    },
+    "available": 24
+  }
+]

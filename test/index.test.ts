@@ -1,4 +1,5 @@
 import {createOfferConfigurationsFromOfferToBuy} from '../source';
+import withUpgradeProductsOffer from './withUpgradeProductsOffer.json';
 
 describe('createOfferConfigurationFromOfferToBuy', () => {
   test('One element in possibleTravellerIds', () => {
@@ -12,6 +13,7 @@ describe('createOfferConfigurationFromOfferToBuy', () => {
     const expectedOfferConfigurations = [
       {
         offerId: '08b47e1e-b2d0-49d6-8a8d-7ab059732e85',
+        selectableProductIds: [],
         selectedTravellerIds: ['ADULT-0-anonymous']
       }
     ];
@@ -36,14 +38,17 @@ describe('createOfferConfigurationFromOfferToBuy', () => {
     const expectedOfferConfigurations = [
       {
         offerId: '10e3099a-8ea0-46f8-8643-e10b49816f41',
+        selectableProductIds: [],
         selectedTravellerIds: ['ADULT-0-anonymous']
       },
       {
         offerId: '10e3099a-8ea0-46f8-8643-e10b49816f41',
+        selectableProductIds: [],
         selectedTravellerIds: ['ADULT-1-anonymous']
       },
       {
         offerId: '10e3099a-8ea0-46f8-8643-e10b49816f41',
+        selectableProductIds: [],
         selectedTravellerIds: ['ADULT-2-anonymous']
       }
     ];
@@ -57,6 +62,7 @@ describe('createOfferConfigurationFromOfferToBuy', () => {
     const expectedOfferConfigurations = [
       {
         offerId: 'a15347d8-75ae-44ef-877c-297984c73b07',
+        selectableProductIds: [],
         selectedTravellerIds: ['3518762', '3543283']
       }
     ];
@@ -71,5 +77,46 @@ describe('createOfferConfigurationFromOfferToBuy', () => {
     const offerConfigurations =
       createOfferConfigurationsFromOfferToBuy(offerToBuy);
     expect(offerConfigurations).toEqual(expectedOfferConfigurations);
+  });
+
+  describe('withUpgradeProducts', () => {
+    const offerToBuy = {
+      id: '7f3d172f-a1db-4479-9c79-b68ffb433318',
+      numberToBuy: 1,
+      possibleTravellerIds: [['190920e5-e5fc-4b44-a9d0-a81931614d7b']],
+      withUpgradeProduct: 'SJN:SupplementProduct:Sleeper',
+      withUpgradeProducts: ['SJN:SupplementProduct:Sleeper']
+    };
+
+    test('Adds Netex IDs from withUpgradeProducts to selectableProductIds', () => {
+      const expectedOfferConfigurations = [
+        {
+          offerId: '7f3d172f-a1db-4479-9c79-b68ffb433318',
+          selectableProductIds: ['SJN:SupplementProduct:Sleeper'],
+          selectedTravellerIds: ['190920e5-e5fc-4b44-a9d0-a81931614d7b']
+        }
+      ];
+
+      const offerConfigurations =
+        createOfferConfigurationsFromOfferToBuy(offerToBuy);
+      expect(offerConfigurations).toEqual(expectedOfferConfigurations);
+    });
+
+    test('Translates the added Netex IDs to selectableProductIds if the offer is supplied', () => {
+      const expectedOfferConfigurations = [
+        {
+          offerId: '7f3d172f-a1db-4479-9c79-b68ffb433318',
+          selectableProductIds: ['3cfBvn'],
+          selectedTravellerIds: ['190920e5-e5fc-4b44-a9d0-a81931614d7b']
+        }
+      ];
+
+      const offerConfigurations = createOfferConfigurationsFromOfferToBuy(
+        offerToBuy,
+        // @ts-expect-error
+        withUpgradeProductsOffer
+      );
+      expect(offerConfigurations).toEqual(expectedOfferConfigurations);
+    });
   });
 });

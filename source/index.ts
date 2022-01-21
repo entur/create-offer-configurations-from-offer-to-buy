@@ -61,7 +61,7 @@ export function createOfferConfigurationsFromOfferToBuy(
       selectableProductIds: offerConfiguration.selectableProductIds.flatMap(
         (netexId) =>
           getSelectableProductIdsMatchingNetexIdFromProducts(
-            'salesPackageConfig' in offerOrOptionalProducts
+            isOffer(offerOrOptionalProducts)
               ? offerOrOptionalProducts.salesPackageConfig.fareProducts
               : offerOrOptionalProducts,
             netexId
@@ -78,4 +78,10 @@ export function getSelectableProductIdsMatchingNetexIdFromProducts(
   return products
     .filter((product) => product.id === netexId)
     .map((product) => product.selectableId);
+}
+
+function isOffer(
+  offerOrOptionalProducts: StrippedOffer | StrippedOptionalProduct[]
+): offerOrOptionalProducts is StrippedOffer {
+  return 'salesPackageConfig' in offerOrOptionalProducts;
 }

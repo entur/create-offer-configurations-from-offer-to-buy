@@ -1,4 +1,4 @@
-import {OptionalProduct} from './types/offers2Types';
+import {OfferToBuy as OfferToBuy2} from './types/offers2Types';
 import {FareProductConfiguration, OfferToBuy} from './types/offersTypes';
 import {OfferConfiguration} from './types/reserveOfferTypes';
 
@@ -11,8 +11,6 @@ export type SetRequired<T, K extends keyof T> = Required<Pick<T, K>> &
  * The hope is that this will lead to fewer updates because
  * the type has changed.
  */
-type StrippedOptionalProduct = Pick<OptionalProduct, 'id' | 'selectableId'>;
-
 type StrippedFareProductConfiguration = Pick<
   FareProductConfiguration,
   'id' | 'selectableId'
@@ -39,46 +37,32 @@ type OfferConfigurationWithCountOne = SetRequired<
  * We just avoid setting the count field, because 1 is the default value.
  */
 export function createOfferConfigurationsFromOfferToBuy(
-  offerToBuy: OfferToBuy,
-  offerOrOptionalProducts: StrippedOffer | StrippedOptionalProduct[]
+  offerToBuy: OfferToBuy | OfferToBuy2,
+  offer?: StrippedOffer
 ): OfferConfigurationWithCountOne[] {
-  const netexIds = offerToBuy.withUpgradeProducts;
-  const offerConfigurationsWithOnlyNetexIdsAsSelectableProductIds =
-    offerToBuy.possibleTravellerIds.map(
-      (travellerIds): OfferConfigurationWithCountOne => ({
-        offerId: offerToBuy.id,
-        selectableProductIds: netexIds,
-        selectedTravellerIds: travellerIds
-      })
-    );
+  const selectableProductIds =
+    'selectableProductIds' in offerToBuy
+      ? offerToBuy.selectableProductIds
+      : getSelectableProductIdsMatchingNetexIdFromOffer(offerToBuy, offer);
 
-  return offerConfigurationsWithOnlyNetexIdsAsSelectableProductIds.map(
-    (offerConfiguration) => ({
-      ...offerConfiguration,
-      selectableProductIds: offerConfiguration.selectableProductIds.flatMap(
-        (netexId) =>
-          getSelectableProductIdsMatchingNetexIdFromProducts(
-            isOffer(offerOrOptionalProducts)
-              ? offerOrOptionalProducts.salesPackageConfig.fareProducts
-              : offerOrOptionalProducts,
-            netexId
-          )
-      )
-    })
-  );
+  return offerToBuy.possibleTravellerIds.map((selectedTravellerIds) => ({
+    offerId: offerToBuy.id,
+    selectableProductIds,
+    selectedTravellerIds
+  }));
 }
 
-export function getSelectableProductIdsMatchingNetexIdFromProducts(
-  products: StrippedFareProductConfiguration[] | StrippedOptionalProduct[],
-  netexId: string
+function getSelectableProductIdsMatchingNetexIdFromOffer(
+  offerToBuy: OfferToBuy,
+  offer?: StrippedOffer
 ): string[] {
-  return products
-    .filter((product) => product.id === netexId)
-    .map((product) => product.selectableId);
-}
+  if (!offer) return [];
+  const netexIds = offerToBuy.withUpgradeProducts;
+  return netexIds.flatMap((netexId) => {
+    const {fareProducts} = offer.salesPackageConfig;
 
-function isOffer(
-  offerOrOptionalProducts: StrippedOffer | StrippedOptionalProduct[]
-): offerOrOptionalProducts is StrippedOffer {
-  return 'salesPackageConfig' in offerOrOptionalProducts;
+    return fareProducts
+      .filter((product) => product.id === netexId)
+      .map((product) => product.selectableId);
+  });
 }

@@ -1,6 +1,7 @@
 {
   "name": "@entur/create-offer-configurations-from-offer-to-buy",
   "version": "2.0.0",
+  "type": "module",
   "description": "Create an array of offer configurations exactly as prescribed by the possibleTravellerIds field in an OfferToBuy",
   "main": "dist/index.js",
   "repository": "https://github.com/entur/create-offer-configurations-from-offer-to-buy",
@@ -14,8 +15,8 @@
     "build": "rm -rf dist && npx tsc",
     "update-types": "npx swagger-typescript-api --path https://api.staging.entur.io/sales/v1/offers/api-docs/swagger.json --output source/types  -n offersTypes.ts --no-client && npx swagger-typescript-api --path https://api.staging.entur.io/offers/v2-beta/api-docs/swagger.json --output source/types  -n offers2Types.ts --no-client && npx swagger-typescript-api --path https://api.staging.entur.io/api-docs/reserve-offer?group=public --output source/types  -n reserveOfferTypes.ts --no-client",
     "test": "jest",
-    "lint": "npx prettier --check *.{md,json} .*.js; xo",
-    "lint:fix": "npx prettier --write *.{md,json} .*.js; xo --fix",
+    "lint": "npx prettier --check *.{md,json} .*.cjs; xo",
+    "lint:fix": "npx prettier --write *.{md,json} .*.cjs; xo --fix",
     "prepublishOnly": "npx tsc && npm run test",
     "prepare": "husky install",
     "publish": "npx np"

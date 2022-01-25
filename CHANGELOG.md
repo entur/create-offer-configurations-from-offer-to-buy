@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1 (2022-01-25)
+
+Add `"type": "module"` to `package.json`.
+
 ## 2.0.0 (2022-01-21)
 
 ### Support withUpgradeProducts

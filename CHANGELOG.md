@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0 (2022-01-26)
+
+Add CommonJS build.
+
 ## 2.0.1 (2022-01-25)
 
 Add `"type": "module"` to `package.json`.

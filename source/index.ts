@@ -1,5 +1,5 @@
-import {OptionalProduct} from './types/offers2Types';
-import {FareProductConfiguration, OfferToBuy} from './types/offersTypes';
+import {OfferToBuy as OfferToBuy2} from './types/offers2Types';
+import {FareProductConfiguration, Offer, OfferToBuy} from './types/offersTypes';
 import {OfferConfiguration} from './types/reserveOfferTypes';
 
 export type SetRequired<T, K extends keyof T> = Required<Pick<T, K>> &
@@ -11,14 +11,12 @@ export type SetRequired<T, K extends keyof T> = Required<Pick<T, K>> &
  * The hope is that this will lead to fewer updates because
  * the type has changed.
  */
-type StrippedOptionalProduct = Pick<OptionalProduct, 'id' | 'selectableId'>;
-
 type StrippedFareProductConfiguration = Pick<
   FareProductConfiguration,
   'id' | 'selectableId'
 >;
 
-type StrippedOffer = {
+type StrippedOffer = Pick<Offer, 'id'> & {
   salesPackageConfig: {
     fareProducts: StrippedFareProductConfiguration[];
   };
@@ -39,46 +37,61 @@ type OfferConfigurationWithCountOne = SetRequired<
  * We just avoid setting the count field, because 1 is the default value.
  */
 export function createOfferConfigurationsFromOfferToBuy(
-  offerToBuy: OfferToBuy,
-  offerOrOptionalProducts: StrippedOffer | StrippedOptionalProduct[]
+  offerToBuy: OfferToBuy | OfferToBuy2,
+  offer?: StrippedOffer
 ): OfferConfigurationWithCountOne[] {
-  const netexIds = offerToBuy.withUpgradeProducts;
-  const offerConfigurationsWithOnlyNetexIdsAsSelectableProductIds =
-    offerToBuy.possibleTravellerIds.map(
-      (travellerIds): OfferConfigurationWithCountOne => ({
-        offerId: offerToBuy.id,
-        selectableProductIds: netexIds,
-        selectedTravellerIds: travellerIds
-      })
-    );
+  const selectableProductIds = extractSelectableProductIds(offerToBuy, offer);
 
-  return offerConfigurationsWithOnlyNetexIdsAsSelectableProductIds.map(
-    (offerConfiguration) => ({
-      ...offerConfiguration,
-      selectableProductIds: offerConfiguration.selectableProductIds.flatMap(
-        (netexId) =>
-          getSelectableProductIdsMatchingNetexIdFromProducts(
-            isOffer(offerOrOptionalProducts)
-              ? offerOrOptionalProducts.salesPackageConfig.fareProducts
-              : offerOrOptionalProducts,
-            netexId
-          )
-      )
-    })
-  );
+  return offerToBuy.possibleTravellerIds.map((selectedTravellerIds) => ({
+    offerId: offerToBuy.id,
+    selectableProductIds,
+    selectedTravellerIds
+  }));
 }
 
-export function getSelectableProductIdsMatchingNetexIdFromProducts(
-  products: StrippedFareProductConfiguration[] | StrippedOptionalProduct[],
-  netexId: string
+function extractSelectableProductIds(
+  offerToBuy: OfferToBuy | OfferToBuy2,
+  offer?: StrippedOffer
 ): string[] {
-  return products
-    .filter((product) => product.id === netexId)
-    .map((product) => product.selectableId);
+  const offerToBuyIsFromOffersV2 = 'selectableProductIds' in offerToBuy;
+  if (offerToBuyIsFromOffersV2) {
+    return offerToBuy.selectableProductIds;
+  }
+
+  if (!offer) {
+    const netexIds = offerToBuy.withUpgradeProducts;
+    const userShouldHaveSuppliedAnOffer = netexIds.length > 0;
+    if (userShouldHaveSuppliedAnOffer) {
+      throw new Error(
+        `offerToBuy.withUpgradeProducts contains product IDs (${JSON.stringify(
+          netexIds
+        )}), but the second argument was undefined. Supply the offer referenced by offerToBuy (id: ${
+          offerToBuy.id
+        }) to fix this error.`
+      );
+    }
+
+    return [];
+  }
+
+  return getSelectableProductIdsMatchingNetexIdFromOffer(offerToBuy, offer);
 }
 
-function isOffer(
-  offerOrOptionalProducts: StrippedOffer | StrippedOptionalProduct[]
-): offerOrOptionalProducts is StrippedOffer {
-  return 'salesPackageConfig' in offerOrOptionalProducts;
+export function getSelectableProductIdsMatchingNetexIdFromOffer(
+  offerToBuy: OfferToBuy,
+  offer: StrippedOffer
+): string[] {
+  if (offerToBuy.id !== offer.id) {
+    throw new Error(
+      `The ID of the offer you supplied (${offer.id}) does not match the ID of the offerToBuy (${offerToBuy.id}). Supply the referenced offer to fix this error.`
+    );
+  }
+
+  const netexIds = offerToBuy.withUpgradeProducts;
+  const {fareProducts} = offer.salesPackageConfig;
+  return netexIds.flatMap((netexId) =>
+    fareProducts
+      .filter((product) => product.id === netexId)
+      .map((product) => product.selectableId)
+  );
 }

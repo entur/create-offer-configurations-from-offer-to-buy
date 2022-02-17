@@ -1,5 +1,5 @@
 import {OfferToBuy as OfferToBuy2} from './types/offers2Types';
-import {FareProductConfiguration, OfferToBuy} from './types/offersTypes';
+import {FareProductConfiguration, Offer, OfferToBuy} from './types/offersTypes';
 import {OfferConfiguration} from './types/reserveOfferTypes';
 
 export type SetRequired<T, K extends keyof T> = Required<Pick<T, K>> &
@@ -16,7 +16,7 @@ type StrippedFareProductConfiguration = Pick<
   'id' | 'selectableId'
 >;
 
-type StrippedOffer = {
+type StrippedOffer = Pick<Offer, 'id'> & {
   salesPackageConfig: {
     fareProducts: StrippedFareProductConfiguration[];
   };
@@ -59,6 +59,18 @@ function extractSelectableProductIds(
   }
 
   if (!offer) {
+    const netexIds = offerToBuy.withUpgradeProducts;
+    const userShouldHaveSuppliedAnOffer = netexIds.length > 0;
+    if (userShouldHaveSuppliedAnOffer) {
+      throw new Error(
+        `offerToBuy.withUpgradeProducts contains product IDs (${JSON.stringify(
+          netexIds
+        )}), but the second argument was undefined. Supply the offer referenced by offerToBuy (id: ${
+          offerToBuy.id
+        }) to fix this error.`
+      );
+    }
+
     return [];
   }
 
@@ -69,6 +81,12 @@ export function getSelectableProductIdsMatchingNetexIdFromOffer(
   offerToBuy: OfferToBuy,
   offer: StrippedOffer
 ): string[] {
+  if (offerToBuy.id !== offer.id) {
+    throw new Error(
+      `The ID of the offer you supplied (${offer.id}) does not match the ID of the offerToBuy (${offerToBuy.id}). Supply the referenced offer to fix this error.`
+    );
+  }
+
   const netexIds = offerToBuy.withUpgradeProducts;
   const {fareProducts} = offer.salesPackageConfig;
   return netexIds.flatMap((netexId) =>

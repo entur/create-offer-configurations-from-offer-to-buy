@@ -62,20 +62,18 @@ function extractSelectableProductIds(
     return [];
   }
 
-  return getSelectableProductIdsMatchingNetexIdsFromOffer(
-    offerToBuy.withUpgradeProducts,
-    offer
-  );
+  return getSelectableProductIdsMatchingNetexIdFromOffer(offerToBuy, offer);
 }
 
-export function getSelectableProductIdsMatchingNetexIdsFromOffer(
-  netexIds: string[],
+export function getSelectableProductIdsMatchingNetexIdFromOffer(
+  offerToBuy: OfferToBuy,
   offer: StrippedOffer
 ): string[] {
-  const {fareProducts} = offer.salesPackageConfig;
-  return netexIds.flatMap((netexId) =>
-    fareProducts
+  const netexIds = offerToBuy.withUpgradeProducts;
+  return netexIds.flatMap((netexId) => {
+    const {fareProducts} = offer.salesPackageConfig;
+    return fareProducts
       .filter((product) => product.id === netexId)
-      .map((product) => product.selectableId)
-  );
+      .map((product) => product.selectableId);
+  });
 }

@@ -19,6 +19,15 @@ yarn add @entur/create-offer-configurations-from-offer-to-buy
 
 ## Usage/Examples
 
+The function has an optional second parameter, `offerIfUsingOffersApiV1`. You
+have to supply an argument for it if you are using
+[Offers v1](https://developer.entur.org/pages-offers-docs-api-v1-reference). The
+offer is used to map the items in `withUpgradeProducts` to
+`selectableProductIds` in the output. The second argument is superfluous if you
+are using
+[Offers v2](https://developer.entur.org/pages-offers-docs-api-v2-reference),
+because `selectableProductIds` are already present in the `offerToBuy`.
+
 ```javascript
 import { createOfferConfigurationsFromOfferToBuy } from "@entur/create-offer-configurations-from-offer-to-buy";
 
@@ -29,7 +38,7 @@ createOfferConfigurationsFromOfferToBuy(
     withUpgradeProducts: [],
     possibleTravellerIds: [["3543283", "3518762"], ["ADULT-0-anonymous"]],
   },
-  offerOrOptionalProducts
+  offerIfUsingOffersApiV1
 );
 
 /*

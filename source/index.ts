@@ -6,8 +6,8 @@ export type SetRequired<T, K extends keyof T> = Required<Pick<T, K>> &
   Omit<T, K>; // eslint-disable-line @typescript-eslint/ban-types
 
 /**
- * This is a stripped down version of the Offer types,
- * containing only the root keys that we need.
+ * These are stripped down versions of the Offer types,
+ * containing only the data that we need.
  * The hope is that this will lead to fewer updates because
  * the type has changed.
  */
@@ -38,9 +38,12 @@ type OfferConfigurationWithCountOne = SetRequired<
  */
 export function createOfferConfigurationsFromOfferToBuy(
   offerToBuy: OfferToBuy | OfferToBuy2,
-  offer?: StrippedOffer
+  offerIfUsingOffersApiV1?: StrippedOffer
 ): OfferConfigurationWithCountOne[] {
-  const selectableProductIds = extractSelectableProductIds(offerToBuy, offer);
+  const selectableProductIds = extractSelectableProductIds(
+    offerToBuy,
+    offerIfUsingOffersApiV1
+  );
 
   return offerToBuy.possibleTravellerIds.map((selectedTravellerIds) => ({
     offerId: offerToBuy.id,
@@ -51,14 +54,14 @@ export function createOfferConfigurationsFromOfferToBuy(
 
 function extractSelectableProductIds(
   offerToBuy: OfferToBuy | OfferToBuy2,
-  offer?: StrippedOffer
+  offerIfUsingOffersApiV1?: StrippedOffer
 ): string[] {
   const offerToBuyIsFromOffersV2 = 'selectableProductIds' in offerToBuy;
   if (offerToBuyIsFromOffersV2) {
     return offerToBuy.selectableProductIds;
   }
 
-  if (!offer) {
+  if (!offerIfUsingOffersApiV1) {
     const netexIds = offerToBuy.withUpgradeProducts;
     const userShouldHaveSuppliedAnOffer = netexIds.length > 0;
     if (userShouldHaveSuppliedAnOffer) {
@@ -74,21 +77,24 @@ function extractSelectableProductIds(
     return [];
   }
 
-  return getSelectableProductIdsMatchingNetexIdFromOffer(offerToBuy, offer);
+  return getSelectableProductIdsMatchingNetexIdFromOffer(
+    offerToBuy,
+    offerIfUsingOffersApiV1
+  );
 }
 
-export function getSelectableProductIdsMatchingNetexIdFromOffer(
+function getSelectableProductIdsMatchingNetexIdFromOffer(
   offerToBuy: OfferToBuy,
-  offer: StrippedOffer
+  offerFromV1: StrippedOffer
 ): string[] {
-  if (offerToBuy.id !== offer.id) {
+  if (offerToBuy.id !== offerFromV1.id) {
     throw new Error(
-      `The ID of the offer you supplied (${offer.id}) does not match the ID of the offerToBuy (${offerToBuy.id}). Supply the referenced offer to fix this error.`
+      `The ID of the offer you supplied (${offerFromV1.id}) does not match the ID of the offerToBuy (${offerToBuy.id}). Supply the referenced offer to fix this error.`
     );
   }
 
   const netexIds = offerToBuy.withUpgradeProducts;
-  const {fareProducts} = offer.salesPackageConfig;
+  const {fareProducts} = offerFromV1.salesPackageConfig;
   return netexIds.flatMap((netexId) =>
     fareProducts
       .filter((product) => product.id === netexId)

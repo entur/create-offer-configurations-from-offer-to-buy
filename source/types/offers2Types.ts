@@ -17,16 +17,7 @@ export interface VersionedObjectRef {
   id: string;
 
   /** Versioned object ref version */
-  version: string;
-}
-
-/**
- * There are two supported algorithms for comparing offers; TOTAL_PRICE and BEFORE_SDR. TOTAL_PRICE: This is the default algorithm used if not specified, this only looks at the total price of the offers and finds the cheapest, if two offers have the same price, the one with the least amount of offers in the combination is chosen. BEFORE_SDR: This algorithm unapplies all sales discount rights in the offers before comparing prices, when the price of two combinations is the same, the combination containing the most amount of SDRs is chosen, thereafter if the amount is the same the combination with the least amount of offers in the combination is chosen.
- * @example TOTAL_PRICE
- */
-export enum PriceComparisonAlgorithm {
-  TOTAL_PRICE = "TOTAL_PRICE",
-  BEFORE_SDR = "BEFORE_SDR",
+  version?: string;
 }
 
 /**
@@ -60,40 +51,6 @@ export interface DiscountRightSummary {
 }
 
 /**
- * A request used to search for extension products valid between zones.
- */
-export interface SearchExtensionZonesRequest {
-  recommendationConfig?: RecommendationConfig;
-
-  /**
-   * The expected start time of travel.
-   * @format date-time
-   */
-  travelDate: string;
-
-  /**
-   * The id of the origin zone.
-   * @example RUT:TariffZone:1
-   */
-  from: string;
-
-  /** A specification of an existing ticket. */
-  existingTicket: ExistingTicket;
-
-  /**
-   * The id of the destination zone.
-   * @example ENT:TariffZone:3N
-   */
-  to: string;
-
-  /** A specification of a traveller. */
-  traveller: Traveller;
-
-  /** Optional sequence of via zones. */
-  via?: string[];
-}
-
-/**
  * id and and name of an organisation
  */
 export interface OrganisationSummary {
@@ -108,20 +65,6 @@ export interface OrganisationSummary {
    * @example GOA:Authority:GOA
    */
   id: string;
-}
-
-/**
- * A request used to search for extension products for a specified trip.
- */
-export interface SearchExtensionTripRequest {
-  /** List of legs constituting a suggested sequence of rides and links for a specific trip. */
-  tripPattern: TripPatternRequest;
-
-  /** A specification of an existing ticket. */
-  existingTicket: ExistingTicket;
-
-  /** A specification of a traveller. */
-  traveller: Traveller;
 }
 
 /**
@@ -162,7 +105,7 @@ export interface PricedGroup {
    * Basis on which pricing is done - per whole group
    * or per member.
    */
-  pricingBasis?: PricingBasis;
+  pricingBasis?: PricingBasisEnum;
 
   /** The ID of the object on the format < context : type : instance name > */
   id: string;
@@ -176,26 +119,26 @@ export interface PricedGroup {
 
 /**
  * The mode of transport or access (e.g., foot) used when traversing this leg.
- * @example rail
+ * @example RAIL
  */
 export enum TransportModeEnum {
-  Air = "air",
-  Bicycle = "bicycle",
-  Bus = "bus",
-  Cableway = "cableway",
-  Car = "car",
-  Water = "water",
-  Funicular = "funicular",
-  Lift = "lift",
-  Rail = "rail",
-  Metro = "metro",
-  Tram = "tram",
-  Coach = "coach",
-  Transit = "transit",
-  Foot = "foot",
-  CarPark = "car_park",
-  CarPickup = "car_pickup",
-  CarDropoff = "car_dropoff",
+  AIR = "AIR",
+  BICYCLE = "BICYCLE",
+  BUS = "BUS",
+  CABLEWAY = "CABLEWAY",
+  CAR = "CAR",
+  WATER = "WATER",
+  FUNICULAR = "FUNICULAR",
+  LIFT = "LIFT",
+  RAIL = "RAIL",
+  METRO = "METRO",
+  TRAM = "TRAM",
+  COACH = "COACH",
+  TRANSIT = "TRANSIT",
+  FOOT = "FOOT",
+  CAR_PARK = "CAR_PARK",
+  CAR_PICKUP = "CAR_PICKUP",
+  CAR_DROPOFF = "CAR_DROPOFF",
 }
 
 /**
@@ -219,6 +162,9 @@ export interface SearchZonesRequest {
    */
   from: string;
 
+  /** A specification of an existing ticket. */
+  existingTicket?: ExistingTicket;
+
   /**
    * The id of the destination zone.
    * @example RUT:TariffZone:3N
@@ -227,6 +173,31 @@ export interface SearchZonesRequest {
 
   /** Optional sequence of via zones. */
   via?: string[];
+}
+
+/**
+ * @example BICYCLE
+ */
+export enum BaggageTypeEnum {
+  HANDBAG = "HANDBAG",
+  HAND_LUGGAGE = "HAND_LUGGAGE",
+  SMALL_SUITCASE = "SMALL_SUITCASE",
+  SUITCASE = "SUITCASE",
+  TRUNK = "TRUNK",
+  OVERSIZE_ITEM = "OVERSIZE_ITEM",
+  BICYCLE = "BICYCLE",
+  SPORTING_EQUIPMENT = "SPORTING_EQUIPMENT",
+  SKIS = "SKIS",
+  MUSICAL_INSTRUMENT = "MUSICAL_INSTRUMENT",
+  PUSH_CHAIR = "PUSH_CHAIR",
+  MOTORIZED_WHEELCHAIR = "MOTORIZED_WHEELCHAIR",
+  LARGE_MOTORIZED_WHEELCHAIR = "LARGE_MOTORIZED_WHEELCHAIR",
+  WHEELCHAIR = "WHEELCHAIR",
+  SMALL_ANIMAL = "SMALL_ANIMAL",
+  ANIMAL = "ANIMAL",
+  GAME = "GAME",
+  MOTORCYCLE = "MOTORCYCLE",
+  OTHER = "OTHER",
 }
 
 export interface ServiceJourneySummary {
@@ -350,17 +321,6 @@ export enum FareClassEnum {
 }
 
 /**
- * @example TRIP_CARNET
- */
-export enum ProductType {
-  TRIP_CARNET = "TRIP_CARNET",
-  PASS_CARNET = "PASS_CARNET",
-  UNIT_COUPONS = "UNIT_COUPONS",
-  STORED_VALUE = "STORED_VALUE",
-  OTHER = "OTHER",
-}
-
-/**
  * Representation of a optional product that can be selected together with mandatory products in an offer
  */
 export interface OptionalProduct {
@@ -388,7 +348,7 @@ export interface OptionalProduct {
 
   /** @example NSB:SupplementProduct:BicycleReserving */
   id: string;
-  supplementProductType?: SupplementProductType;
+  supplementProductType?: SupplementProductTypeEnum;
 
   /** @example NSB:Version:V1 */
   version: string;
@@ -623,7 +583,7 @@ export interface SpecificParameterAssignment {
   specificationOf: string;
 
   /** Validity parameters */
-  validityParameters?: string[];
+  validityParameters?: VersionedObjectRef[];
 
   /** Limitations */
   limitations?: VersionedObjectRef[];
@@ -698,121 +658,121 @@ export interface Authority {
 
 /**
  * The transport sub mode (e.g., localBus or expressBus) used when traversing this leg. Null if leg is not a ride
- * @example local
+ * @example LOCAL
  */
 export enum TransportSubModeEnum {
-  Unknown = "unknown",
-  Undefined = "undefined",
-  InternationalFlight = "internationalFlight",
-  DomesticFlight = "domesticFlight",
-  IntercontinentalFlight = "intercontinentalFlight",
-  DomesticScheduledFlight = "domesticScheduledFlight",
-  ShuttleFlight = "shuttleFlight",
-  IntercontinentalCharterFlight = "intercontinentalCharterFlight",
-  InternationalCharterFlight = "internationalCharterFlight",
-  RoundTripCharterFlight = "roundTripCharterFlight",
-  SightseeingFlight = "sightseeingFlight",
-  HelicopterService = "helicopterService",
-  DomesticCharterFlight = "domesticCharterFlight",
-  SchengenAreaFlight = "SchengenAreaFlight",
-  AirshipService = "airshipService",
-  ShortHaulInternationalFlight = "shortHaulInternationalFlight",
-  CanalBarge = "canalBarge",
-  LocalBus = "localBus",
-  RegionalBus = "regionalBus",
-  ExpressBus = "expressBus",
-  NightBus = "nightBus",
-  PostBus = "postBus",
-  SpecialNeedsBus = "specialNeedsBus",
-  MobilityBus = "mobilityBus",
-  MobilityBusForRegisteredDisabled = "mobilityBusForRegisteredDisabled",
-  SightseeingBus = "sightseeingBus",
-  ShuttleBus = "shuttleBus",
-  HighFrequencyBus = "highFrequencyBus",
-  DedicatedLaneBus = "dedicatedLaneBus",
-  SchoolBus = "schoolBus",
-  SchoolAndPublicServiceBus = "schoolAndPublicServiceBus",
-  RailReplacementBus = "railReplacementBus",
-  DemandAndResponseBus = "demandAndResponseBus",
-  AirportLinkBus = "airportLinkBus",
-  InternationalCoach = "internationalCoach",
-  NationalCoach = "nationalCoach",
-  ShuttleCoach = "shuttleCoach",
-  RegionalCoach = "regionalCoach",
-  SpecialCoach = "specialCoach",
-  SchoolCoach = "schoolCoach",
-  SightseeingCoach = "sightseeingCoach",
-  TouristCoach = "touristCoach",
-  CommuterCoach = "commuterCoach",
-  Funicular = "funicular",
-  StreetCableCar = "streetCableCar",
-  AllFunicularServices = "allFunicularServices",
-  UndefinedFunicular = "undefinedFunicular",
-  Metro = "metro",
-  Tube = "tube",
-  UrbanRailway = "urbanRailway",
-  CityTram = "cityTram",
-  LocalTram = "localTram",
-  RegionalTram = "regionalTram",
-  SightseeingTram = "sightseeingTram",
-  ShuttleTram = "shuttleTram",
-  TrainTram = "trainTram",
-  Telecabin = "telecabin",
-  CableCar = "cableCar",
-  Lift = "lift",
-  ChairLift = "chairLift",
-  DragLift = "dragLift",
-  TelecabinLink = "telecabinLink",
-  Local = "local",
-  HighSpeedRail = "highSpeedRail",
-  SuburbanRailway = "suburbanRailway",
-  RegionalRail = "regionalRail",
-  InterregionalRail = "interregionalRail",
-  LongDistance = "longDistance",
-  International = "international",
-  SleeperRailService = "sleeperRailService",
-  NightRail = "nightRail",
-  CarTransportRailService = "carTransportRailService",
-  TouristRailway = "touristRailway",
-  AirportLinkRail = "airportLinkRail",
-  RailShuttle = "railShuttle",
-  ReplacementRailService = "replacementRailService",
-  SpecialTrain = "specialTrain",
-  CrossCountryRail = "crossCountryRail",
-  RackAndPinionRailway = "rackAndPinionRailway",
-  InternationalCarFerry = "internationalCarFerry",
-  NationalCarFerry = "nationalCarFerry",
-  RegionalCarFerry = "regionalCarFerry",
-  LocalCarFerry = "localCarFerry",
-  InternationalPassengerFerry = "internationalPassengerFerry",
-  NationalPassengerFerry = "nationalPassengerFerry",
-  RegionalPassengerFerry = "regionalPassengerFerry",
-  LocalPassengerFerry = "localPassengerFerry",
-  PostBoat = "postBoat",
-  TrainFerry = "trainFerry",
-  RoadFerryLink = "roadFerryLink",
-  AirportBoatLink = "airportBoatLink",
-  HighSpeedVehicleService = "highSpeedVehicleService",
-  HighSpeedPassengerService = "highSpeedPassengerService",
-  SightseeingService = "sightseeingService",
-  SchoolBoat = "schoolBoat",
-  CableFerry = "cableFerry",
-  RiverBus = "riverBus",
-  ScheduledFerry = "scheduledFerry",
-  ShuttleFerryService = "shuttleFerryService",
-  CommunalTaxi = "communalTaxi",
-  CharterTaxi = "charterTaxi",
-  WaterTaxi = "waterTaxi",
-  RailTaxi = "railTaxi",
-  BikeTaxi = "bikeTaxi",
-  BlackCab = "blackCab",
-  MiniCab = "miniCab",
-  AllTaxiServices = "allTaxiServices",
-  HireCar = "hireCar",
-  HireVan = "hireVan",
-  HireMotorbike = "hireMotorbike",
-  HireCycle = "hireCycle",
-  AllHireVehicles = "allHireVehicles",
+  UNKNOWN = "UNKNOWN",
+  UNDEFINED = "UNDEFINED",
+  INTERNATIONAL_FLIGHT = "INTERNATIONAL_FLIGHT",
+  DOMESTIC_FLIGHT = "DOMESTIC_FLIGHT",
+  INTERCONTINENTAL_FLIGHT = "INTERCONTINENTAL_FLIGHT",
+  DOMESTIC_SCHEDULED_FLIGHT = "DOMESTIC_SCHEDULED_FLIGHT",
+  SHUTTLE_FLIGHT = "SHUTTLE_FLIGHT",
+  INTERCONTINENTAL_CHARTER_FLIGHT = "INTERCONTINENTAL_CHARTER_FLIGHT",
+  INTERNATIONAL_CHARTER_FLIGHT = "INTERNATIONAL_CHARTER_FLIGHT",
+  ROUND_TRIP_CHARTER_FLIGHT = "ROUND_TRIP_CHARTER_FLIGHT",
+  SIGHTSEEING_FLIGHT = "SIGHTSEEING_FLIGHT",
+  HELICOPTER_SERVICE = "HELICOPTER_SERVICE",
+  DOMESTIC_CHARTER_FLIGHT = "DOMESTIC_CHARTER_FLIGHT",
+  SCHENGEN_AREA_FLIGHT = "SCHENGEN_AREA_FLIGHT",
+  AIRSHIP_SERVICE = "AIRSHIP_SERVICE",
+  SHORT_HAUL_INTERNATIONAL_FLIGHT = "SHORT_HAUL_INTERNATIONAL_FLIGHT",
+  CANAL_BARGE = "CANAL_BARGE",
+  LOCAL_BUS = "LOCAL_BUS",
+  REGIONAL_BUS = "REGIONAL_BUS",
+  EXPRESS_BUS = "EXPRESS_BUS",
+  NIGHT_BUS = "NIGHT_BUS",
+  POST_BUS = "POST_BUS",
+  SPECIAL_NEEDS_BUS = "SPECIAL_NEEDS_BUS",
+  MOBILITY_BUS = "MOBILITY_BUS",
+  MOBILITY_BUS_FOR_REGISTERED_DISABLED = "MOBILITY_BUS_FOR_REGISTERED_DISABLED",
+  SIGHTSEEING_BUS = "SIGHTSEEING_BUS",
+  SHUTTLE_BUS = "SHUTTLE_BUS",
+  HIGH_FREQUENCY_BUS = "HIGH_FREQUENCY_BUS",
+  DEDICATED_LANE_BUS = "DEDICATED_LANE_BUS",
+  SCHOOL_BUS = "SCHOOL_BUS",
+  SCHOOL_AND_PUBLIC_SERVICE_BUS = "SCHOOL_AND_PUBLIC_SERVICE_BUS",
+  RAIL_REPLACEMENT_BUS = "RAIL_REPLACEMENT_BUS",
+  DEMAND_AND_RESPONSE_BUS = "DEMAND_AND_RESPONSE_BUS",
+  AIRPORT_LINK_BUS = "AIRPORT_LINK_BUS",
+  INTERNATIONAL_COACH = "INTERNATIONAL_COACH",
+  NATIONAL_COACH = "NATIONAL_COACH",
+  SHUTTLE_COACH = "SHUTTLE_COACH",
+  REGIONAL_COACH = "REGIONAL_COACH",
+  SPECIAL_COACH = "SPECIAL_COACH",
+  SCHOOL_COACH = "SCHOOL_COACH",
+  SIGHTSEEING_COACH = "SIGHTSEEING_COACH",
+  TOURIST_COACH = "TOURIST_COACH",
+  COMMUTER_COACH = "COMMUTER_COACH",
+  FUNICULAR = "FUNICULAR",
+  STREET_CABLE_CAR = "STREET_CABLE_CAR",
+  ALL_FUNICULAR_SERVICES = "ALL_FUNICULAR_SERVICES",
+  UNDEFINED_FUNICULAR = "UNDEFINED_FUNICULAR",
+  METRO = "METRO",
+  TUBE = "TUBE",
+  URBAN_RAILWAY = "URBAN_RAILWAY",
+  CITY_TRAM = "CITY_TRAM",
+  LOCAL_TRAM = "LOCAL_TRAM",
+  REGIONAL_TRAM = "REGIONAL_TRAM",
+  SIGHTSEEING_TRAM = "SIGHTSEEING_TRAM",
+  SHUTTLE_TRAM = "SHUTTLE_TRAM",
+  TRAIN_TRAM = "TRAIN_TRAM",
+  TELECABIN = "TELECABIN",
+  CABLE_CAR = "CABLE_CAR",
+  LIFT = "LIFT",
+  CHAIR_LIFT = "CHAIR_LIFT",
+  DRAG_LIFT = "DRAG_LIFT",
+  TELECABIN_LINK = "TELECABIN_LINK",
+  LOCAL = "LOCAL",
+  HIGH_SPEED_RAIL = "HIGH_SPEED_RAIL",
+  SUBURBAN_RAILWAY = "SUBURBAN_RAILWAY",
+  REGIONAL_RAIL = "REGIONAL_RAIL",
+  INTERREGIONAL_RAIL = "INTERREGIONAL_RAIL",
+  LONG_DISTANCE = "LONG_DISTANCE",
+  INTERNATIONAL = "INTERNATIONAL",
+  SLEEPER_RAIL_SERVICE = "SLEEPER_RAIL_SERVICE",
+  NIGHT_RAIL = "NIGHT_RAIL",
+  CAR_TRANSPORT_RAIL_SERVICE = "CAR_TRANSPORT_RAIL_SERVICE",
+  TOURIST_RAILWAY = "TOURIST_RAILWAY",
+  AIRPORT_LINK_RAIL = "AIRPORT_LINK_RAIL",
+  RAIL_SHUTTLE = "RAIL_SHUTTLE",
+  REPLACEMENT_RAIL_SERVICE = "REPLACEMENT_RAIL_SERVICE",
+  SPECIAL_TRAIN = "SPECIAL_TRAIN",
+  CROSS_COUNTRY_RAIL = "CROSS_COUNTRY_RAIL",
+  RACK_AND_PINION_RAILWAY = "RACK_AND_PINION_RAILWAY",
+  INTERNATIONAL_CAR_FERRY = "INTERNATIONAL_CAR_FERRY",
+  NATIONAL_CAR_FERRY = "NATIONAL_CAR_FERRY",
+  REGIONAL_CAR_FERRY = "REGIONAL_CAR_FERRY",
+  LOCAL_CAR_FERRY = "LOCAL_CAR_FERRY",
+  INTERNATIONAL_PASSENGER_FERRY = "INTERNATIONAL_PASSENGER_FERRY",
+  NATIONAL_PASSENGER_FERRY = "NATIONAL_PASSENGER_FERRY",
+  REGIONAL_PASSENGER_FERRY = "REGIONAL_PASSENGER_FERRY",
+  LOCAL_PASSENGER_FERRY = "LOCAL_PASSENGER_FERRY",
+  POST_BOAT = "POST_BOAT",
+  TRAIN_FERRY = "TRAIN_FERRY",
+  ROAD_FERRY_LINK = "ROAD_FERRY_LINK",
+  AIRPORT_BOAT_LINK = "AIRPORT_BOAT_LINK",
+  HIGH_SPEED_VEHICLE_SERVICE = "HIGH_SPEED_VEHICLE_SERVICE",
+  HIGH_SPEED_PASSENGER_SERVICE = "HIGH_SPEED_PASSENGER_SERVICE",
+  SIGHTSEEING_SERVICE = "SIGHTSEEING_SERVICE",
+  SCHOOL_BOAT = "SCHOOL_BOAT",
+  CABLE_FERRY = "CABLE_FERRY",
+  RIVER_BUS = "RIVER_BUS",
+  SCHEDULED_FERRY = "SCHEDULED_FERRY",
+  SHUTTLE_FERRY_SERVICE = "SHUTTLE_FERRY_SERVICE",
+  COMMUNAL_TAXI = "COMMUNAL_TAXI",
+  CHARTER_TAXI = "CHARTER_TAXI",
+  WATER_TAXI = "WATER_TAXI",
+  RAIL_TAXI = "RAIL_TAXI",
+  BIKE_TAXI = "BIKE_TAXI",
+  BLACK_CAB = "BLACK_CAB",
+  MINI_CAB = "MINI_CAB",
+  ALL_TAXI_SERVICES = "ALL_TAXI_SERVICES",
+  HIRE_CAR = "HIRE_CAR",
+  HIRE_VAN = "HIRE_VAN",
+  HIRE_MOTORBIKE = "HIRE_MOTORBIKE",
+  HIRE_CYCLE = "HIRE_CYCLE",
+  ALL_HIRE_VEHICLES = "ALL_HIRE_VEHICLES",
 }
 
 /**
@@ -937,14 +897,14 @@ export interface GeographicalValidity {
 
 export interface ReservingRequirementForServiceJourney {
   seatMapIsAvailable: boolean;
-  reservingRequirement?: ReservingRequirement;
+  reservingRequirement?: ReservingRequirementEnum;
   serviceJourney: ServiceJourneySummary;
 }
 
 /**
  * @example BICYCLE
  */
-export enum SupplementProductType {
+export enum SupplementProductTypeEnum {
   SEAT_RESERVATION = "SEAT_RESERVATION",
   BICYCLE = "BICYCLE",
   DOG = "DOG",
@@ -1077,6 +1037,9 @@ export interface SearchTripPatternRequest {
   /** List of legs constituting a suggested sequence of rides and links for a specific trip. */
   tripPattern: TripPatternRequest;
 
+  /** A specification of an existing ticket. */
+  existingTicket?: ExistingTicket;
+
   /** A configuration of how to group travellers in offers. */
   groupConfig?: GroupConfig;
 }
@@ -1099,14 +1062,14 @@ export interface Carnet {
  * A specification of a traveller.
  */
 export interface Traveller {
-  /** A filter for what kind of luggage the traveller wants offers for. The type is enum as string with the following possible values: HANDBAG, HAND_LUGGAGE, SMALL_SUITCASE, SUITCASE, TRUNK, OVERSIZE_ITEM, BICYCLE, SPORTING_EQUIPMENT, SKIS, MUSICAL_INSTRUMENT, PUSH_CHAIR, MOTORIZED_WHEELCHAIR,LARGE_MOTORIZED_WHEELCHAIR, WHEELCHAIR, SMALL_ANIMAL, ANIMAL, GAME, MOTORCYCLE, OTHER */
-  luggageTypes?: LuggageAllowance[];
-
   /** A list of references to products that the traveller already owns */
   productIds?: string[];
 
   /** Contains information to look up transaction history for a traveller and what CappedDiscountRight-program he or she is a part of. */
   cappingSpecification?: CappingSpecification;
+
+  /** A filter for what kind of luggage the traveller wants offers for. The type is enum as string with the following possible values: HANDBAG, HAND_LUGGAGE, SMALL_SUITCASE, SUITCASE, TRUNK, OVERSIZE_ITEM, BICYCLE, SPORTING_EQUIPMENT, SKIS, MUSICAL_INSTRUMENT, PUSH_CHAIR, MOTORIZED_WHEELCHAIR,LARGE_MOTORIZED_WHEELCHAIR, WHEELCHAIR, SMALL_ANIMAL, ANIMAL, GAME, MOTORCYCLE, OTHER */
+  baggageTypes?: BaggageTypeEnum[];
 
   /**
    * Identifier of the traveller. Only unique within an http-transaction with Products.
@@ -1122,6 +1085,27 @@ export interface Traveller {
 export interface RefType {
   id: string;
   version: string;
+}
+
+/**
+ * @example RESERVATIONS_COMPULSORY
+ */
+export enum ReservingRequirementEnum {
+  RESERVATIONS_COMPULSORY = "RESERVATIONS_COMPULSORY",
+  RESERVATIONS_COMPULSORY_FOR_GROUPS = "RESERVATIONS_COMPULSORY_FOR_GROUPS",
+  RESERVATIONS_COMPULSORY_FOR_FIRST_CLASS = "RESERVATIONS_COMPULSORY_FOR_FIRST_CLASS",
+  RESERVATIONS_COMPULSORY_FROM_ORIGIN_STATION = "RESERVATIONS_COMPULSORY_FROM_ORIGIN_STATION",
+  RESERVATIONS_RECOMMENDED = "RESERVATIONS_RECOMMENDED",
+  RESERVATIONS_POSSIBLE = "RESERVATIONS_POSSIBLE",
+  RESERVATIONS_POSSIBLE_ONLY_IN_FIRST_CLASS = "RESERVATIONS_POSSIBLE_ONLY_IN_FIRST_CLASS",
+  RESERVATIONS_POSSIBLE_ONLY_IN_SECOND_CLASS = "RESERVATIONS_POSSIBLE_ONLY_IN_SECOND_CLASS",
+  RESERVATIONS_POSSIBLE_FOR_CERTAIN_CLASSES = "RESERVATIONS_POSSIBLE_FOR_CERTAIN_CLASSES",
+  GROUP_BOOKING_RESTRICTED = "GROUP_BOOKING_RESTRICTED",
+  NO_GROUPS_ALLOWED = "NO_GROUPS_ALLOWED",
+  NO_RESERVATIONS_POSSIBLE = "NO_RESERVATIONS_POSSIBLE",
+  WHEELCHAIR_ONLY_RESERVATIONS = "WHEELCHAIR_ONLY_RESERVATIONS",
+  BICYCLE_RESERVATIONS_COMPULSORY = "BICYCLE_RESERVATIONS_COMPULSORY",
+  RESERVATION_SUPPLEMENT_CHARGED = "RESERVATION_SUPPLEMENT_CHARGED",
 }
 
 /**
@@ -1174,6 +1158,15 @@ export interface TripPatternRequest {
 }
 
 /**
+ * There are two supported algorithms for comparing offers; TOTAL_PRICE and BEFORE_SDR. TOTAL_PRICE: This is the default algorithm used if not specified, this only looks at the total price of the offers and finds the cheapest, if two offers have the same price, the one with the least amount of offers in the combination is chosen. BEFORE_SDR: This algorithm unapplies all sales discount rights in the offers before comparing prices, when the price of two combinations is the same, the combination containing the most amount of SDRs is chosen, thereafter if the amount is the same the combination with the least amount of offers in the combination is chosen.
+ * @example TOTAL_PRICE
+ */
+export enum PriceComparisonAlgorithmEnum {
+  TOTAL_PRICE = "TOTAL_PRICE",
+  BEFORE_SDR = "BEFORE_SDR",
+}
+
+/**
  * A specification of which travellers can use an offer, along with limitations on the number of travellers that must be selected from the group for the OFFER to be valid.
  */
 export interface TravellerMappingSummary {
@@ -1194,6 +1187,15 @@ export interface TravellerMappingSummary {
 
   /** A user type */
   userType: UserTypeEnum;
+}
+
+/**
+ * Identify zone or stopPlace in a journeySpec
+ */
+export interface PlaceInJourneySpec {
+  /** A stop place */
+  stopPlace?: StopPlace;
+  zoneId?: string;
 }
 
 /**
@@ -1234,34 +1236,13 @@ export interface RuleSpec {
    * FOR_EACH_AND_GROUPED_COMBINATIONS: (SJ-1), (SJ-2), (SJ-3), (SJ-1, SJ-2, SJ-3)
    * COMBINATIONS_FROM_OFFERS: Will only organize by unique journey combinations covered by offers.
    */
-  journeyOrganizeAlgorithm?: JourneyOrganizeAlgorithm;
+  journeyOrganizeAlgorithm?: JourneyOrganizeAlgorithmEnum;
   mixinOffersWithHigherFlexibility?: boolean;
 
   /** There are two supported algorithms for comparing offers; TOTAL_PRICE and BEFORE_SDR. TOTAL_PRICE: This is the default algorithm used if not specified, this only looks at the total price of the offers and finds the cheapest, if two offers have the same price, the one with the least amount of offers in the combination is chosen. BEFORE_SDR: This algorithm unapplies all sales discount rights in the offers before comparing prices, when the price of two combinations is the same, the combination containing the most amount of SDRs is chosen, thereafter if the amount is the same the combination with the least amount of offers in the combination is chosen. */
-  priceComparisonAlgorithm?: PriceComparisonAlgorithm;
+  priceComparisonAlgorithm?: PriceComparisonAlgorithmEnum;
   onlyIncludeRecommendedOffers?: boolean;
   onlyIncludeRecommendationsWithOffersToBuy?: boolean;
-}
-
-/**
- * @example RESERVATIONS_COMPULSORY
- */
-export enum ReservingRequirement {
-  RESERVATIONS_COMPULSORY = "RESERVATIONS_COMPULSORY",
-  RESERVATIONS_COMPULSORY_FOR_GROUPS = "RESERVATIONS_COMPULSORY_FOR_GROUPS",
-  RESERVATIONS_COMPULSORY_FOR_FIRST_CLASS = "RESERVATIONS_COMPULSORY_FOR_FIRST_CLASS",
-  RESERVATIONS_COMPULSORY_FROM_ORIGIN_STATION = "RESERVATIONS_COMPULSORY_FROM_ORIGIN_STATION",
-  RESERVATIONS_RECOMMENDED = "RESERVATIONS_RECOMMENDED",
-  RESERVATIONS_POSSIBLE = "RESERVATIONS_POSSIBLE",
-  RESERVATIONS_POSSIBLE_ONLY_IN_FIRST_CLASS = "RESERVATIONS_POSSIBLE_ONLY_IN_FIRST_CLASS",
-  RESERVATIONS_POSSIBLE_ONLY_IN_SECOND_CLASS = "RESERVATIONS_POSSIBLE_ONLY_IN_SECOND_CLASS",
-  RESERVATIONS_POSSIBLE_FOR_CERTAIN_CLASSES = "RESERVATIONS_POSSIBLE_FOR_CERTAIN_CLASSES",
-  GROUP_BOOKING_RESTRICTED = "GROUP_BOOKING_RESTRICTED",
-  NO_GROUPS_ALLOWED = "NO_GROUPS_ALLOWED",
-  NO_RESERVATIONS_POSSIBLE = "NO_RESERVATIONS_POSSIBLE",
-  WHEELCHAIR_ONLY_RESERVATIONS = "WHEELCHAIR_ONLY_RESERVATIONS",
-  BICYCLE_RESERVATIONS_COMPULSORY = "BICYCLE_RESERVATIONS_COMPULSORY",
-  RESERVATION_SUPPLEMENT_CHARGED = "RESERVATION_SUPPLEMENT_CHARGED",
 }
 
 /**
@@ -1343,6 +1324,17 @@ export interface SearchResponse {
   unavailableProducts?: UnavailableProduct[];
   optionalProducts?: OptionalProduct[];
   recommendations?: Recommendation[];
+}
+
+/**
+ * @example TRIP_CARNET
+ */
+export enum ProductTypeEnum {
+  TRIP_CARNET = "TRIP_CARNET",
+  PASS_CARNET = "PASS_CARNET",
+  UNIT_COUPONS = "UNIT_COUPONS",
+  STORED_VALUE = "STORED_VALUE",
+  OTHER = "OTHER",
 }
 
 /**
@@ -1501,7 +1493,7 @@ export interface FareProductConfiguration {
 
   /** The price(s) of the sub configurations below this node. Multiple prices is supported in case of prices in multiple currencies. */
   prices: Price[];
-  productType?: ProductType;
+  productType?: ProductTypeEnum;
 
   /** Specific parameter assignments */
   specificParameterAssignments?: SpecificParameterAssignment[];
@@ -1523,7 +1515,7 @@ export interface FareProductConfiguration {
 
   /** True if this configuration is optional to buy, false if it's required. */
   optional: boolean;
-  supplementProductType?: SupplementProductType;
+  supplementProductType?: SupplementProductTypeEnum;
 
   /** The price contribution shows how much this node contributes on the total price. */
   priceContributions: Price[];
@@ -1552,7 +1544,6 @@ export interface FareProductConfiguration {
  */
 export interface PropertiesSummary {
   duration?: string;
-  luggageAllowances?: LuggageAllowance[];
   accommodations?: AccommodationForServiceJourney[];
   fareClasses?: FareClassEnum[];
 
@@ -1565,6 +1556,7 @@ export interface PropertiesSummary {
 
   /** id and and name of an organisation */
   organisation: OrganisationSummary;
+  baggageTypes?: BaggageTypeEnum[];
 
   /** @example ENT:UserProfile:Adult */
   userProfileId?: string;
@@ -1710,6 +1702,19 @@ export interface StopPlace {
  */
 export interface ZonalValidity {
   zones?: string[];
+}
+
+/**
+* There are three supported algorithms for organizing how we present each combination of journeys. Given three journeys in the trip pattern; SJ-1, SJ-2, SJ-3 the three algorithms will generate these combinations:
+SUBSEQUENT_COMBINATIONS: (SJ-1), (SJ-2), (SJ-3), (SJ-1, SJ-2), (SJ-2, SJ-3), (SJ-1, SJ-2, SJ-3)
+FOR_EACH_AND_GROUPED_COMBINATIONS: (SJ-1), (SJ-2), (SJ-3), (SJ-1, SJ-2, SJ-3)
+COMBINATIONS_FROM_OFFERS: Will only organize by unique journey combinations covered by offers.
+* @example FOR_EACH_AND_GROUPED_COMBINATIONS
+*/
+export enum JourneyOrganizeAlgorithmEnum {
+  SUBSEQUENT_COMBINATIONS = "SUBSEQUENT_COMBINATIONS",
+  COMBINATIONS_FROM_OFFERS = "COMBINATIONS_FROM_OFFERS",
+  FOR_EACH_AND_GROUPED_COMBINATIONS = "FOR_EACH_AND_GROUPED_COMBINATIONS",
 }
 
 /**
@@ -1899,44 +1904,6 @@ export interface TravellerMapping {
 }
 
 /**
-* There are three supported algorithms for organizing how we present each combination of journeys. Given three journeys in the trip pattern; SJ-1, SJ-2, SJ-3 the three algorithms will generate these combinations:
-SUBSEQUENT_COMBINATIONS: (SJ-1), (SJ-2), (SJ-3), (SJ-1, SJ-2), (SJ-2, SJ-3), (SJ-1, SJ-2, SJ-3)
-FOR_EACH_AND_GROUPED_COMBINATIONS: (SJ-1), (SJ-2), (SJ-3), (SJ-1, SJ-2, SJ-3)
-COMBINATIONS_FROM_OFFERS: Will only organize by unique journey combinations covered by offers.
-* @example FOR_EACH_AND_GROUPED_COMBINATIONS
-*/
-export enum JourneyOrganizeAlgorithm {
-  SUBSEQUENT_COMBINATIONS = "SUBSEQUENT_COMBINATIONS",
-  COMBINATIONS_FROM_OFFERS = "COMBINATIONS_FROM_OFFERS",
-  FOR_EACH_AND_GROUPED_COMBINATIONS = "FOR_EACH_AND_GROUPED_COMBINATIONS",
-}
-
-/**
- * @example BICYCLE
- */
-export enum LuggageAllowance {
-  HANDBAG = "HANDBAG",
-  HAND_LUGGAGE = "HAND_LUGGAGE",
-  SMALL_SUITCASE = "SMALL_SUITCASE",
-  SUITCASE = "SUITCASE",
-  TRUNK = "TRUNK",
-  OVERSIZE_ITEM = "OVERSIZE_ITEM",
-  BICYCLE = "BICYCLE",
-  SPORTING_EQUIPMENT = "SPORTING_EQUIPMENT",
-  SKIS = "SKIS",
-  MUSICAL_INSTRUMENT = "MUSICAL_INSTRUMENT",
-  PUSH_CHAIR = "PUSH_CHAIR",
-  MOTORIZED_WHEELCHAIR = "MOTORIZED_WHEELCHAIR",
-  LARGE_MOTORIZED_WHEELCHAIR = "LARGE_MOTORIZED_WHEELCHAIR",
-  WHEELCHAIR = "WHEELCHAIR",
-  SMALL_ANIMAL = "SMALL_ANIMAL",
-  ANIMAL = "ANIMAL",
-  GAME = "GAME",
-  MOTORCYCLE = "MOTORCYCLE",
-  OTHER = "OTHER",
-}
-
-/**
  * A reference to a user profile and price data.
  */
 export interface PricedUserProfile {
@@ -1970,6 +1937,48 @@ export interface PricedUserProfile {
    */
   version: string;
   typeOfConcession?: string;
+}
+
+/**
+ * Collection of attributes that characterize a journey.
+ */
+export interface JourneySpec {
+  /** The mode of transport or access (e.g., foot) used when traversing this leg. */
+  mode?: TransportModeEnum;
+
+  /**
+   * NeTEx-id of line
+   * @example GJB:Line:R30
+   */
+  line?: string;
+
+  /**
+   * NeTEx-id of authority.
+   * @example ENT:Authority:ENT
+   */
+  authority?: string;
+
+  /** The transport sub mode (e.g., localBus or expressBus) used when traversing this leg. Null if leg is not a ride */
+  transportSubmode?: TransportSubModeEnum;
+
+  /**
+   * @format date-time
+   * @example 2020-05-13T07:19:30.389Z
+   */
+  startTime?: string;
+
+  /**
+   * @format date-time
+   * @example 2020-05-13T09:19:30.389Z
+   */
+  endTime?: string;
+  placesInJourney?: PlaceInJourneySpec[];
+
+  /**
+   * NeTEx-id of Operator.
+   * @example RUT:Operator:210
+   */
+  operator?: string;
 }
 
 /**
@@ -2091,16 +2100,6 @@ export interface Quota {
 }
 
 /**
-* Basis on which pricing is done - per whole group
-or per member.
-* @example PER_OFFER
-*/
-export enum PricingBasis {
-  PER_OFFER = "PER_OFFER",
-  PER_PERSON = "PER_PERSON",
-}
-
-/**
  * A list of coordinates encoded as a polyline string (see http://code.google.com/apis/maps/documentation/polylinealgorithm.html)
  */
 export interface PointsOnLink {
@@ -2135,4 +2134,14 @@ export interface OfferToBuy {
    * @example 2
    */
   numberToBuy: number;
+}
+
+/**
+* Basis on which pricing is done - per whole group
+or per member.
+* @example PER_OFFER
+*/
+export enum PricingBasisEnum {
+  PER_OFFER = "PER_OFFER",
+  PER_PERSON = "PER_PERSON",
 }

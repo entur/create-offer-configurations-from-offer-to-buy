@@ -11,6 +11,7 @@ module.exports = {
   rules: {
     ...SORT_KEYS_RULES,
     ...getJsdocRules(true),
+    curly: "error",
     "multiline-comment-style": ["error", "starred-block"],
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",

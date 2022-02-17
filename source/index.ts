@@ -70,10 +70,10 @@ export function getSelectableProductIdsMatchingNetexIdFromOffer(
   offer: StrippedOffer
 ): string[] {
   const netexIds = offerToBuy.withUpgradeProducts;
-  return netexIds.flatMap((netexId) => {
-    const {fareProducts} = offer.salesPackageConfig;
-    return fareProducts
+  const {fareProducts} = offer.salesPackageConfig;
+  return netexIds.flatMap((netexId) =>
+    fareProducts
       .filter((product) => product.id === netexId)
-      .map((product) => product.selectableId);
-  });
+      .map((product) => product.selectableId)
+  );
 }

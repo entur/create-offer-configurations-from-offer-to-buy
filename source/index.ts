@@ -56,7 +56,10 @@ function getSelectableProductIdsMatchingNetexIdFromOffer(
   offerToBuy: OfferToBuy,
   offer?: StrippedOffer
 ): string[] {
-  if (!offer) return [];
+  if (!offer) {
+    return [];
+  }
+
   const netexIds = offerToBuy.withUpgradeProducts;
   return netexIds.flatMap((netexId) => {
     const {fareProducts} = offer.salesPackageConfig;

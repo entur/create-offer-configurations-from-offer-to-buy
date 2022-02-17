@@ -40,10 +40,7 @@ export function createOfferConfigurationsFromOfferToBuy(
   offerToBuy: OfferToBuy | OfferToBuy2,
   offer?: StrippedOffer
 ): OfferConfigurationWithCountOne[] {
-  const offerToBuyIsFromOffersV2 = 'selectableProductIds' in offerToBuy;
-  const selectableProductIds = offerToBuyIsFromOffersV2
-    ? offerToBuy.selectableProductIds
-    : getSelectableProductIdsMatchingNetexIdFromOffer(offerToBuy, offer);
+  const selectableProductIds = extractSelectableProductIds(offerToBuy, offer);
 
   return offerToBuy.possibleTravellerIds.map((selectedTravellerIds) => ({
     offerId: offerToBuy.id,
@@ -52,13 +49,29 @@ export function createOfferConfigurationsFromOfferToBuy(
   }));
 }
 
-function getSelectableProductIdsMatchingNetexIdFromOffer(
-  offerToBuy: OfferToBuy,
+function extractSelectableProductIds(
+  offerToBuy: OfferToBuy | OfferToBuy2,
   offer?: StrippedOffer
+): string[] {
+  const offerToBuyIsFromOffersV2 = 'selectableProductIds' in offerToBuy;
+  if (offerToBuyIsFromOffersV2) {
+    return offerToBuy.selectableProductIds;
+  }
+
+  if (!offer) {
+    return [];
+  }
+
+  return getSelectableProductIdsMatchingNetexIdFromOffer(offerToBuy, offer);
+}
+
+export function getSelectableProductIdsMatchingNetexIdFromOffer(
+  offerToBuy: OfferToBuy,
+  offer: StrippedOffer
 ): string[] {
   const netexIds = offerToBuy.withUpgradeProducts;
   return netexIds.flatMap((netexId) => {
-    const fareProducts = offer?.salesPackageConfig.fareProducts ?? [];
+    const {fareProducts} = offer.salesPackageConfig;
     return fareProducts
       .filter((product) => product.id === netexId)
       .map((product) => product.selectableId);

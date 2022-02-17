@@ -40,10 +40,10 @@ export function createOfferConfigurationsFromOfferToBuy(
   offerToBuy: OfferToBuy | OfferToBuy2,
   offer?: StrippedOffer
 ): OfferConfigurationWithCountOne[] {
-  const selectableProductIds =
-    'selectableProductIds' in offerToBuy
-      ? offerToBuy.selectableProductIds
-      : getSelectableProductIdsMatchingNetexIdFromOffer(offerToBuy, offer);
+  const offerToBuyIsFromOffersV2 = 'selectableProductIds' in offerToBuy;
+  const selectableProductIds = offerToBuyIsFromOffersV2
+    ? offerToBuy.selectableProductIds
+    : getSelectableProductIdsMatchingNetexIdFromOffer(offerToBuy, offer);
 
   return offerToBuy.possibleTravellerIds.map((selectedTravellerIds) => ({
     offerId: offerToBuy.id,

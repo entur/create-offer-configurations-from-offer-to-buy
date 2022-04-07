@@ -10,14 +10,17 @@
  */
 
 /**
- * Versioned object ref
+ * Properties of an unavailable product
  */
-export interface VersionedObjectRef {
-  /** Versioned object ref id */
-  id: string;
+export interface UnavailableProductProperties {
+  /** Accommodation. Enum as string with the following values: SLEEPER, SEATING, DOUBLE_SLEEPER, SINGLE_SLEEPER, SPECIAL_SLEEPER, COUCHETTE, SINGLE_COUCHETTE, DOUBLE_COUCHETTE, RECLINING_SEAT, BABY_COMPARTMENT, FAMILY_COMPARTMENT, PANORAMA_COACH, PULLMAN_COACH, STANDING, ANY_FACILITY_SET */
+  accommodations?: AccommodationFacilityEnum[];
+  fareClasses?: FareClassEnum[];
 
-  /** Versioned object ref version */
-  version?: string;
+  /** id and and name of an organisation */
+  organisation?: OrganisationSummary;
+  isExchangeable?: boolean;
+  isRefundable?: boolean;
 }
 
 /**
@@ -200,6 +203,17 @@ export enum BaggageTypeEnum {
   OTHER = "OTHER",
 }
 
+/**
+ * Object ref
+ */
+export interface ObjectRef {
+  /** object ref ref */
+  ref: string;
+
+  /** object ref version */
+  version?: string;
+}
+
 export interface ServiceJourneySummary {
   /** @example NSB:ServiceJourney:56789 */
   serviceJourneyId: string;
@@ -365,7 +379,7 @@ export interface FareStructureElementConfiguration {
   qualityFactor?: DataManagedObjectData;
 
   /** Specific parameter assignments */
-  specificParameterAssignments?: SpecificParameterAssignment[];
+  specificParameterAssignments?: ParameterSpecification[];
 
   /** Quotas for the configuration */
   quotas: Quota[];
@@ -571,6 +585,29 @@ export interface DistributionParameters {
 }
 
 /**
+ * DynamicDistanceMatrixElement type
+ */
+export interface DynamicDistanceMatrixElement {
+  /** Object ref */
+  endStopPointRef?: ObjectRef;
+
+  /** Object ref */
+  startTariffZoneRef?: ObjectRef;
+
+  /** Object ref */
+  startStopPointRef?: ObjectRef;
+
+  /** Object ref */
+  endTariffZoneRef?: ObjectRef;
+
+  /** DynamicDistanceMatrixElement id */
+  id: string;
+
+  /** DynamicDistanceMatrixElement version */
+  version: string;
+}
+
+/**
  * Accommodation for service journey
  */
 export interface AccommodationForServiceJourney {
@@ -579,14 +616,32 @@ export interface AccommodationForServiceJourney {
 }
 
 export interface SpecificParameterAssignment {
-  /** Specification of parameter id */
-  specificationOf: string;
+  /** Object ref */
+  distanceMatrixElementRef?: ObjectRef;
+
+  /** DynamicDistanceMatrixElement type */
+  dynamicDistanceMatrixElement?: DynamicDistanceMatrixElement;
+
+  /** Logical operator */
+  includesGroupingType?: LogicalOperatorEnum;
 
   /** Validity parameters */
-  validityParameters?: VersionedObjectRef[];
+  validityParameters?: ValidityParameter[];
+
+  /** Object ref */
+  typeOfAccessRightAssignmentRef?: ObjectRef;
+
+  /** Logical operator */
+  validityParameterGroupingType?: LogicalOperatorEnum;
+
+  /** Logical operator */
+  limitationGroupingType?: LogicalOperatorEnum;
+
+  /** Included SpecificParameterAssignments */
+  includes?: SpecificParameterAssignment[];
 
   /** Limitations */
-  limitations?: VersionedObjectRef[];
+  limitations?: Limitation[];
 }
 
 /**
@@ -601,6 +656,20 @@ export interface EstimatedCall {
 
   /** A place such as platform, stance, or quayside where passengers have access to PT vehicles. */
   quay?: Quay;
+}
+
+export enum UsageTriggerEnum {
+  ENROLMENT = "ENROLMENT",
+  RESERVATION = "RESERVATION",
+  PURCHASE = "PURCHASE",
+  FULFILMENT = "FULFILMENT",
+  ACTIVATION = "ACTIVATION",
+  SPECIFIED_START_DATE = "SPECIFIED_START_DATE",
+  START_OUTBOUND_RIDE = "START_OUTBOUND_RIDE",
+  END_OUTBOUND_RIDE = "END_OUTBOUND_RIDE",
+  START_RETURN_RIDE = "START_RETURN_RIDE",
+  START_OF_PERIOD = "START_OF_PERIOD",
+  DAY_OFFSET_BEFORE_CALENDAR_PERIOD = "DAY_OFFSET_BEFORE_CALENDAR_PERIOD",
 }
 
 /**
@@ -654,6 +723,20 @@ export interface Authority {
    * @example ENT:Authority:ENT
    */
   id: string;
+}
+
+/**
+ * ValidityParameter object.
+ */
+export interface ValidityParameter {
+  /** Object ref */
+  serviceJourneyRef?: ObjectRef;
+
+  /** Object ref */
+  tariffZoneRef?: ObjectRef;
+
+  /** Object ref */
+  passengerSeatRef?: ObjectRef;
 }
 
 /**
@@ -780,7 +863,7 @@ export enum TransportSubModeEnum {
  */
 export interface SalesPackageConfiguration {
   /** Specific parameter assignments */
-  specificParameterAssignments?: SpecificParameterAssignment[];
+  specificParameterAssignments?: ParameterSpecification[];
 
   /** Reference to the legs this configuration is for. */
   serviceJourneyIds: string[];
@@ -833,6 +916,9 @@ export interface UnavailableProduct {
 
   /** @example SJN:PreassignedFareProduct:StandardFullFlex */
   id: string;
+
+  /** Properties of an unavailable product */
+  properties?: UnavailableProductProperties;
   status: UnavailableEnum;
 }
 
@@ -1016,6 +1102,12 @@ export interface TariffZone {
   id: string;
 }
 
+export interface ParameterSpecification {
+  /** Specification of parameter id */
+  specificationOf?: string;
+  specificParameterAssignment?: SpecificParameterAssignment;
+}
+
 /**
  * Reference to a group
  */
@@ -1146,7 +1238,22 @@ export enum AccommodationFacilityForRecommendationsEnum {
   SLEEPER = "SLEEPER",
   SEATING = "SEATING",
   COUCHETTE = "COUCHETTE",
+  RECLINING_SEAT = "RECLINING_SEAT",
   ANY_FACILITY_SET = "ANY_FACILITY_SET",
+}
+
+/**
+ * Limitation object.
+ */
+export interface Limitation {
+  /** Usage validity period type */
+  usageValidityPeriod?: UsageValidityPeriod;
+
+  /** Object ref */
+  usageValidityPeriodRef?: ObjectRef;
+
+  /** Object ref */
+  userProfileRef?: ObjectRef;
 }
 
 /**
@@ -1250,7 +1357,7 @@ export interface RuleSpec {
  */
 export interface ValidableElementConfiguration {
   /** Specific parameter assignments */
-  specificParameterAssignments?: SpecificParameterAssignment[];
+  specificParameterAssignments?: ParameterSpecification[];
 
   /** Reference to the legs this configuration is for. */
   serviceJourneyIds: string[];
@@ -1351,6 +1458,16 @@ export enum DurationEnum {
   SEASON_TICKET = "SEASON_TICKET",
   PROFILE_MEMBERSHIP = "PROFILE_MEMBERSHIP",
   OPEN_ENDED = "OPEN_ENDED",
+  OTHER = "OTHER",
+}
+
+export enum ActivationMeansEnum {
+  NONE_REQUIRED = "NONE_REQUIRED",
+  CHECK_IN = "CHECK_IN",
+  USE_OF_VALIDATOR = "USE_OF_VALIDATOR",
+  USE_OF_MOBILE_DEVICE = "USE_OF_MOBILE_DEVICE",
+  AUTOMATIC_BY_TIME = "AUTOMATIC_BY_TIME",
+  AUTOMATIC_BY_PROXIMITY = "AUTOMATIC_BY_PROXIMITY",
   OTHER = "OTHER",
 }
 
@@ -1496,7 +1613,7 @@ export interface FareProductConfiguration {
   productType?: ProductTypeEnum;
 
   /** Specific parameter assignments */
-  specificParameterAssignments?: SpecificParameterAssignment[];
+  specificParameterAssignments?: ParameterSpecification[];
 
   /**
    * Amount of priced unit
@@ -1537,6 +1654,19 @@ export interface FareProductConfiguration {
 
   /** Container object for other properties. */
   properties?: Properties;
+}
+
+/**
+ * Logical operator
+ */
+export enum LogicalOperatorEnum {
+  AND = "AND",
+  OR = "OR",
+  XOR = "XOR",
+  NOT = "NOT",
+  NAND = "NAND",
+  XNOR = "XNOR",
+  NOR = "NOR",
 }
 
 /**
@@ -1939,6 +2069,20 @@ export interface PricedUserProfile {
   typeOfConcession?: string;
 }
 
+export enum UsageEndEnum {
+  STANDARD_DURATION = "STANDARD_DURATION",
+  END_OF_CALENDAR_PERIOD = "END_OF_CALENDAR_PERIOD",
+  END_OF_RIDE = "END_OF_RIDE",
+  END_OF_TRIP = "END_OF_TRIP",
+  END_OF_FARE_DAY = "END_OF_FARE_DAY",
+  END_OF_FARE_PERIOD = "END_OF_FARE_PERIOD",
+  PRODUCT_EXPIRY = "PRODUCT_EXPIRY",
+  PROFILE_EXPIRY = "PROFILE_EXPIRY",
+  DEREGISTRATION = "DEREGISTRATION",
+  OTHER = "OTHER",
+  NO_TEMPORAL_VALIDITY = "NO_TEMPORAL_VALIDITY",
+}
+
 /**
  * Collection of attributes that characterize a journey.
  */
@@ -2079,6 +2223,43 @@ export interface Leg {
 
   /** Super type for all places (stop places, quays, car parks, bike parks and bike rental stations) */
   toPlace: Place;
+}
+
+/**
+ * Usage validity period type
+ */
+export interface UsageValidityPeriod {
+  /**
+   * Standard duration. Represented as a string formatted according to ISO-8601
+   * @format duration
+   * @example PT1H
+   */
+  standardDuration?: string;
+
+  /**
+   * StartDateTime
+   * @format date-time
+   * @example 2020-05-13T07:19:30.389Z
+   */
+  startDateTime?: string;
+
+  /** UsageValidityPeriod id */
+  id: string;
+  usageTrigger?: UsageTriggerEnum;
+
+  /**
+   * EndDate
+   * @format date-time
+   * @example 2020-05-13T07:19:30.389Z
+   */
+  endDateTime?: string;
+  usageEnd?: UsageEndEnum;
+
+  /** UsageValidityPeriod version */
+  version: string;
+
+  /** Activation Means. Describes how a product can be activated. */
+  activationMeans?: ActivationMeansEnum[];
 }
 
 /**

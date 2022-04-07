@@ -10,6 +10,90 @@
  */
 
 /**
+ * The configuration-holder for an offer configuration
+ */
+export interface AddSupplementProductsConfiguration {
+  /** Customers with optional entitlement data; used to link travellers to order line and when offers are created with entitlements */
+  customers?: Customer[];
+
+  /**
+   * The id of the offer that is used
+   * @format uuid
+   */
+  offerId: string;
+
+  /** The id of the order line to add supplement products to */
+  orderLineId: string;
+
+  /** A list of ids and counts for selected supplement product configurations. Count is only considered for fare products. */
+  selectedProductsConfiguration: SelectedProductConfiguration[];
+}
+
+/**
+ * The holder for an add supplement product configuration.
+ */
+export interface AddSupplementProductsRequest {
+  /** A list of supplement product configurations selected for purchase */
+  offerConfigurations: AddSupplementProductsConfiguration[];
+
+  /** The offer to add the supplement products to */
+  orderId: string;
+}
+
+export interface ApiError {
+  /** @format date-time */
+  timestamp: string;
+
+  /** @format int32 */
+  status: number;
+  error: string;
+  exception: string;
+  message: string;
+  path: string;
+}
+
+/**
+ * The configuration-holder for an offer configuration
+ */
+export interface ChangeOrderLinesConfiguration {
+  /** Customers with optional entitlement data; used to link travellers to order line and when offers are created with entitlements */
+  customers?: Customer[];
+
+  /** Wrapper for references connected to distribution of travel rights and/or tickets */
+  distributionDetails?: DistributionDetails;
+
+  /** External reference to an order line. Only used by external operators to identify order lines created by OfferConfigurations */
+  externalReference?: string;
+
+  /**
+   * The id of the offer that is used
+   * @format uuid
+   */
+  offerId: string;
+
+  /** The id of the OrderLine to replace. Multiple offer configurations may contain the same orderLineId if replacing the OrderLine with multiple offer configurations. In that case, selectedOrderLineIds must also be equal. */
+  orderLineId: string;
+
+  /** A list of ids for selected products. Duplicates are only supported for SupplementProducts which does not modify seating assignments for the PreassignedFareProduct */
+  selectableProductIds?: string[];
+
+  /** This field is used to specify which travellers will be included in the use of this offer. It is validated against the travellers identified in the travellerMappings property of the selected Offer, as well as the legal number of UserProfiles per compartment when reserving a group product. When reserving a group product, validation is performed against the valid number of UserProfiles per compartment. When reserving regular products, a number of order lines will be made, corresponding to the number of selectedTravellerIds. Each order line will have one of the selectedTravellerIds. */
+  selectedTravellerIds?: string[];
+  selectedOrderLineIds?: string[];
+}
+
+/**
+ * The holder for a change offer configuration.
+ */
+export interface ChangeOrderLinesRequest {
+  /** The offer to add the offers to */
+  orderId: string;
+
+  /** A list of change offer configurations selected for purchase */
+  offerConfigurations: ChangeOrderLinesConfiguration[];
+}
+
+/**
  * A holder for a customer and entitlements used by the customer for the offer
  */
 export interface Customer {
@@ -17,7 +101,7 @@ export interface Customer {
   customerId: string;
 
   /** The entitlement data for a customer; used if the the offer is created with entitlements */
-  entitlements?: CustomerEntitlement[];
+  entitlements: CustomerEntitlement[];
 }
 
 /**
@@ -30,10 +114,10 @@ export interface CustomerEntitlement {
    */
   contractId?: string;
 
-  /** The reference to the entitlement product used to generate the offer */
+  /** A holder for an id and version combination */
   entitlementProductRef: IdAndVersionRef;
 
-  /** An optional reference to an entitlement that originates in an external system */
+  /** A holder for an id and version combination */
   externalEntitlementRef?: IdAndVersionRef;
 }
 
@@ -41,10 +125,10 @@ export interface CustomerEntitlement {
  * Wrapper for references connected to distribution of travel rights and/or tickets
  */
 export interface DistributionDetails {
-  /** Reference to the method used to fulfill the order, ie via conductor using MT receipt, TVM via NOD QR or TravelCard, mobile phone via NOD QR code or ID-based - etc */
+  /** Reference to an external resource */
   fulfillmentMethodRef?: RefType;
 
-  /** Reference to the type of travel document that will be issued */
+  /** Reference to an external resource */
   typeOfTravelDocumentToIssueRef?: RefType;
 }
 
@@ -69,7 +153,7 @@ export interface OfferConfiguration {
    */
   count?: number;
 
-  /** Deprecated: Use customers to supply entitlement information */
+  /** A holder for a customers entitlements */
   customerEntitlement?: CustomerEntitlement;
 
   /** Deprecated: Use customers to supply customer ids */
@@ -90,7 +174,7 @@ export interface OfferConfiguration {
    */
   offerId: string;
 
-  /** If replacing an order line, this is the id of the order line to replace */
+  /** Please use /change-order-line instead. If replacing an order line, this is the id of the order line to replace */
   orderLineId?: string;
 
   /** A list of ids for selected products. Duplicates are only supported for SupplementProducts which does not modify seating assignments for the PreassignedFareProduct */
@@ -103,8 +187,8 @@ export interface OfferConfiguration {
 export interface OrderLineIdsAndReservationIds {
   orderId: string;
   orderLineIds: string[];
-  replacedByOrderLineIds: ReplacedOrderLineIds[];
   reservationIds: string[];
+  replacedByOrderLineIds: ReplacedOrderLineIds[];
 }
 
 /**
@@ -112,7 +196,7 @@ export interface OrderLineIdsAndReservationIds {
  */
 export interface RefType {
   /** Id of resource referred to */
-  id?: string;
+  id: string;
 
   /** Version of resource referred to, if required */
   version?: string;
@@ -132,4 +216,18 @@ export interface ReserveOffersRequest {
 
   /** The offer to add the order to. If no orderId is specified, a new order is created */
   orderId?: string;
+}
+
+/**
+ * Configuration for a selectable product from an offer
+ */
+export interface SelectedProductConfiguration {
+  /** A selectable product id. */
+  selectedProductId: string;
+
+  /**
+   * The number of times to add said product. Count will only be considered on a fare product level. Default 1
+   * @format int32
+   */
+  count: number;
 }

@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.1 (2022-04-07)
+
+- **Update types**
+
 ## 3.0.0 (2022-02-17)
 
 ### Breaking

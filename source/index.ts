@@ -16,7 +16,7 @@ type StrippedFareProductConfiguration = Pick<
   'id' | 'selectableId'
 >;
 
-type StrippedOffer = Pick<Offer, 'id'> & {
+export type StrippedOffer = Pick<Offer, 'id'> & {
   salesPackageConfig: {
     fareProducts: StrippedFareProductConfiguration[];
   };

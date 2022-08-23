@@ -1,12 +1,25 @@
 /* eslint-disable max-nested-callbacks -- in order to structure this test file, we need a lot of callbacks */
+// eslint-disable-next-line simple-import-sort/imports
+import {readFile} from 'node:fs/promises';
+import {URL} from 'node:url';
+import {expect} from 'expect';
+import {describe, it} from 'mocha';
 
-import {createOfferConfigurationsFromOfferToBuy} from '../source';
-import withUpgradeProductsOffer from './withUpgradeProductsOffer.json';
+import {
+  createOfferConfigurationsFromOfferToBuy,
+  StrippedOffer
+} from '../source/index.js';
+
+async function readJSON<T>(path: string) {
+  return JSON.parse(
+    await readFile(new URL(path, import.meta.url), 'utf-8')
+  ) as Promise<T>;
+}
 
 describe('createOfferConfigurationFromOfferToBuy', () => {
   describe('Offers v1', () => {
     describe('Without upgrade products', () => {
-      test('One element in possibleTravellerIds', () => {
+      it('One element in possibleTravellerIds', () => {
         const offerToBuy = {
           id: '08b47e1e-b2d0-49d6-8a8d-7ab059732e85',
           numberToBuy: 1,
@@ -27,7 +40,7 @@ describe('createOfferConfigurationFromOfferToBuy', () => {
         expect(offerConfigurations).toEqual(expectedOfferConfigurations);
       });
 
-      test('Three elements in possibleTravellerIds', () => {
+      it('Three elements in possibleTravellerIds', () => {
         const offerToBuy = {
           id: '10e3099a-8ea0-46f8-8643-e10b49816f41',
           numberToBuy: 3,
@@ -62,7 +75,7 @@ describe('createOfferConfigurationFromOfferToBuy', () => {
         expect(offerConfigurations).toEqual(expectedOfferConfigurations);
       });
 
-      test('Group ticket', () => {
+      it('Group ticket', () => {
         const expectedOfferConfigurations = [
           {
             offerId: 'a15347d8-75ae-44ef-877c-297984c73b07',
@@ -93,7 +106,10 @@ describe('createOfferConfigurationFromOfferToBuy', () => {
         withUpgradeProducts: ['SJN:SupplementProduct:Sleeper']
       };
 
-      test('Translates the added Netex IDs to selectableProductIds if the offer is supplied', () => {
+      it('Translates the added Netex IDs to selectableProductIds if the offer is supplied', async () => {
+        const data = await readJSON<StrippedOffer>(
+          './withUpgradeProductsOffer.json'
+        );
         const expectedOfferConfigurations = [
           {
             offerId: '7f3d172f-a1db-4479-9c79-b68ffb433318',
@@ -104,12 +120,12 @@ describe('createOfferConfigurationFromOfferToBuy', () => {
 
         const offerConfigurations = createOfferConfigurationsFromOfferToBuy(
           offerToBuy,
-          withUpgradeProductsOffer
+          data
         );
         expect(offerConfigurations).toEqual(expectedOfferConfigurations);
       });
 
-      test('Throws error when you do not supply an offer', () => {
+      it('Throws error when you do not supply an offer', () => {
         expect(() => {
           createOfferConfigurationsFromOfferToBuy(offerToBuy);
         }).toThrowError(
@@ -117,10 +133,13 @@ describe('createOfferConfigurationFromOfferToBuy', () => {
         );
       });
 
-      test('Throws error when you supply the wrong offer', () => {
+      it('Throws error when you supply the wrong offer', async () => {
+        const data = await readJSON<StrippedOffer>(
+          './withUpgradeProductsOffer.json'
+        );
         expect(() => {
           createOfferConfigurationsFromOfferToBuy(offerToBuy, {
-            ...withUpgradeProductsOffer,
+            ...data,
             id: 'wrong-id'
           });
         }).toThrowError(
@@ -131,7 +150,7 @@ describe('createOfferConfigurationFromOfferToBuy', () => {
   });
 
   describe('Offers 2.0 selectableProductIds', () => {
-    test('SelectableProductIds', () => {
+    it('SelectableProductIds', () => {
       const offerToBuy = {
         id: '7f3d172f-a1db-4479-9c79-b68ffb433318',
         numberToBuy: 1,

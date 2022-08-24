@@ -1,6 +1,10 @@
-import {OfferToBuy as OfferToBuy2} from './types/offers2Types';
-import {FareProductConfiguration, Offer, OfferToBuy} from './types/offersTypes';
-import {OfferConfiguration} from './types/reserveOfferTypes';
+import {OfferToBuy as OfferToBuy2} from './types/offers2Types.js';
+import {
+  FareProductConfiguration,
+  Offer,
+  OfferToBuy
+} from './types/offersTypes.js';
+import {OfferConfiguration} from './types/reserveOfferTypes.js';
 
 export type SetRequired<T, K extends keyof T> = Required<Pick<T, K>> &
   Omit<T, K>; // eslint-disable-line @typescript-eslint/ban-types
@@ -16,7 +20,7 @@ type StrippedFareProductConfiguration = Pick<
   'id' | 'selectableId'
 >;
 
-type StrippedOffer = Pick<Offer, 'id'> & {
+export type StrippedOffer = Pick<Offer, 'id'> & {
   salesPackageConfig: {
     fareProducts: StrippedFareProductConfiguration[];
   };

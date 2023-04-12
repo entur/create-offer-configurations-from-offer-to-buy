@@ -1,5 +1,14 @@
 # Changelog
 
+## Next version (????-??-??)
+
+### Breaking
+
+- **Remove support for Offers v1**: The function
+  `createOfferConfigurationsFromOfferToBuy` now only supports Offers v2. If you
+  are using Offers v1, you must upgrade to Offers v2 (or continue to use the old
+  version of this package).
+
 ## 3.1.2 (2023-05-11)
 
 Changed from Offers 2.0 beta to release swagger url

@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.1 (2023-05-11)
+
+Updated genereated types
+
 ## 3.1.0 (2022-08-24)
 
 - Add full EcmaScript Module (ESM) support

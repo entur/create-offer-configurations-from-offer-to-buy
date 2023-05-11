@@ -19,7 +19,7 @@
     "build": "rm -rf dist && npm run build:commonjs && npm run build:esm",
     "build:esm": "tsc --outDir dist/esm",
     "build:commonjs": "tsc --module commonjs --target es5 --outDir dist/commonjs && mv dist/commonjs/index.js dist/commonjs/index.cjs",
-    "update-types": "npx swagger-typescript-api --path https://api.staging.entur.io/sales/v1/offers/api-docs/swagger.json --output source/types  -n offersTypes.ts --no-client && npx swagger-typescript-api --path https://api.staging.entur.io/offers/v2-beta/api-docs/swagger.json --output source/types  -n offers2Types.ts --no-client && npx swagger-typescript-api --path https://api.staging.entur.io/api-docs/reserve-offer?group=public --output source/types  -n reserveOfferTypes.ts --no-client",
+    "update-types": "npx swagger-typescript-api --path https://api.staging.entur.io/sales/v1/offers/api-docs/swagger.json --output source/types  -n offersTypes.ts --no-client && npx swagger-typescript-api --path https://api.staging.entur.io/offers/v2/api-docs/swagger.json --output source/types  -n offers2Types.ts --no-client && npx swagger-typescript-api --path https://api.staging.entur.io/api-docs/reserve-offer?group=public --output source/types  -n reserveOfferTypes.ts --no-client",
     "test": "mocha test/**/*.ts",
     "lint": "npx prettier --check *.{md,json} .*.cjs; xo",
     "lint:fix": "npx prettier --write *.{md,json} .*.cjs; xo --fix",

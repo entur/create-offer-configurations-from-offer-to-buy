@@ -214,6 +214,19 @@ export interface SearchZonesRequest {
 }
 
 /**
+ * ProgramSummary
+ * @example null
+ */
+export interface ProgramSummary {
+  /** @example "Entur Reis" */
+  name?: string;
+  /** @example "9" */
+  id: string;
+  /** @example null */
+  infoLink?: string;
+}
+
+/**
  * BaggageTypeEnum
  * @example "BICYCLE"
  */
@@ -360,7 +373,10 @@ export interface SearchStopPlacesRequest {
    * @example null
    */
   travelDate: string;
-  /** @example "ENT:Authority:ENT" */
+  /**
+   * Authority ID. Ignored for rail stop places.
+   * @example "ENT:Authority:ENT"
+   */
   authority?: string;
   /**
    * The id of the origin stop place.
@@ -601,6 +617,8 @@ export interface OfferSummary {
   preassignedProducts: PreassignedProduct[];
   /** @example null */
   optionalProductsSelectableIds?: string[];
+  /** @example null */
+  eligibleForAccrualInPrograms?: ProgramSummary[];
   price: PriceSummary;
   /** @example "Flex Refunderbar" */
   name: string;
@@ -1349,6 +1367,11 @@ export interface Traveller {
   /** Contains information to look up transaction history for a traveller and what CappedDiscountRight-program he or she is a part of. */
   cappingSpecification?: CappingSpecification;
   /**
+   * Identification of an Entur-customer. Used to personalise Offers when applicable.
+   * @example "1234567"
+   */
+  customerId?: string;
+  /**
    * A filter for what kind of luggage the traveller wants offers for. The type is enum as string with the following possible values: HANDBAG, HAND_LUGGAGE, SMALL_SUITCASE, SUITCASE, TRUNK, OVERSIZE_ITEM, BICYCLE, SPORTING_EQUIPMENT, SKIS, MUSICAL_INSTRUMENT, PUSH_CHAIR, MOTORIZED_WHEELCHAIR,LARGE_MOTORIZED_WHEELCHAIR, WHEELCHAIR, SMALL_ANIMAL, ANIMAL, GAME, MOTORCYCLE, OTHER
    * @example null
    */
@@ -1424,7 +1447,7 @@ export enum ReservingRequirementEnum {
  */
 export interface GroupConfig {
   /**
-   * Number of compartments to group travellers in.
+   * Number of compartments to group travellers in. If we are unable to fit the given travellers in the specified amount of compartments, no offer will be returned.
    * @example null
    */
   numberOfCompartments: number;
@@ -2017,36 +2040,26 @@ export enum LogicalOperatorEnum {
  */
 export interface PropertiesSummary {
   /** @example null */
+  duration?: string;
+  /** @example null */
   accommodations?: AccommodationForServiceJourney[];
   /** @example null */
   fareClasses?: FareClassEnum[];
-  /** id and and name of an organisation */
-  organisation: OrganisationSummary;
-  durationType?: DurationEnum;
-  /** @example null */
-  isRefundable?: boolean;
-  /** @example null */
-  duration?: string;
   /** Representation of a repeatable ticket, with an optional duration for each instance and an amount of times the ticket can be used */
   carnet?: Carnet;
   /** id, version, name and user type of a user */
   userProfileSummary?: UserProfileSummary;
-  /**
-   * @deprecated
-   * @example "ENT:Version:V1"
-   */
-  userProfileVersion?: string;
   /** @example null */
   reservingRequirements?: ReservingRequirementForServiceJourney[];
+  /** id and and name of an organisation */
+  organisation: OrganisationSummary;
   /** @example null */
   baggageTypes?: BaggageTypeEnum[];
-  /**
-   * @deprecated
-   * @example "ENT:UserProfile:Adult"
-   */
-  userProfileId?: string;
   /** @example null */
   isExchangeable?: boolean;
+  durationType?: DurationEnum;
+  /** @example null */
+  isRefundable?: boolean;
   group?: GroupSummary;
 }
 
@@ -2581,7 +2594,7 @@ export interface TripPattern {
 export interface Leg {
   /** Used to specify that the vehicle used on this leg is the same that will be used on the next leg */
   interchangeTo?: InterchangeTo;
-  /** A list of coordinates encoded as a polyline string (see http://code.google.com/apis/maps/documentation/polylinealgorithm.html) */
+  /** A list of coordinates encoded as a polyline string (see https://code.google.com/apis/maps/documentation/polylinealgorithm.html) */
   pointsOnLink?: PointsOnLink;
   /** Super type for all places (stop places, quays, car parks, bike parks and bike rental stations) */
   fromPlace: Place;
@@ -2703,7 +2716,7 @@ export interface Quota {
 }
 
 /**
- * A list of coordinates encoded as a polyline string (see http://code.google.com/apis/maps/documentation/polylinealgorithm.html)
+ * A list of coordinates encoded as a polyline string (see https://code.google.com/apis/maps/documentation/polylinealgorithm.html)
  * @example null
  */
 export interface PointsOnLink {
@@ -2735,12 +2748,6 @@ export interface OfferToBuy {
    * @example "00faf83-56c3-4f4e-8be9-e793c255a77b"
    */
   id: string;
-  /**
-   * DEPRECATED: Use selectable ids from selectableProductIds instead. This field contains netexIds of upgradable supplement products
-   * @deprecated
-   * @example null
-   */
-  withUpgradeProducts: string[];
   /**
    * Number of this offer to buy
    * @example 2

@@ -1,5 +1,4 @@
-import {expect} from 'expect';
-import {describe, it} from 'mocha';
+import {describe, expect, it} from 'vitest';
 
 import {createOfferConfigurationsFromOfferToBuy} from '../source/index.js';
 
@@ -10,8 +9,7 @@ describe('createOfferConfigurationFromOfferToBuy', () => {
         id: '08b47e1e-b2d0-49d6-8a8d-7ab059732e85',
         numberToBuy: 1,
         possibleTravellerIds: [['ADULT-0-anonymous']],
-        selectableProductIds: [],
-        withUpgradeProducts: []
+        selectableProductIds: []
       })
     ).toEqual([
       {
@@ -32,8 +30,7 @@ describe('createOfferConfigurationFromOfferToBuy', () => {
           ['ADULT-1-anonymous'],
           ['ADULT-2-anonymous']
         ],
-        selectableProductIds: [],
-        withUpgradeProducts: []
+        selectableProductIds: []
       })
     ).toEqual([
       {
@@ -60,8 +57,7 @@ describe('createOfferConfigurationFromOfferToBuy', () => {
         id: 'a15347d8-75ae-44ef-877c-297984c73b07',
         numberToBuy: 1,
         possibleTravellerIds: [['3518762', '3543283']],
-        selectableProductIds: [],
-        withUpgradeProducts: []
+        selectableProductIds: []
       })
     ).toEqual([
       {
@@ -78,8 +74,7 @@ describe('createOfferConfigurationFromOfferToBuy', () => {
         id: '7f3d172f-a1db-4479-9c79-b68ffb433318',
         numberToBuy: 1,
         possibleTravellerIds: [['190920e5-e5fc-4b44-a9d0-a81931614d7b']],
-        selectableProductIds: ['3cfBvn'],
-        withUpgradeProducts: ['SJN:SupplementProduct:Sleeper']
+        selectableProductIds: ['3cfBvn']
       })
     ).toEqual([
       {

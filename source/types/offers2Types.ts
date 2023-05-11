@@ -10,119 +10,151 @@
  */
 
 /**
+ * UnavailableProductProperties
  * Properties of an unavailable product
+ * @example null
  */
 export interface UnavailableProductProperties {
-  /** Accommodation. Enum as string with the following values: SLEEPER, SEATING, DOUBLE_SLEEPER, SINGLE_SLEEPER, SPECIAL_SLEEPER, COUCHETTE, SINGLE_COUCHETTE, DOUBLE_COUCHETTE, RECLINING_SEAT, BABY_COMPARTMENT, FAMILY_COMPARTMENT, PANORAMA_COACH, PULLMAN_COACH, STANDING, ANY_FACILITY_SET */
+  /**
+   * Accommodation. Enum as string with the following values: SLEEPER, SEATING, DOUBLE_SLEEPER, SINGLE_SLEEPER, SPECIAL_SLEEPER, COUCHETTE, SINGLE_COUCHETTE, DOUBLE_COUCHETTE, RECLINING_SEAT, BABY_COMPARTMENT, FAMILY_COMPARTMENT, PANORAMA_COACH, PULLMAN_COACH, STANDING, ANY_FACILITY_SET
+   * @example null
+   */
   accommodations?: AccommodationFacilityEnum[];
+  /** @example null */
   fareClasses?: FareClassEnum[];
-
   /** id and and name of an organisation */
   organisation?: OrganisationSummary;
+  /** @example null */
   isExchangeable?: boolean;
+  /** @example null */
   isRefundable?: boolean;
 }
 
 /**
+ * CappedDiscountOption
  * A discount might be given based on previous transactions if CappedDiscountRequest was specified.
+ * @example null
  */
 export interface CappedDiscountOption {
   cappedDiscountRightRef: RefType;
+  /** @example null */
   alternatives?: CappingAlternative[];
   cappedDiscountRuleRef: RefType;
 }
 
 /**
+ * DiscountRightSummary
  * Summary of a sale discount right that has been applied to the fare product.
+ * @example null
  */
 export interface DiscountRightSummary {
-  /** @example ENT:EntitlementProduct:levelA1 */
+  /** @example "ENT:EntitlementProduct:levelA1" */
   originatingFromProductId?: string;
   price: PriceSummary;
-
-  /** @example Premiumrabatt */
+  /** @example "Premiumrabatt" */
   name: string;
-
-  /** @example Premiumrabatt */
+  /** @example "Premiumrabatt" */
   description: string;
-
-  /** @example SJN:SaleDiscountRight:Premium */
+  /** @example "SJN:SaleDiscountRight:Premium" */
   id: string;
-
-  /** @example SJN:Version:SDR-Premium-1 */
+  /** @example "SJN:Version:SDR-Premium-1" */
   version: string;
 }
 
 /**
+ * OrganisationSummary
  * id and and name of an organisation
+ * @example null
  */
 export interface OrganisationSummary {
   /**
    * the name of the organisation
-   * @example Go-Ahead Nordic
+   * @example "Go-Ahead Nordic"
    */
   name: string;
-
   /**
    * the netex-id of organisation
-   * @example GOA:Authority:GOA
+   * @example "GOA:Authority:GOA"
    */
   id: string;
 }
 
 /**
  * A reference to a group with price data.
+ * @example null
  */
 export interface PricedGroup {
-  /** Reference to a group */
+  /**
+   * Reference to a group
+   * @example null
+   */
   userProfiles: UserProfileInGroup[];
-
-  /** The description of the object. */
+  /**
+   * The description of the object.
+   * @example null
+   */
   description: TextInLanguage[];
-
-  /** True if this configuration is optional to buy, false if it's required. */
+  /**
+   * True if this configuration is optional to buy, false if it's required.
+   * @example null
+   */
   optional: boolean;
-
-  /** Minimum number of persons in the group */
+  /**
+   * Minimum number of persons in the group
+   * @example null
+   */
   minNumberOfPersons?: number;
-
-  /** The price contribution shows how much this node contributes on the total price. */
+  /**
+   * The price contribution shows how much this node contributes on the total price.
+   * @example null
+   */
   priceContributions: Price[];
-
   /**
    * The version of the object
-   * @example NSB:Version:V1
+   * @example "NSB:Version:V1"
    */
   version: string;
-
-  /** Maximum number of persons in the group */
+  /**
+   * Maximum number of persons in the group
+   * @example null
+   */
   maxNumberOfPersons?: number;
-
-  /** The name of the object. */
+  /**
+   * The name of the object.
+   * @example null
+   */
   name: TextInLanguage[];
-
-  /** Used for selecting a unique element in the configurations */
+  /**
+   * Used for selecting a unique element in the configurations
+   * @example null
+   */
   selectableId: string;
-
   /**
    * Basis on which pricing is done - per whole group
    * or per member.
    */
   pricingBasis?: PricingBasisEnum;
-
-  /** The ID of the object on the format < context : type : instance name > */
+  /**
+   * The ID of the object on the format < context : type : instance name >
+   * @example null
+   */
   id: string;
-
-  /** The type of this usage parameter. */
+  /**
+   * The type of this usage parameter.
+   * @example null
+   */
   typeOfUsageParameter?: string;
-
-  /** The price(s) of the sub configurations below this node. Multiple prices is supported in case of prices in multiple currencies. */
+  /**
+   * The price(s) of the sub configurations below this node. Multiple prices is supported in case of prices in multiple currencies.
+   * @example null
+   */
   prices: Price[];
 }
 
 /**
+ * TransportModeEnum
  * The mode of transport or access (e.g., foot) used when traversing this leg.
- * @example RAIL
+ * @example "RAIL"
  */
 export enum TransportModeEnum {
   AIR = "AIR",
@@ -142,44 +174,48 @@ export enum TransportModeEnum {
   CAR_PARK = "CAR_PARK",
   CAR_PICKUP = "CAR_PICKUP",
   CAR_DROPOFF = "CAR_DROPOFF",
+  UNKNOWN = "UNKNOWN",
 }
 
 /**
  * A request used to search for fare products valid between zones.
+ * @example null
  */
 export interface SearchZonesRequest {
   recommendationConfig?: RecommendationConfig;
-
-  /** The travellers. */
+  /**
+   * The travellers.
+   * @example null
+   */
   travellers: Traveller[];
-
   /**
    * The expected start time of travel.
    * @format date-time
+   * @example null
    */
   travelDate: string;
-
   /**
    * The id of the origin zone.
-   * @example RUT:TariffZone:1
+   * @example "RUT:TariffZone:1"
    */
   from: string;
-
   /** A specification of an existing ticket. */
   existingTicket?: ExistingTicket;
-
   /**
    * The id of the destination zone.
-   * @example RUT:TariffZone:3N
+   * @example "RUT:TariffZone:3N"
    */
   to: string;
-
-  /** Optional sequence of via zones. */
+  /**
+   * Optional sequence of via zones.
+   * @example null
+   */
   via?: string[];
 }
 
 /**
- * @example BICYCLE
+ * BaggageTypeEnum
+ * @example "BICYCLE"
  */
 export enum BaggageTypeEnum {
   HANDBAG = "HANDBAG",
@@ -205,61 +241,79 @@ export enum BaggageTypeEnum {
 
 /**
  * Object ref
+ * @example null
  */
 export interface ObjectRef {
-  /** object ref ref */
+  /**
+   * object ref ref
+   * @example null
+   */
   ref: string;
-
-  /** object ref version */
+  /**
+   * object ref version
+   * @example null
+   */
   version?: string;
 }
 
+/**
+ * ServiceJourney
+ * @example null
+ */
 export interface ServiceJourneySummary {
-  /** @example NSB:ServiceJourney:56789 */
+  /** @example "NSB:ServiceJourney:56789" */
   serviceJourneyId: string;
-
-  /** @example ENT:DatedServiceJourney:12345 */
+  /** @example "ENT:DatedServiceJourney:12345" */
   datedServiceJourneyId: string;
 }
 
 /**
  * Used to specify that the vehicle used on this leg is the same that will be used on the next leg
+ * @example null
  */
 export interface InterchangeTo {
   toServiceJourney?: ServiceJourney;
+  /** @example null */
   staySeated?: boolean;
   fromServiceJourney?: ServiceJourney;
 }
 
 /**
  * Reference to a group
+ * @example null
  */
 export interface UserProfileInGroup {
-  /** The name of the object. */
+  /**
+   * The name of the object.
+   * @example null
+   */
   name: TextInLanguage[];
-
-  /** The description of the object. */
+  /**
+   * The description of the object.
+   * @example null
+   */
   description: TextInLanguage[];
-
-  /** The ID of the object on the format < context : type : instance name > */
+  /**
+   * The ID of the object on the format < context : type : instance name >
+   * @example null
+   */
   id: string;
-
   /**
    * The version of the object
-   * @example NSB:Version:V1
+   * @example "NSB:Version:V1"
    */
   version: string;
-
-  /** @example NSB:TypeOfConcession:Student */
+  /** @example "NSB:TypeOfConcession:Student" */
   typeOfConcession?: string;
-
   /**
    * The number of people in the group.
    * @format int32
+   * @example null
    */
   numberOfPeople: number;
 }
 
+/** @example null */
 export enum AccommodationFacilityEnum {
   SLEEPER = "SLEEPER",
   SEATING = "SEATING",
@@ -278,47 +332,53 @@ export enum AccommodationFacilityEnum {
 }
 
 /**
- * @example CHEAPEST
+ * TypeOfRecommendationEnum
+ * @default "CHEAPEST"
+ * @example "CHEAPEST"
  */
 export enum TypeOfRecommendationEnum {
   FLEXIBLE = "FLEXIBLE",
   SEMI_FLEXIBLE = "SEMI_FLEXIBLE",
   NON_FLEXIBLE = "NON_FLEXIBLE",
   CHEAPEST = "CHEAPEST",
-  SPECIFIED_PRODUCT = "SPECIFIED_PRODUCT",
 }
 
 /**
  * A request used to search for fare products between stop places
+ * @example null
  */
 export interface SearchStopPlacesRequest {
   recommendationConfig?: RecommendationConfig;
-
-  /** The travellers. */
+  /**
+   * The travellers.
+   * @example null
+   */
   travellers: Traveller[];
-
   /**
    * The expected start time of travel.
    * @format date-time
+   * @example null
    */
   travelDate: string;
-
+  /** @example "ENT:Authority:ENT" */
+  authority?: string;
   /**
    * The id of the origin stop place.
-   * @example NSR:StopPlace:548
+   * @example "NSR:StopPlace:548"
    */
   from: string;
-
   /**
    * The id of the destination stop place.
-   * @example NSR:StopPlace:337
+   * @example "NSR:StopPlace:337"
    */
   to: string;
+  /** @example null */
   offersForWholeTripOnly?: boolean;
 }
 
 /**
- * @example STANDARD_CLASS
+ * FareClassEnum
+ * @example "STANDARD_CLASS"
  */
 export enum FareClassEnum {
   FIRST_CLASS = "FIRST_CLASS",
@@ -335,329 +395,363 @@ export enum FareClassEnum {
 }
 
 /**
+ * OptionalProduct
  * Representation of a optional product that can be selected together with mandatory products in an offer
+ * @example null
  */
 export interface OptionalProduct {
   /** Summary of a sale discount right that has been applied to the fare product. */
   discountRight?: DiscountRightSummary;
   price: PriceSummary;
-
-  /** @example Sykkel som bagasje */
+  /** @example "Sykkel som bagasje" */
   name: string;
-
   /**
    * Antallet valgfrie produkter som er tilgjengelig for å kjøpe
    * @example 4
    */
   available?: number;
-
-  /** @example ZO9Qjn */
+  /** @example "ZO9Qjn" */
   selectableId: string;
-
-  /** @example Sykkel som bagasje */
+  /** @example "Sykkel som bagasje" */
   description: string;
-
   /** Describes the geographical validity of a product */
   geographicalValidity: GeographicalValidity;
-
-  /** @example NSB:SupplementProduct:BicycleReserving */
+  /** @example "NSB:SupplementProduct:BicycleReserving" */
   id: string;
   supplementProductType?: SupplementProductTypeEnum;
-
-  /** @example NSB:Version:V1 */
+  /** @example "NSB:Version:V1" */
   version: string;
-
   /** Summary of properties for a product */
   properties: PropertiesSummary;
 }
 
 /**
  * Reference to a Fare Structure Element and its configuration.
+ * @example null
  */
 export interface FareStructureElementConfiguration {
   /** A simple reference object containing enough information to lookup the object itself if needed. */
   qualityFactor?: DataManagedObjectData;
-
-  /** Specific parameter assignments */
+  /**
+   * Specific parameter assignments
+   * @example null
+   */
   specificParameterAssignments?: ParameterSpecification[];
-
-  /** Quotas for the configuration */
+  /**
+   * Quotas for the configuration
+   * @example null
+   */
   quotas: Quota[];
-
-  /** Reference to the legs this configuration is for. */
+  /**
+   * Reference to the legs this configuration is for.
+   * @example null
+   */
   serviceJourneyIds: string[];
-
-  /** The description of the object. */
+  /**
+   * The description of the object.
+   * @example null
+   */
   description: TextInLanguage[];
-
-  /** The price contribution shows how much this node contributes on the total price. */
+  /**
+   * The price contribution shows how much this node contributes on the total price.
+   * @example null
+   */
   priceContributions: Price[];
-
   /**
    * The version of the object
-   * @example NSB:Version:V1
+   * @example "NSB:Version:V1"
    */
   version: string;
-
-  /** Reference to the legs this configuration is for. */
+  /**
+   * Reference to the legs this configuration is for.
+   * @example null
+   */
   datedServiceJourneys?: DatedServiceJourney[];
-
   /** A simple reference object containing enough information to lookup the object itself if needed. */
   distanceMatrixElement?: DataManagedObjectData;
-
-  /** The name of the object. */
+  /**
+   * The name of the object.
+   * @example null
+   */
   name: TextInLanguage[];
-
   /** The Geographical Interval with distance and zone data. */
   interval?: GeoIntervalData;
-
   /**
    * The ID of the object on the format < context : type : instance name >
-   * @example NSB:FareStructureElement:TENInterval
+   * @example "NSB:FareStructureElement:TENInterval"
    */
   id: string;
-
-  /** The price(s) of the sub configurations below this node. Multiple prices is supported in case of prices in multiple currencies. */
+  /**
+   * The price(s) of the sub configurations below this node. Multiple prices is supported in case of prices in multiple currencies.
+   * @example null
+   */
   prices: Price[];
-
   /** Reference to different UsageParameters. */
   parameters?: UsageParameters;
-
   /** Container object for other properties. */
   properties?: Properties;
 }
 
 /**
  * Leg request describing a part of a journey
+ * @example null
  */
 export interface LegRequest {
   /**
    * Stop place id for the destination of the leg
-   * @example NSR:StopPlace:640
+   * @example "NSR:StopPlace:640"
    */
   toStopPlaceId: string;
-
   /**
-   * The expected date and time this leg starts.
+   * The date the service journey is valid for
    * @format date
-   * @example 2020-05-13
+   * @example "2020-05-13"
    */
   travelDate: string;
-
   /**
    * Stop place id for he origin of the leg
-   * @example NSR:StopPlace:635
+   * @example "NSR:StopPlace:635"
    */
   fromStopPlaceId: string;
-
   /**
    * Service journey id for the leg
-   * @example NSB:ServiceJourney:1-232-1016-20201117132
+   * @example "NSB:ServiceJourney:1-232-1016-20201117132"
    */
   serviceJourneyId: string;
 }
 
 /**
+ * CappingAlternative
  * An alternative is based on previous transactions might have a discount at the expense of setting the start date in the past.
+ * @example null
  */
 export interface CappingAlternative {
   /**
    * The start date of this alternative.
    * @format date-time
+   * @example null
    */
   startDateTime: string;
-
-  /** A pseudo random string that is used to select what alternative to use when purchasing an offer. */
+  /**
+   * A pseudo random string that is used to select what alternative to use when purchasing an offer.
+   * @example null
+   */
   selectableId: string;
-  discount: PriceSummary;
-
+  /** Price with VAT and currency information */
+  discount: Price;
   /**
    * The end date of this alternative.
    * @format date-time
+   * @example null
    */
   endDateTime: string;
 }
 
+/**
+ * Recommendation
+ * @example null
+ */
 export interface Recommendation {
   typeOfRecommendation: TypeOfRecommendationEnum;
   facilitySet?: AccommodationFacilityForRecommendationsEnum;
   fareClass?: FareClassEnum;
-
-  /** @example ENT:PreassignedFareProduct:StandardFlexible */
-  specifiedProduct?: string;
+  /** @example null */
   offersToBuy: OfferToBuy[];
-
   /** Describes the geographical validity covered by the recommendation */
   geographicalValidityCovered: GeographicalValidityCovered;
   durationType?: DurationEnum;
 }
 
 /**
+ * GeographicalValidityCovered
  * Describes the geographical validity covered by the recommendation
+ * @example null
  */
 export interface GeographicalValidityCovered {
+  /** @example null */
   serviceJourneys?: string[];
-
   /** Describes zones where a product is valid */
   zonalValidity?: ZonalValidity;
-
   /** Start and stop places where the product is valid */
   pointToPointValidity?: PointToPointValidity;
 }
 
 /**
  * A group of routes which is generally known to the public by a similar name or number implements
+ * @example null
  */
 export interface Line {
   /**
    * ID of the Line
-   * @example GJB:Line:R30
+   * @example "GJB:Line:R30"
    */
   id: string;
 }
 
+/**
+ * OfferSummary
+ * @example null
+ */
 export interface OfferSummary {
   /** A discount might be given based on previous transactions if CappedDiscountRequest was specified. */
   cappedDiscountOption?: CappedDiscountOption;
+  /** @example null */
+  availableFulfillmentMethods: AvailableFulfillmentMethod[];
+  /** @example null */
   preassignedProducts: PreassignedProduct[];
+  /** @example null */
   optionalProductsSelectableIds?: string[];
   price: PriceSummary;
-
-  /** @example Flex Refunderbar */
+  /** @example "Flex Refunderbar" */
   name: string;
-
   /**
    * Antall tilbud tilgjengelig for å kjøpe
    * @example 14
    */
   available?: number;
-
-  /** @example Flex Refunderbar */
+  /** @example "Flex Refunderbar" */
   description: string;
-
   /** Describes the geographical validity of a product */
   geographicalValidity: GeographicalValidity;
-
-  /** @example 00faf83-56c3-4f4e-8be9-e793c255a77b */
+  /** @example "00faf83-56c3-4f4e-8be9-e793c255a77b" */
   id: string;
+  /** @example null */
   travellerMapping?: TravellerMappingSummary[];
 }
 
 /**
+ * DistributionParameters
  * References to different distribution parameters.
+ * @example null
  */
 export interface DistributionParameters {
-  /** The name of the object. */
+  /**
+   * The name of the object.
+   * @example null
+   */
   name: TextInLanguage[];
-
-  /** The description of the object. */
+  /**
+   * The description of the object.
+   * @example null
+   */
   description: TextInLanguage[];
-
   /**
    * Reference to a FullfillmentMethod with price information.
-   * @example TRAVEL_CARD
+   * @example "TRAVEL_CARD"
    */
   fulfillmentMethod?: string;
-
   /**
    * The ID of the object on the format < context : type : instance name >
-   * @example ENT:DistributionMethod:NOD
+   * @example "ENT:DistributionMethod:NOD"
    */
   id: string;
-
-  /** The price(s) of the sub configurations below this node. Multiple prices is supported in case of prices in multiple currencies. */
+  /**
+   * The price(s) of the sub configurations below this node. Multiple prices is supported in case of prices in multiple currencies.
+   * @example null
+   */
   prices: Price[];
-
-  /** The price contribution shows how much this node contributes on the total price. */
+  /**
+   * The price contribution shows how much this node contributes on the total price.
+   * @example null
+   */
   priceContributions: Price[];
-
   /**
    * Reference to a DistributionChannel with price information.
-   * @example ENT:DistributionChannel:Online
+   * @example "ENT:DistributionChannel:Online"
    */
   distributionChannel?: string;
-
   /**
    * The version of the object
-   * @example ENT:Version:V1
+   * @example "ENT:Version:V1"
    */
   version: string;
 }
 
 /**
  * DynamicDistanceMatrixElement type
+ * @example null
  */
 export interface DynamicDistanceMatrixElement {
   /** Object ref */
   endStopPointRef?: ObjectRef;
-
   /** Object ref */
   startTariffZoneRef?: ObjectRef;
-
   /** Object ref */
   startStopPointRef?: ObjectRef;
-
   /** Object ref */
   endTariffZoneRef?: ObjectRef;
-
-  /** DynamicDistanceMatrixElement id */
+  /**
+   * DynamicDistanceMatrixElement id
+   * @example null
+   */
   id: string;
-
-  /** DynamicDistanceMatrixElement version */
+  /**
+   * DynamicDistanceMatrixElement version
+   * @example null
+   */
   version: string;
 }
 
 /**
+ * AccommodationForServiceJourney
  * Accommodation for service journey
+ * @example null
  */
 export interface AccommodationForServiceJourney {
   serviceJourney: ServiceJourneySummary;
+  /** @example null */
   accommodation: AccommodationFacilityEnum[];
 }
 
+/** @example null */
 export interface SpecificParameterAssignment {
   /** Object ref */
   distanceMatrixElementRef?: ObjectRef;
-
   /** DynamicDistanceMatrixElement type */
   dynamicDistanceMatrixElement?: DynamicDistanceMatrixElement;
-
   /** Logical operator */
   includesGroupingType?: LogicalOperatorEnum;
-
-  /** Validity parameters */
+  /**
+   * Validity parameters
+   * @example null
+   */
   validityParameters?: ValidityParameter[];
-
   /** Object ref */
   typeOfAccessRightAssignmentRef?: ObjectRef;
-
   /** Logical operator */
   validityParameterGroupingType?: LogicalOperatorEnum;
-
   /** Logical operator */
   limitationGroupingType?: LogicalOperatorEnum;
-
-  /** Included SpecificParameterAssignments */
+  /**
+   * Included SpecificParameterAssignments
+   * @example null
+   */
   includes?: SpecificParameterAssignment[];
-
-  /** Limitations */
+  /**
+   * Limitations
+   * @example null
+   */
   limitations?: Limitation[];
 }
 
 /**
  * EstimatedCall for the quay.
+ * @example null
  */
 export interface EstimatedCall {
   /**
    * The date the estimated call is valid for.
-   * @example 2020-12-24T16:00:00Z
+   * @example "2020-12-24T16:00:00Z"
    */
   date: string;
-
   /** A place such as platform, stance, or quayside where passengers have access to PT vehicles. */
   quay?: Quay;
 }
 
+/**
+ * UsageTriggerEnum
+ * @example null
+ */
 export enum UsageTriggerEnum {
   ENROLMENT = "ENROLMENT",
   RESERVATION = "RESERVATION",
@@ -674,74 +768,87 @@ export enum UsageTriggerEnum {
 
 /**
  * Reference to different UsageParameters.
+ * @example null
  */
 export interface DiscountUsageParameters {
-  /** Reference to entitlement given parameters with price information. */
+  /**
+   * Reference to entitlement given parameters with price information.
+   * @example null
+   */
   entitlementGiven: PricedUsageParameter[];
-
-  /** Reference to reserving parameters with price information. */
+  /**
+   * Reference to reserving parameters with price information.
+   * @example null
+   */
   reserving: PricedUsageParameter[];
 }
 
+/**
+ * ServiceJourney
+ * @example null
+ */
 export interface ServiceJourney {
-  /** @example ENT:ServiceJourney:1-1605-1919 */
+  /** @example "ENT:ServiceJourney:1-1605-1919" */
   id: string;
-
-  /** @example 1919 */
+  /** @example "1919" */
   privateCode?: string;
 }
 
 /**
  * A specification of an existing ticket.
+ * @example null
  */
 export interface ExistingTicket {
-  /** ServiceJourneys, not implemented */
+  /**
+   * ServiceJourneys, not implemented
+   * @example null
+   */
   serviceJourneys?: string[];
-
   /**
    * The netex-id of the entity.
-   * @example RUT:PreassignedFareProduct:SupplementaryTicket
+   * @example "RUT:PreassignedFareProduct:SupplementaryTicket"
    */
   id: string;
-
-  /** The zones the existing ticket is valid for */
+  /**
+   * The zones the existing ticket is valid for
+   * @example null
+   */
   zones?: string[];
 }
 
 /**
  * Authority involved in public transportation. An organisation under which the responsibility of organising the transport service in a certain area is placed.
+ * @example null
  */
 export interface Authority {
   /**
    * Name of Authority.
-   * @example ENT
+   * @example "ENT"
    */
   name?: string;
-
   /**
    * NeTEx-id of Authority.
-   * @example ENT:Authority:ENT
+   * @example "ENT:Authority:ENT"
    */
   id: string;
 }
 
 /**
  * ValidityParameter object.
+ * @example null
  */
 export interface ValidityParameter {
   /** Object ref */
   serviceJourneyRef?: ObjectRef;
-
   /** Object ref */
   tariffZoneRef?: ObjectRef;
-
   /** Object ref */
   passengerSeatRef?: ObjectRef;
 }
 
 /**
  * The transport sub mode (e.g., localBus or expressBus) used when traversing this leg. Null if leg is not a ride
- * @example LOCAL
+ * @example "LOCAL"
  */
 export enum TransportSubModeEnum {
   UNKNOWN = "UNKNOWN",
@@ -860,63 +967,81 @@ export enum TransportSubModeEnum {
 
 /**
  * Reference to a Sales Package and its configuration.
+ * @example null
  */
 export interface SalesPackageConfiguration {
-  /** Specific parameter assignments */
+  /** A discount might be given based on previous transactions if CappedDiscountRequest was specified. */
+  cappedDiscountOption?: CappedDiscountOption;
+  /**
+   * Specific parameter assignments
+   * @example null
+   */
   specificParameterAssignments?: ParameterSpecification[];
-
-  /** Reference to the legs this configuration is for. */
+  /**
+   * Reference to the legs this configuration is for.
+   * @example null
+   */
   serviceJourneyIds: string[];
-
-  /** The description of the object. */
+  /**
+   * The description of the object.
+   * @example null
+   */
   description: TextInLanguage[];
-
-  /** The price contribution shows how much this node contributes on the total price. */
+  /**
+   * The price contribution shows how much this node contributes on the total price.
+   * @example null
+   */
   priceContributions: Price[];
-
   /**
    * The version of the object
-   * @example NSB:Version:V1
+   * @example "NSB:Version:V1"
    */
   version: string;
-
-  /** Reference to the legs this configuration is for. */
+  /**
+   * Reference to the legs this configuration is for.
+   * @example null
+   */
   datedServiceJourneys: DatedServiceJourney[];
-
-  /** References to different distribution parameters. */
+  /**
+   * References to different distribution parameters.
+   * @example null
+   */
   distributions: DistributionParameters[];
-
-  /** The name of the object. */
+  /**
+   * The name of the object.
+   * @example null
+   */
   name: TextInLanguage[];
-
   /**
    * The ID of the object on the format < context : type : instance name >
-   * @example NSB:SalesPackage:Ordinary
+   * @example "NSB:SalesPackage:Ordinary"
    */
   id: string;
-
-  /** Reference to a Fare Product and its configuration. */
+  /**
+   * Reference to a Fare Product and its configuration.
+   * @example null
+   */
   fareProducts: FareProductConfiguration[];
-
-  /** The price(s) of the sub configurations below this node. Multiple prices is supported in case of prices in multiple currencies. */
+  /**
+   * The price(s) of the sub configurations below this node. Multiple prices is supported in case of prices in multiple currencies.
+   * @example null
+   */
   prices: Price[];
-
   /** Reference to different UsageParameters. */
   parameters?: UsageParameters;
-
   /** Container object for other properties. */
   properties?: Properties;
 }
 
 /**
+ * UnavailableProduct
  * Representation of a product that is unavailable, but would have been included in an offer if available.
+ * @example null
  */
 export interface UnavailableProduct {
   serviceJourney: ServiceJourneySummary;
-
-  /** @example SJN:PreassignedFareProduct:StandardFullFlex */
+  /** @example "SJN:PreassignedFareProduct:StandardFullFlex" */
   id: string;
-
   /** Properties of an unavailable product */
   properties?: UnavailableProductProperties;
   status: UnavailableEnum;
@@ -924,14 +1049,14 @@ export interface UnavailableProduct {
 
 /**
  * A request used to search for fare products for a specified trip.
+ * @example null
  */
 export interface OrganisationConfig {
   /**
    * The netexId for the organisation.
-   * @example ENT:Organisation:ENT
+   * @example "ENT:Organisation:ENT"
    */
   id: string;
-
   /**
    * The privateCode for the organisation, used to integrate with the organisation register.
    * @format int64
@@ -942,53 +1067,83 @@ export interface OrganisationConfig {
 
 /**
  * Lines where the product is valid
+ * @example null
  */
 export interface LineValidity {
-  /** Valid on lines */
+  /**
+   * Valid on lines
+   * @example null
+   */
   validOn: string[];
-
-  /** Not valid on lines */
+  /**
+   * Not valid on lines
+   * @example null
+   */
   notValidOn: string[];
 }
 
 /**
  * A place such as platform, stance, or quayside where passengers have access to PT vehicles.
+ * @example null
  */
 export interface Quay {
   /** A stop place */
   stopPlace?: StopPlace;
-
   /**
    * Name
-   * @example Nydalen
+   * @example "Nydalen"
    */
   name?: string;
-
-  /** @example NSR:Quay:11151 */
+  /** @example "NSR:Quay:11151" */
   id?: string;
 }
 
 /**
+ * GeographicalValidity
  * Describes the geographical validity of a product
+ * @example null
  */
 export interface GeographicalValidity {
+  /** @example null */
   serviceJourneys?: ServiceJourneySummary[];
-
   /** Describes zones where a product is valid */
   zonalValidity?: ZonalValidity;
-
   /** Start and stop places where the product is valid */
   pointToPointValidity?: PointToPointValidity;
 }
 
+/**
+ * ReservingRequirementForServiceJourney
+ * @example null
+ */
 export interface ReservingRequirementForServiceJourney {
+  /** @example null */
   seatMapIsAvailable: boolean;
   reservingRequirement?: ReservingRequirementEnum;
   serviceJourney: ServiceJourneySummary;
 }
 
 /**
- * @example BICYCLE
+ * AvailableFulfillmentMethod
+ * Describes which fulfilmentMethods are available for an Offer,
+ * @example null
+ */
+export interface AvailableFulfillmentMethod {
+  /**
+   * NeTEx standard
+   * @example null
+   */
+  id: string;
+  /**
+   * NeTEx standard
+   * @example null
+   */
+  version: string;
+}
+
+/**
+ * SupplementProductTypeEnum
+ * @example "BICYCLE"
  */
 export enum SupplementProductTypeEnum {
   SEAT_RESERVATION = "SEAT_RESERVATION",
@@ -1006,45 +1161,58 @@ export enum SupplementProductTypeEnum {
   PARKING = "PARKING",
 }
 
+/** @example null */
 export interface RecommendationConfig {
   /** Determines what rules to apply when categorizing and recommending offers for travellers */
   ruleSpec?: RuleSpec;
-
   /** Determines what fields should be used to categorize the offers */
   categorySpec?: CategorySpec;
 }
 
+/**
+ * GroupSummary
+ * @example null
+ */
 export interface GroupSummary {
-  /** @example Familiebillett */
+  /** @example "Familiebillett" */
   name?: string;
+  /** @example null */
   userProfiles: UserProfileInGroupSummary[];
+  /** @example null */
   description: string;
-
-  /** @example ENT:GroupTicket:Family */
+  /** @example "ENT:GroupTicket:Family" */
   id: string;
-
-  /** @example ENT:Version:V1 */
+  /** @example "ENT:Version:V1" */
   version: string;
 }
 
+/**
+ * PriceSummary
+ * @example null
+ */
 export interface PriceSummary {
-  /** @example 100.00 */
+  /** @example "100.00" */
   amount: string;
-
-  /** @example NOK */
+  /** @example "NOK" */
   currency: string;
 }
 
 /**
+ * CustomerRef
  * Contains enough information about a customer to look up transaction history.
+ * @example null
  */
 export interface CustomerRef {
-  /** Reference to the account id within the account based ticketing module. */
+  /**
+   * Reference to the account id within the account based ticketing module.
+   * @example null
+   */
   accountBasedTicketingCustomerRef?: string;
 }
 
 /**
  * A summary of the properties of a fare product or package that can be used to generate passenger information.
+ * @example null
  */
 export interface ConditionSummary {
   /**
@@ -1052,7 +1220,6 @@ export interface ConditionSummary {
    * @example true
    */
   isExchangeable?: boolean;
-
   /**
    * Whether the ticket is refundable.
    * @example true
@@ -1062,126 +1229,176 @@ export interface ConditionSummary {
 
 /**
  * Super type for all places (stop places, quays, car parks, bike parks and bike rental stations)
+ * @example null
  */
 export interface Place {
-  /** @example Oslo S */
+  /** @example "Oslo S" */
   name?: string;
-
   /** A place such as platform, stance, or quayside where passengers have access to PT vehicles. */
   quay?: Quay;
 }
 
 /**
  * A simple reference object containing enough information to lookup the object itself if needed.
+ * @example null
  */
 export interface DataManagedObjectData {
-  /** The name of the object. */
+  /**
+   * The name of the object.
+   * @example null
+   */
   name: TextInLanguage[];
-
-  /** The description of the object. */
+  /**
+   * The description of the object.
+   * @example null
+   */
   description: TextInLanguage[];
-
   /**
    * The ID of the object on the format < context : type : instance name >
-   * @example ENT:PreassignedFareProduct:Sone1
+   * @example "ENT:PreassignedFareProduct:Sone1"
    */
   id: string;
-
   /**
    * The version of the object
-   * @example ENT:Version:V1
+   * @example "ENT:Version:V1"
    */
   version: string;
 }
 
+/** @example null */
 export interface TariffZone {
-  /** @example Ruter sone 1 */
+  /** @example "Ruter sone 1" */
   name?: string;
-
-  /** @example RUT:TariffZone:1 */
+  /** @example "RUT:TariffZone:1" */
   id: string;
 }
 
+/** @example null */
 export interface ParameterSpecification {
-  /** Specification of parameter id */
+  /**
+   * Specification of parameter id
+   * @example null
+   */
   specificationOf?: string;
   specificParameterAssignment?: SpecificParameterAssignment;
 }
 
 /**
+ * UserProfileInGroupSummary
  * Reference to a group
+ * @example null
  */
 export interface UserProfileInGroupSummary {
+  /** @example null */
   id: string;
+  /** @example null */
   version?: string;
+  /** @example null */
   numberOfPeople: number;
 }
 
 /**
  * A request used to search for fare products for a specified trip.
+ * @example null
  */
 export interface SearchTripPatternRequest {
   recommendationConfig?: RecommendationConfig;
-
-  /** The travellers for the set trip */
+  /**
+   * The travellers for the set trip
+   * @example null
+   */
   travellers: Traveller[];
-
   /** List of legs constituting a suggested sequence of rides and links for a specific trip. */
   tripPattern: TripPatternRequest;
-
   /** A specification of an existing ticket. */
   existingTicket?: ExistingTicket;
-
   /** A configuration of how to group travellers in offers. */
   groupConfig?: GroupConfig;
+  /**
+   * @default false
+   * @example null
+   */
+  includeMultiTripOffers?: boolean;
 }
 
 /**
+ * Carnet
  * Representation of a repeatable ticket, with an optional duration for each instance and an amount of times the ticket can be used
+ * @example null
  */
 export interface Carnet {
   /**
    * @format duration
-   * @example PT1H30M
+   * @example "PT1H30M"
    */
   duration?: string;
-
   /** @example 10 */
   amount: number;
 }
 
 /**
  * A specification of a traveller.
+ * @example null
  */
 export interface Traveller {
-  /** A list of references to products that the traveller already owns */
+  /**
+   * A list of references to products that the traveller already owns
+   * @example null
+   */
   productIds?: string[];
-
   /** Contains information to look up transaction history for a traveller and what CappedDiscountRight-program he or she is a part of. */
   cappingSpecification?: CappingSpecification;
-
-  /** A filter for what kind of luggage the traveller wants offers for. The type is enum as string with the following possible values: HANDBAG, HAND_LUGGAGE, SMALL_SUITCASE, SUITCASE, TRUNK, OVERSIZE_ITEM, BICYCLE, SPORTING_EQUIPMENT, SKIS, MUSICAL_INSTRUMENT, PUSH_CHAIR, MOTORIZED_WHEELCHAIR,LARGE_MOTORIZED_WHEELCHAIR, WHEELCHAIR, SMALL_ANIMAL, ANIMAL, GAME, MOTORCYCLE, OTHER */
+  /**
+   * A filter for what kind of luggage the traveller wants offers for. The type is enum as string with the following possible values: HANDBAG, HAND_LUGGAGE, SMALL_SUITCASE, SUITCASE, TRUNK, OVERSIZE_ITEM, BICYCLE, SPORTING_EQUIPMENT, SKIS, MUSICAL_INSTRUMENT, PUSH_CHAIR, MOTORIZED_WHEELCHAIR,LARGE_MOTORIZED_WHEELCHAIR, WHEELCHAIR, SMALL_ANIMAL, ANIMAL, GAME, MOTORCYCLE, OTHER
+   * @example null
+   */
   baggageTypes?: BaggageTypeEnum[];
-
   /**
    * Identifier of the traveller. Only unique within an http-transaction with Products.
-   * @example ID_A
+   * @example "ID_A"
    */
   id?: string;
-
   /** A user type */
   userType?: UserTypeEnum;
+  /** @example null */
   age?: number;
 }
 
+/**
+ * RefType
+ * @example null
+ */
 export interface RefType {
+  /** @example null */
   id: string;
+  /** @example null */
   version: string;
 }
 
 /**
- * @example RESERVATIONS_COMPULSORY
+ * A request used to search for fare products without inputting geographic data, but instead use Authority
+ * @example null
  */
+export interface SearchWithAuthorityRequest {
+  /**
+   * NeTEx-id of Authority
+   * @example "ENT:Authority:1"
+   */
+  authorityId: string;
+  /**
+   * The travellers.
+   * @example null
+   */
+  travellers: Traveller[];
+  /**
+   * The expected start time of travel.
+   * @format date-time
+   * @example null
+   */
+  travelDate: string;
+}
+
+/** @example "RESERVATIONS_COMPULSORY" */
 export enum ReservingRequirementEnum {
   RESERVATIONS_COMPULSORY = "RESERVATIONS_COMPULSORY",
   RESERVATIONS_COMPULSORY_FOR_GROUPS = "RESERVATIONS_COMPULSORY_FOR_GROUPS",
@@ -1201,13 +1418,22 @@ export enum ReservingRequirementEnum {
 }
 
 /**
+ * GroupConfig
  * A configuration of how to group travellers in offers.
+ * @example null
  */
 export interface GroupConfig {
-  /** Number of compartments to group travellers in. */
+  /**
+   * Number of compartments to group travellers in.
+   * @example null
+   */
   numberOfCompartments: number;
 }
 
+/**
+ * UnavailableEnum
+ * @example null
+ */
 export enum UnavailableEnum {
   SOLD_OUT = "SOLD_OUT",
   CLOSED = "CLOSED",
@@ -1216,23 +1442,24 @@ export enum UnavailableEnum {
 
 /**
  * Start and stop places where the product is valid
+ * @example null
  */
 export interface PointToPointValidity {
   /**
    * Valid from place
-   * @example NSR:StopPlace:398
+   * @example "NSR:StopPlace:398"
    */
   fromPlace: string;
-
   /**
    * Valid to place
-   * @example NSR:StopPlace:440
+   * @example "NSR:StopPlace:440"
    */
   toPlace: string;
 }
 
 /**
- * @example SLEEPER
+ * AccommodationFacilityForRecommendationsEnum
+ * @example "SLEEPER"
  */
 export enum AccommodationFacilityForRecommendationsEnum {
   SLEEPER = "SLEEPER",
@@ -1244,29 +1471,42 @@ export enum AccommodationFacilityForRecommendationsEnum {
 
 /**
  * Limitation object.
+ * @example null
  */
 export interface Limitation {
   /** Usage validity period type */
   usageValidityPeriod?: UsageValidityPeriod;
-
   /** Object ref */
   usageValidityPeriodRef?: ObjectRef;
-
   /** Object ref */
   userProfileRef?: ObjectRef;
 }
 
+/** @example null */
+export interface UpdateOfferWithCappedDiscountAlternativeRequest {
+  /**
+   * Selectable id of the capped discount alternative
+   * @example null
+   */
+  selectableId: string;
+}
+
 /**
  * List of legs constituting a suggested sequence of rides and links for a specific trip.
+ * @example null
  */
 export interface TripPatternRequest {
-  /** Legs constituting a suggested sequence of rides and links for this trip */
+  /**
+   * Legs constituting a suggested sequence of rides and links for this trip
+   * @example null
+   */
   legs: LegRequest[];
 }
 
 /**
  * There are two supported algorithms for comparing offers; TOTAL_PRICE and BEFORE_SDR. TOTAL_PRICE: This is the default algorithm used if not specified, this only looks at the total price of the offers and finds the cheapest, if two offers have the same price, the one with the least amount of offers in the combination is chosen. BEFORE_SDR: This algorithm unapplies all sales discount rights in the offers before comparing prices, when the price of two combinations is the same, the combination containing the most amount of SDRs is chosen, thereafter if the amount is the same the combination with the least amount of offers in the combination is chosen.
- * @example TOTAL_PRICE
+ * @default "TOTAL_PRICE"
+ * @example "TOTAL_PRICE"
  */
 export enum PriceComparisonAlgorithmEnum {
   TOTAL_PRICE = "TOTAL_PRICE",
@@ -1274,67 +1514,106 @@ export enum PriceComparisonAlgorithmEnum {
 }
 
 /**
+ * UsageStartConstraintTypeEnum
+ * @example null
+ */
+export enum UsageStartConstraintTypeEnum {
+  VARIABLE = "VARIABLE",
+  FIXED = "FIXED",
+  FIXED_WINDOW = "FIXED_WINDOW",
+}
+
+/**
  * A specification of which travellers can use an offer, along with limitations on the number of travellers that must be selected from the group for the OFFER to be valid.
+ * @example null
  */
 export interface TravellerMappingSummary {
   /**
    * The maximum number of travellers that can be selected from the group.
    * @format int32
+   * @example null
    */
   maxNumberOfTravellers: number;
-
-  /** The ids of the travellers. */
+  /**
+   * The ids of the travellers.
+   * @example null
+   */
   travellerIds: string[];
-
   /**
    * The minimum number of travellers that can be selected from the group.
    * @format int32
+   * @example null
    */
   minNumberOfTravellers: number;
-
   /** A user type */
   userType: UserTypeEnum;
 }
 
 /**
+ * PlaceInJourneySpec
  * Identify zone or stopPlace in a journeySpec
+ * @example null
  */
 export interface PlaceInJourneySpec {
   /** A stop place */
   stopPlace?: StopPlace;
+  /** @example null */
   zoneId?: string;
 }
 
 /**
  * A reference to the resource that is priced in this offer, e.g. a specific 'TripPattern'.
+ * @example null
  */
 export interface PricedResourceRef {
-  /** ID of the resource, e.g. an ID of a 'TripPattern'. */
+  /**
+   * ID of the resource, e.g. an ID of a 'TripPattern'.
+   * @example null
+   */
   id: string;
-
-  /** Name of the resource. */
+  /**
+   * Name of the resource.
+   * @example null
+   */
   resourceType: string;
 }
 
 /**
+ * UserProfileSummary
+ * id, version, name and user type of a user
+ * @example null
+ */
+export interface UserProfileSummary {
+  /** @example null */
+  name: string;
+  /** @example null */
+  id: string;
+  /** A user type */
+  userType?: UserTypeEnum;
+  /** @example null */
+  version: string;
+}
+
+/**
  * A planned vehicle journey with passengers.
+ * @example null
  */
 export interface DatedServiceJourney {
   /**
    * A unique departure ID.
-   * @example ENT:DatedServiceJourney:151530
+   * @example "ENT:DatedServiceJourney:151530"
    */
   datedServiceJourneyId: string;
-
   /**
    * A reference to the original dated service journey ID.
-   * @example ENT:DatedServiceJourney:151530
+   * @example "ENT:DatedServiceJourney:151530"
    */
   originalDatedServiceJourneyId: string;
 }
 
 /**
  * Determines what rules to apply when categorizing and recommending offers for travellers
+ * @example null
  */
 export interface RuleSpec {
   /**
@@ -1344,97 +1623,129 @@ export interface RuleSpec {
    * COMBINATIONS_FROM_OFFERS: Will only organize by unique journey combinations covered by offers.
    */
   journeyOrganizeAlgorithm?: JourneyOrganizeAlgorithmEnum;
+  /**
+   * @default false
+   * @example null
+   */
   mixinOffersWithHigherFlexibility?: boolean;
-
   /** There are two supported algorithms for comparing offers; TOTAL_PRICE and BEFORE_SDR. TOTAL_PRICE: This is the default algorithm used if not specified, this only looks at the total price of the offers and finds the cheapest, if two offers have the same price, the one with the least amount of offers in the combination is chosen. BEFORE_SDR: This algorithm unapplies all sales discount rights in the offers before comparing prices, when the price of two combinations is the same, the combination containing the most amount of SDRs is chosen, thereafter if the amount is the same the combination with the least amount of offers in the combination is chosen. */
   priceComparisonAlgorithm?: PriceComparisonAlgorithmEnum;
+  /**
+   * @default false
+   * @example null
+   */
   onlyIncludeRecommendedOffers?: boolean;
+  /**
+   * @default true
+   * @example null
+   */
   onlyIncludeRecommendationsWithOffersToBuy?: boolean;
 }
 
 /**
  * Reference to a Validable Element and its configuration.
+ * @example null
  */
 export interface ValidableElementConfiguration {
-  /** Specific parameter assignments */
+  /**
+   * Specific parameter assignments
+   * @example null
+   */
   specificParameterAssignments?: ParameterSpecification[];
-
-  /** Reference to the legs this configuration is for. */
+  /**
+   * Reference to the legs this configuration is for.
+   * @example null
+   */
   serviceJourneyIds: string[];
-
-  /** The description of the object. */
+  /**
+   * The description of the object.
+   * @example null
+   */
   description: TextInLanguage[];
-
-  /** The price contribution shows how much this node contributes on the total price. */
+  /**
+   * The price contribution shows how much this node contributes on the total price.
+   * @example null
+   */
   priceContributions: Price[];
-
   /**
    * How many repeatable validable elements
    * @format int32
    * @example 10
    */
   occurs?: number;
-
   /**
    * The version of the object
-   * @example NSB:Version:V1
+   * @example "NSB:Version:V1"
    */
   version: string;
-
-  /** Reference to the legs this configuration is for. */
+  /**
+   * Reference to the legs this configuration is for.
+   * @example null
+   */
   datedServiceJourneys?: DatedServiceJourney[];
-
-  /** Reference to a Fare Structure Element and its configuration. */
+  /**
+   * Reference to a Fare Structure Element and its configuration.
+   * @example null
+   */
   fareStructureElements: FareStructureElementConfiguration[];
-
-  /** The name of the object. */
+  /**
+   * The name of the object.
+   * @example null
+   */
   name: TextInLanguage[];
-
   /**
    * The ID of the object on the format < context : type : instance name >
-   * @example NSB:ValidableElement:Ordinary
+   * @example "NSB:ValidableElement:Ordinary"
    */
   id: string;
-
-  /** The price(s) of the sub configurations below this node. Multiple prices is supported in case of prices in multiple currencies. */
+  /**
+   * The price(s) of the sub configurations below this node. Multiple prices is supported in case of prices in multiple currencies.
+   * @example null
+   */
   prices: Price[];
-
   /** Reference to different UsageParameters. */
   parameters?: UsageParameters;
-
   /** Container object for other properties. */
   properties?: Properties;
 }
 
 /**
  * Text in a specific language.
+ * @example null
  */
 export interface TextInLanguage {
   /**
    * Language code.
-   * @example nob
+   * @example "nob"
    */
   lang: string;
-
   /**
    * The text.
-   * @example Enkeltbillett sone 1
+   * @example "Enkeltbillett sone 1"
    */
   value: string;
 }
 
+/**
+ * SearchResponse
+ * @example null
+ */
 export interface SearchResponse {
+  /** @example null */
   offers: OfferSummary[];
-
-  /** @example 5e7cbc83e58e6a00011cecc3 */
+  /** @example "5e7cbc83e58e6a00011cecc3" */
   tripPatternId?: string;
+  /** @example null */
   unavailableProducts?: UnavailableProduct[];
+  /** @example null */
   optionalProducts?: OptionalProduct[];
+  /** @example null */
   recommendations?: Recommendation[];
 }
 
 /**
- * @example TRIP_CARNET
+ * ProductTypeEnum
+ * @example "TRIP_CARNET"
  */
 export enum ProductTypeEnum {
   TRIP_CARNET = "TRIP_CARNET",
@@ -1445,7 +1756,8 @@ export enum ProductTypeEnum {
 }
 
 /**
- * @example DAY_PASS
+ * DurationEnum
+ * @example "DAY_PASS"
  */
 export enum DurationEnum {
   SINGLE_TRIP = "SINGLE_TRIP",
@@ -1461,6 +1773,10 @@ export enum DurationEnum {
   OTHER = "OTHER",
 }
 
+/**
+ * ActivationMeansEnum
+ * @example null
+ */
 export enum ActivationMeansEnum {
   NONE_REQUIRED = "NONE_REQUIRED",
   CHECK_IN = "CHECK_IN",
@@ -1473,191 +1789,216 @@ export enum ActivationMeansEnum {
 
 /**
  * An identifiable SALES PACKAGE CONFIGURATION paired with information regarding which travellers can use it.
+ * @example null
  */
 export interface Offer {
   /** A reference to the resource that is priced in this offer, e.g. a specific 'TripPattern'. */
   pricedResource?: PricedResourceRef;
-
   /**
    * The requested distribution channel
-   * @example ENT:DistributionChannel:Web
+   * @example "ENT:DistributionChannel:Web"
    */
   requestedByDistributionChannel?: string;
-
   /**
    * The ID of the OFFER.
    * @format uuid
-   * @example f65c6b98-768f-4578-9c83-1a2ccfd2b7d7
+   * @example "f65c6b98-768f-4578-9c83-1a2ccfd2b7d7"
    */
   id: string;
-
   /** Reference to a Sales Package and its configuration. */
   salesPackageConfig: SalesPackageConfiguration;
-
-  /** Traveller limitations that applies to the SALES PACKAGE CONFIGURATION. */
+  /**
+   * Traveller limitations that applies to the SALES PACKAGE CONFIGURATION.
+   * @example null
+   */
   travellerMapping: TravellerMapping[];
 }
 
 /**
  * Price with VAT and currency information
+ * @example null
  */
 export interface Price {
   /**
    * The VAT group.
-   * @example TRANSPORT_AND_TICKETS_VAT
+   * @example "TRANSPORT_AND_TICKETS_VAT"
    */
   vatGroup?: string;
-
   /**
    * The amount.
-   * @example 100.00
+   * @example "100.00"
    */
   amount: string;
-
   /**
    * The currency of the amount.
-   * @example NOK
+   * @example "NOK"
    */
   currency: string;
 }
 
 /**
  * Reference to different UsageParameters.
+ * @example null
  */
 export interface UsageParameters {
-  /** Reference to round trip parameters with price information */
+  /**
+   * Reference to round trip parameters with price information
+   * @example null
+   */
   roundTrip: PricedUsageParameter[];
-
-  /** Reference to luggage allowance parameters with price information. */
+  /**
+   * Reference to luggage allowance parameters with price information.
+   * @example null
+   */
   luggageAllowances: PricedUsageParameter[];
-
   /** A reference to a user parameter and price data. */
   usageValidityPeriod?: PricedUsageParameter;
-
-  /** Reference to entitlement given parameters with price information. */
+  /**
+   * Reference to entitlement given parameters with price information.
+   * @example null
+   */
   entitlementGiven: PricedUsageParameter[];
-
-  /** Reference to purchase window parameters with price information. */
+  /**
+   * Reference to purchase window parameters with price information.
+   * @example null
+   */
   purchaseWindow: PricedUsageParameter[];
-
-  /** Reference to reserving parameters with price information. */
+  /**
+   * Reference to reserving parameters with price information.
+   * @example null
+   */
   reserving: PricedUsageParameter[];
-
-  /** Reference to replacing parameters with price information. */
+  /**
+   * Reference to replacing parameters with price information.
+   * @example null
+   */
   replacing: PricedUsageParameter[];
-
   /** A reference to a user profile and price data. */
   userProfile?: PricedUserProfile;
-
-  /** Reference to exchanging parameters with price information. */
+  /**
+   * Reference to exchanging parameters with price information.
+   * @example null
+   */
   exchanging: PricedUsageParameter[];
-
-  /** Reference to transferability parameters with price information. */
+  /**
+   * Reference to transferability parameters with price information.
+   * @example null
+   */
   transferability: PricedUsageParameter[];
-
-  /** Reference to a refund parameter with price information. */
+  /**
+   * Reference to a refund parameter with price information.
+   * @example null
+   */
   refunds: PricedUsageParameter[];
-
   /** A reference to a group with price data. */
   group?: PricedGroup;
 }
 
 /**
  * Reference to a Fare Product and its configuration.
+ * @example null
  */
 export interface FareProductConfiguration {
   /** A sale discount right that has been applied to the fare product. */
   discountRight?: DiscountRight;
-
   /**
    * The id of the entitlement product that allowed the sale discount right to be used. Only used if the fare product configuration contains a sale discount right, and the traveller had an entitlement product.
-   * @example SJN:PreassignedFareProduct:StandardFullFlex
+   * @example "SJN:PreassignedFareProduct:StandardFullFlex"
    */
   originatingFromProductId?: string;
-
   /** Describes zones where a product is valid */
   zonalValidity?: ZonalValidity;
-
-  /** The description of the object. */
+  /**
+   * The description of the object.
+   * @example null
+   */
   description: TextInLanguage[];
-
   /** A request used to search for fare products for a specified trip. */
   organisation: OrganisationConfig;
-
   /** Start and stop places where the product is valid */
   pointToPointValidity?: PointToPointValidity;
-
-  /** Reference to the legs this configuration is for. */
+  /**
+   * Reference to the legs this configuration is for.
+   * @example null
+   */
   datedServiceJourneys?: DatedServiceJourney[];
-
-  /** Reference to a Validable Element and its configuration. */
+  /**
+   * Reference to a Validable Element and its configuration.
+   * @example null
+   */
   validableElements: ValidableElementConfiguration[];
-
   /**
    * Used for selecting a unique element in the configurations
-   * @example nhC7Jr
+   * @example "nhC7Jr"
    */
   selectableId: string;
-
   /**
    * The ID of the object on the format < context : type : instance name >
-   * @example NSB:SupplementProduct:ExtraLegSpace
+   * @example "NSB:SupplementProduct:ExtraLegSpace"
    */
   id: string;
-
   /** A summary of the properties of a fare product or package that can be used to generate passenger information. */
   conditionSummary?: ConditionSummary;
-
-  /** The price(s) of the sub configurations below this node. Multiple prices is supported in case of prices in multiple currencies. */
+  /**
+   * The price(s) of the sub configurations below this node. Multiple prices is supported in case of prices in multiple currencies.
+   * @example null
+   */
   prices: Price[];
   productType?: ProductTypeEnum;
-
-  /** Specific parameter assignments */
+  /**
+   * Specific parameter assignments
+   * @example null
+   */
   specificParameterAssignments?: ParameterSpecification[];
-
   /**
    * Amount of priced unit
    * @format int32
+   * @example null
    */
   amount?: number;
-
   /**
    * A classification of this fare product
-   * @example ENT:TypeOfFareProduct:update_product@single_operator
+   * @example "ENT:TypeOfFareProduct:update_product@single_operator"
    */
   typeOfFareProduct?: string;
-
-  /** Reference to the legs this configuration is for. */
+  /**
+   * Reference to the legs this configuration is for.
+   * @example null
+   */
   serviceJourneyIds: string[];
-
-  /** True if this configuration is optional to buy, false if it's required. */
+  /**
+   * True if this configuration is optional to buy, false if it's required.
+   * @example null
+   */
   optional: boolean;
   supplementProductType?: SupplementProductTypeEnum;
-
-  /** The price contribution shows how much this node contributes on the total price. */
+  /**
+   * The price contribution shows how much this node contributes on the total price.
+   * @example null
+   */
   priceContributions: Price[];
-
   /**
    * The version of the object
-   * @example NSB:Version:V1
+   * @example "NSB:Version:V1"
    */
   version: string;
-
   /** Lines where the product is valid */
   lineValidity?: LineValidity;
-
-  /** The name of the object. */
+  /**
+   * The name of the object.
+   * @example null
+   */
   name: TextInLanguage[];
-
   /** Reference to different UsageParameters. */
   parameters?: UsageParameters;
-
   /** Container object for other properties. */
   properties?: Properties;
 }
 
 /**
+ * LogicalOperatorEnum
  * Logical operator
+ * @example null
  */
 export enum LogicalOperatorEnum {
   AND = "AND",
@@ -1670,74 +2011,100 @@ export enum LogicalOperatorEnum {
 }
 
 /**
+ * PropertiesSummery
  * Summary of properties for a product
+ * @example null
  */
 export interface PropertiesSummary {
-  duration?: string;
+  /** @example null */
   accommodations?: AccommodationForServiceJourney[];
+  /** @example null */
   fareClasses?: FareClassEnum[];
-
-  /** Representation of a repeatable ticket, with an optional duration for each instance and an amount of times the ticket can be used */
-  carnet?: Carnet;
-
-  /** @example ENT:Version:V1 */
-  userProfileVersion?: string;
-  reservingRequirements?: ReservingRequirementForServiceJourney[];
-
   /** id and and name of an organisation */
   organisation: OrganisationSummary;
-  baggageTypes?: BaggageTypeEnum[];
-
-  /** @example ENT:UserProfile:Adult */
-  userProfileId?: string;
-  isExchangeable?: boolean;
+  durationType?: DurationEnum;
+  /** @example null */
   isRefundable?: boolean;
+  /** @example null */
+  duration?: string;
+  /** Representation of a repeatable ticket, with an optional duration for each instance and an amount of times the ticket can be used */
+  carnet?: Carnet;
+  /** id, version, name and user type of a user */
+  userProfileSummary?: UserProfileSummary;
+  /**
+   * @deprecated
+   * @example "ENT:Version:V1"
+   */
+  userProfileVersion?: string;
+  /** @example null */
+  reservingRequirements?: ReservingRequirementForServiceJourney[];
+  /** @example null */
+  baggageTypes?: BaggageTypeEnum[];
+  /**
+   * @deprecated
+   * @example "ENT:UserProfile:Adult"
+   */
+  userProfileId?: string;
+  /** @example null */
+  isExchangeable?: boolean;
   group?: GroupSummary;
 }
 
 /**
  * A reference to a user parameter and price data.
+ * @example null
  */
 export interface PricedUsageParameter {
-  /** The name of the object. */
+  /**
+   * The name of the object.
+   * @example null
+   */
   name: TextInLanguage[];
-
   /**
    * Used for selecting a unique element in the configurations
-   * @example ypLDzG
+   * @example "ypLDzG"
    */
   selectableId: string;
-
-  /** The description of the object. */
+  /**
+   * The description of the object.
+   * @example null
+   */
   description: TextInLanguage[];
-
-  /** True if this configuration is optional to buy, false if it's required. */
+  /**
+   * True if this configuration is optional to buy, false if it's required.
+   * @example null
+   */
   optional: boolean;
-
   /**
    * The ID of the object on the format < context : type : instance name >
-   * @example NSB:UserProfile:Adult
+   * @example "NSB:UserProfile:Adult"
    */
   id: string;
-
-  /** The type of this usage parameter. */
+  /**
+   * The type of this usage parameter.
+   * @example null
+   */
   typeOfUsageParameter?: string;
-
-  /** The price(s) of the sub configurations below this node. Multiple prices is supported in case of prices in multiple currencies. */
+  /**
+   * The price(s) of the sub configurations below this node. Multiple prices is supported in case of prices in multiple currencies.
+   * @example null
+   */
   prices: Price[];
-
-  /** The price contribution shows how much this node contributes on the total price. */
+  /**
+   * The price contribution shows how much this node contributes on the total price.
+   * @example null
+   */
   priceContributions: Price[];
-
   /**
    * The version of the object
-   * @example NSB:Version:V1
+   * @example "NSB:Version:V1"
    */
   version: string;
 }
 
 /**
  * The Geographical Interval with distance and zone data.
+ * @example null
  */
 export interface GeoIntervalData {
   /**
@@ -1746,55 +2113,59 @@ export interface GeoIntervalData {
    * @example 120
    */
   distance?: number;
-
-  /** The name of the object. */
+  /**
+   * The name of the object.
+   * @example null
+   */
   name: TextInLanguage[];
-
-  /** The description of the object. */
+  /**
+   * The description of the object.
+   * @example null
+   */
   description: TextInLanguage[];
-
   /**
    * The number of zones in this interval.
    * @format int32
    * @example 4
    */
   zoneCount?: number;
-
   /**
    * The ID of the object on the format < context : type : instance name >
-   * @example NSB:GeographicalInterval:60TEN
+   * @example "NSB:GeographicalInterval:60TEN"
    */
   id: string;
-
-  /** A list of the zones that exist in this interval. Empty if not relevant. */
+  /**
+   * A list of the zones that exist in this interval. Empty if not relevant.
+   * @example null
+   */
   zones: string[];
-
   /**
    * The version of the object
-   * @example NSB:Version:V1
+   * @example "NSB:Version:V1"
    */
   version: string;
 }
 
 /**
  * Organisation providing public transport services.
+ * @example null
  */
 export interface Operator {
   /**
    * Name of Operator.
-   * @example Sporveien T-banen AS
+   * @example "Sporveien T-banen AS"
    */
   name?: string;
-
   /**
    * NeTEx-id of Operator.
-   * @example RUT:Operator:210
+   * @example "RUT:Operator:210"
    */
   id?: string;
 }
 
 /**
  * A stop place
+ * @example null
  */
 export interface StopPlace {
   /**
@@ -1803,22 +2174,21 @@ export interface StopPlace {
    * @example 59.910925
    */
   latitude?: number;
-
   /**
    * Name of stop place.
-   * @example Oslo S
+   * @example "Oslo S"
    */
   name?: string;
-
-  /** Tariff zones */
+  /**
+   * Tariff zones
+   * @example null
+   */
   tariffZones?: TariffZone[];
-
   /**
    * ID
-   * @example NSR:StopPlace:337
+   * @example "NSR:StopPlace:337"
    */
   id: string;
-
   /**
    * Longitude
    * @format double
@@ -1828,19 +2198,41 @@ export interface StopPlace {
 }
 
 /**
+ * ZonalValidity
  * Describes zones where a product is valid
+ * @example null
  */
 export interface ZonalValidity {
+  /** @example null */
   zones?: string[];
 }
 
 /**
-* There are three supported algorithms for organizing how we present each combination of journeys. Given three journeys in the trip pattern; SJ-1, SJ-2, SJ-3 the three algorithms will generate these combinations:
-SUBSEQUENT_COMBINATIONS: (SJ-1), (SJ-2), (SJ-3), (SJ-1, SJ-2), (SJ-2, SJ-3), (SJ-1, SJ-2, SJ-3)
-FOR_EACH_AND_GROUPED_COMBINATIONS: (SJ-1), (SJ-2), (SJ-3), (SJ-1, SJ-2, SJ-3)
-COMBINATIONS_FROM_OFFERS: Will only organize by unique journey combinations covered by offers.
-* @example FOR_EACH_AND_GROUPED_COMBINATIONS
-*/
+ * UsageValidityTypeEnum
+ * @example null
+ */
+export enum UsageValidityTypeEnum {
+  SINGLE_TRIP = "SINGLE_TRIP",
+  RETURN_TRIP = "RETURN_TRIP",
+  CARNET = "CARNET",
+  DAY_PASS = "DAY_PASS",
+  WEEKLY_PASS = "WEEKLY_PASS",
+  WEEKEND_PASS = "WEEKEND_PASS",
+  MONTHLY_PASS = "MONTHLY_PASS",
+  SEASON_TICKET = "SEASON_TICKET",
+  PROFILE_MEMBERSHIP = "PROFILE_MEMBERSHIP",
+  OPEN_ENDED = "OPEN_ENDED",
+  OTHER = "OTHER",
+}
+
+/**
+ * There are three supported algorithms for organizing how we present each combination of journeys. Given three journeys in the trip pattern; SJ-1, SJ-2, SJ-3 the three algorithms will generate these combinations:
+ * SUBSEQUENT_COMBINATIONS: (SJ-1), (SJ-2), (SJ-3), (SJ-1, SJ-2), (SJ-2, SJ-3), (SJ-1, SJ-2, SJ-3)
+ * FOR_EACH_AND_GROUPED_COMBINATIONS: (SJ-1), (SJ-2), (SJ-3), (SJ-1, SJ-2, SJ-3)
+ * COMBINATIONS_FROM_OFFERS: Will only organize by unique journey combinations covered by offers.
+ * @default "SUBSEQUENT_COMBINATIONS"
+ * @example "FOR_EACH_AND_GROUPED_COMBINATIONS"
+ */
 export enum JourneyOrganizeAlgorithmEnum {
   SUBSEQUENT_COMBINATIONS = "SUBSEQUENT_COMBINATIONS",
   COMBINATIONS_FROM_OFFERS = "COMBINATIONS_FROM_OFFERS",
@@ -1848,8 +2240,9 @@ export enum JourneyOrganizeAlgorithmEnum {
 }
 
 /**
+ * UserTypeEnum
  * A user type
- * @example ADULT
+ * @example "ADULT"
  */
 export enum UserTypeEnum {
   ANYONE = "ANYONE",
@@ -1864,211 +2257,253 @@ export enum UserTypeEnum {
   MILITARY = "MILITARY",
 }
 
+/** @example null */
 export interface UpdateSearchTripPatternRequest {
   recommendationConfig?: RecommendationConfig;
-
-  /** Travellers to be updated. */
+  /**
+   * Travellers to be updated.
+   * @example null
+   */
   travellers: Traveller[];
-
   /** A configuration of how to group travellers in offers. */
   groupConfig?: GroupConfig;
 }
 
 /**
+ * CategorySpec
  * Determines what fields should be used to categorize the offers
+ * @example null
  */
 export interface CategorySpec {
+  /** @example null */
   facilitySet?: AccommodationFacilityForRecommendationsEnum[];
+  /** @example null */
   typesOfRecommendation: TypeOfRecommendationEnum[];
+  /** @example null */
   fareClasses?: FareClassEnum[];
-  specifiedProducts?: string[];
+  /** @example null */
   durationTypes?: DurationEnum[];
 }
 
 /**
  * A sale discount right that has been applied to the fare product.
+ * @example null
  */
 export interface DiscountRight {
   /**
    * The id of the entitlement product that allowed the sale discount right to be used. Only used if the fare product configuration contains a sale discount right, and the traveller had an entitlement product.
-   * @example ENT:EntitlementProduct:V1F1
+   * @example "ENT:EntitlementProduct:V1F1"
    */
   originatingFromProductId?: string;
-
-  /** The name of the object. */
+  /**
+   * The name of the object.
+   * @example null
+   */
   name: TextInLanguage[];
-
   /**
    * Used for selecting a unique element in the configurations
-   * @example hlfmHy
+   * @example "hlfmHy"
    */
   selectableId: string;
-
-  /** The description of the object. */
+  /**
+   * The description of the object.
+   * @example null
+   */
   description: TextInLanguage[];
-
   /** A request used to search for fare products for a specified trip. */
   organisation: OrganisationConfig;
-
-  /** True if this configuration is optional to buy, false if it's required. */
+  /**
+   * True if this configuration is optional to buy, false if it's required.
+   * @example null
+   */
   optional: boolean;
-
   /**
    * The ID of the object on the format < context : type : instance name >
-   * @example SJN:SaleDiscountRight:Premium
+   * @example "SJN:SaleDiscountRight:Premium"
    */
   id: string;
-
-  /** The price(s) of the sub configurations below this node. Multiple prices is supported in case of prices in multiple currencies. */
+  /**
+   * The price(s) of the sub configurations below this node. Multiple prices is supported in case of prices in multiple currencies.
+   * @example null
+   */
   prices: Price[];
-
-  /** The price contribution shows how much this node contributes on the total price. */
+  /**
+   * The price contribution shows how much this node contributes on the total price.
+   * @example null
+   */
   priceContributions: Price[];
-
   /**
    * The version of the object
-   * @example SJN:Version:SDR-Premium-1
+   * @example "SJN:Version:SDR-Premium-1"
    */
   version: string;
-
   /** Reference to different UsageParameters. */
   parameters?: DiscountUsageParameters;
 }
 
 /**
  * Container object for other properties.
+ * @example null
  */
 export interface Properties {
-  /** Accommodation. Enum as string with the following values: SLEEPER, SEATING, DOUBLE_SLEEPER, SINGLE_SLEEPER, SPECIAL_SLEEPER, COUCHETTE, SINGLE_COUCHETTE, DOUBLE_COUCHETTE, RECLINING_SEAT, BABY_COMPARTMENT, FAMILY_COMPARTMENT, PANORAMA_COACH, PULLMAN_COACH, STANDING, ANY_FACILITY_SET */
+  /**
+   * Accommodation. Enum as string with the following values: SLEEPER, SEATING, DOUBLE_SLEEPER, SINGLE_SLEEPER, SPECIAL_SLEEPER, COUCHETTE, SINGLE_COUCHETTE, DOUBLE_COUCHETTE, RECLINING_SEAT, BABY_COMPARTMENT, FAMILY_COMPARTMENT, PANORAMA_COACH, PULLMAN_COACH, STANDING, ANY_FACILITY_SET
+   * @example null
+   */
   accommodations: AccommodationFacilityEnum[];
-
-  /** FareClasses. Enum as string with the following values: FIRST_CLASS, SECOND_CLASS, THIRD_CLASS, ECONOMY_CLASS, BUSINESS_CLASS, TURISTA, PREFERENTE, STANDARD_CLASS, PREMIUM_CLASS, ANY, UNKNOWN */
+  /**
+   * FareClasses. Enum as string with the following values: FIRST_CLASS, SECOND_CLASS, THIRD_CLASS, ECONOMY_CLASS, BUSINESS_CLASS, TURISTA, PREFERENTE, STANDARD_CLASS, PREMIUM_CLASS, ANY, UNKNOWN
+   * @example null
+   */
   fareClasses: FareClassEnum[];
 }
 
 /**
+ * PreassignedProduct
  * Representation of a mandatory product that is included in an offer
+ * @example null
  */
 export interface PreassignedProduct {
   /** Summary of a sale discount right that has been applied to the fare product. */
   discountRight?: DiscountRightSummary;
-
-  /** @example Standard refunderbar */
+  /** @example "Standard refunderbar" */
   name: string;
-
-  /** @example Standard refunderbar */
+  /** @example "Standard refunderbar" */
   description: string;
-
   /** Describes the geographical validity of a product */
   geographicalValidity: GeographicalValidity;
-
-  /** @example SJN:PreassignedFareProduct:StandardFullFlex */
+  /** @example "SJN:PreassignedFareProduct:StandardFullFlex" */
   id: string;
-
-  /** @example SJN:Version:V1 */
+  /** @example "SJN:Version:V1" */
   version: string;
-
   /** Summary of properties for a product */
   properties: PropertiesSummary;
 }
 
 /**
+ * CappingSpecification
  * Contains information to look up transaction history for a traveller and what CappedDiscountRight-program he or she is a part of.
+ * @example null
  */
 export interface CappingSpecification {
   /** Contains enough information about a customer to look up transaction history. */
   customerRef: CustomerRef;
-
   /**
    * Specify a minimum alternative duration oo avoid alternatives that doesn't last long enough in the future to be useful.
    * @format duration
+   * @example null
    */
   minimumAlternativeDuration?: string;
-
-  /** Reference to the fare contract for this traveller. */
+  /**
+   * Reference to the fare contract for this traveller.
+   * @example null
+   */
   fareContractId: string;
-
   /**
    * To avoid too many similar alternatives you can specify a minimum period between the start date of each alternative.
    * @format duration
+   * @example null
    */
   minimumDurationBetweenAlternatives?: string;
-
-  /** Reference to a CappedDiscountRight. */
+  /**
+   * Reference to a CappedDiscountRight.
+   * @example null
+   */
   cappedDiscountRightId: string;
 }
 
 /**
  * A specification of which travellers can use an offer, along with limitations on the number of travellers that must be selected from the group for the OFFER to be valid.
+ * @example null
  */
 export interface TravellerMapping {
   /**
    * The maximum number of travellers that can be selected from the group.
    * @format int32
+   * @example null
    */
   maxNumberOfTravellers: number;
-
-  /** The ids of the travellers. */
+  /**
+   * The ids of the travellers.
+   * @example null
+   */
   travellerIds: string[];
-
   /**
    * The minimum number of travellers that can be selected from the group.
    * @format int32
+   * @example null
    */
   minNumberOfTravellers: number;
-
-  /** If there are a through fare with two operators more user profiles are needed, this list represents these */
+  /**
+   * If there are a through fare with two operators more user profiles are needed, this list represents these
+   * @example null
+   */
   userProfileIds: string[];
-
-  /** Version to the user profile associated with this offer. */
+  /**
+   * Version to the user profile associated with this offer.
+   * @example null
+   */
   userProfileVersion: string;
-
   /**
    * Reference to the user profile associated with this offer.
-   * @example FLB:UserProfile:Adult
+   * @example "FLB:UserProfile:Adult"
    */
   userProfileId: string;
-
-  /** If the request uses traveller groups to specify the travellers this field holds the id of the group that the travellers belongs to. */
+  /**
+   * If the request uses traveller groups to specify the travellers this field holds the id of the group that the travellers belongs to.
+   * @example null
+   */
   travellerGroupId?: string;
 }
 
 /**
  * A reference to a user profile and price data.
+ * @example null
  */
 export interface PricedUserProfile {
-  /** The name of the object. */
+  /**
+   * The name of the object.
+   * @example null
+   */
   name: TextInLanguage[];
-
   /**
    * Used for selecting a unique element in the configurations
-   * @example GtSlJQ
+   * @example "GtSlJQ"
    */
   selectableId: string;
-
-  /** True if this configuration is optional to buy, false if it's required. */
+  /**
+   * True if this configuration is optional to buy, false if it's required.
+   * @example null
+   */
   optional: boolean;
-
   /**
    * The ID of the object on the format < context : type : instance name >
-   * @example ENT:UserProfile:Anyone
+   * @example "ENT:UserProfile:Anyone"
    */
   id: string;
-
-  /** The price(s) of the sub configurations below this node. Multiple prices is supported in case of prices in multiple currencies. */
+  /**
+   * The price(s) of the sub configurations below this node. Multiple prices is supported in case of prices in multiple currencies.
+   * @example null
+   */
   prices: Price[];
-
-  /** The price contribution shows how much this node contributes on the total price. */
+  /**
+   * The price contribution shows how much this node contributes on the total price.
+   * @example null
+   */
   priceContributions: Price[];
-
   /**
    * The version of the object
-   * @example ENT:Version:V1
+   * @example "ENT:Version:V1"
    */
   version: string;
+  /** @example null */
   typeOfConcession?: string;
 }
 
+/**
+ * UsageEndEnum
+ * @example null
+ */
 export enum UsageEndEnum {
   STANDARD_DURATION = "STANDARD_DURATION",
   END_OF_CALENDAR_PERIOD = "END_OF_CALENDAR_PERIOD",
@@ -2084,194 +2519,181 @@ export enum UsageEndEnum {
 }
 
 /**
+ * JourneySpec
  * Collection of attributes that characterize a journey.
+ * @example null
  */
 export interface JourneySpec {
   /** The mode of transport or access (e.g., foot) used when traversing this leg. */
   mode?: TransportModeEnum;
-
   /**
    * NeTEx-id of line
-   * @example GJB:Line:R30
+   * @example "GJB:Line:R30"
    */
   line?: string;
-
   /**
    * NeTEx-id of authority.
-   * @example ENT:Authority:ENT
+   * @example "ENT:Authority:ENT"
    */
   authority?: string;
-
   /** The transport sub mode (e.g., localBus or expressBus) used when traversing this leg. Null if leg is not a ride */
   transportSubmode?: TransportSubModeEnum;
-
   /**
    * @format date-time
-   * @example 2020-05-13T07:19:30.389Z
+   * @example "2020-05-13T07:19:30.389Z"
    */
   startTime?: string;
-
   /**
    * @format date-time
-   * @example 2020-05-13T09:19:30.389Z
+   * @example "2020-05-13T09:19:30.389Z"
    */
   endTime?: string;
+  /** @example null */
   placesInJourney?: PlaceInJourneySpec[];
-
   /**
    * NeTEx-id of Operator.
-   * @example RUT:Operator:210
+   * @example "RUT:Operator:210"
    */
   operator?: string;
 }
 
 /**
  * List of legs constituting a suggested sequence of rides and links for a specific trip.
+ * @example null
  */
 export interface TripPattern {
-  expired?: boolean;
-
-  /** Legs constituting a suggested sequence of rides and links for this trip */
+  /**
+   * Legs constituting a suggested sequence of rides and links for this trip
+   * @example null
+   */
   legs?: Leg[];
-
   /**
    * ID of the trip pattern
-   * @example 5e7cbc83e58e6a00011cecc3
+   * @example "5e7cbc83e58e6a00011cecc3"
    */
   id?: string;
-  isPotentialRoundtrip?: boolean;
 }
 
 /**
  * Part of a trip pattern. Either a ride on a public transport vehicle or access or path link to/from/between places
+ * @example null
  */
 export interface Leg {
   /** Used to specify that the vehicle used on this leg is the same that will be used on the next leg */
   interchangeTo?: InterchangeTo;
-
   /** A list of coordinates encoded as a polyline string (see http://code.google.com/apis/maps/documentation/polylinealgorithm.html) */
   pointsOnLink?: PointsOnLink;
-
   /** Super type for all places (stop places, quays, car parks, bike parks and bike rental stations) */
   fromPlace: Place;
-
   /** A group of routes which is generally known to the public by a similar name or number implements */
   line?: Line;
-
   /** EstimatedCall for the quay. */
   fromEstimatedCall?: EstimatedCall;
-
   /**
    * The aimed date and time this leg ends.
    * @format date-time
-   * @example 2020-05-13T09:19:30.389Z
+   * @example "2020-05-13T09:19:30.389Z"
    */
   aimedEndTime: string;
-
   /** The transport sub mode (e.g., localBus or expressBus) used when traversing this leg. Null if leg is not a ride */
   transportSubmode?: TransportSubModeEnum;
   serviceJourney?: ServiceJourney;
-
   /** EstimatedCall for the quay. */
   toEstimatedCall?: EstimatedCall;
-
-  /** Whether this leg is a ride leg or not. */
+  /**
+   * Whether this leg is a ride leg or not.
+   * @example null
+   */
   ride: boolean;
-
   /** Organisation providing public transport services. */
   operator?: Operator;
-
   /** The mode of transport or access (e.g., foot) used when traversing this leg. */
   mode: TransportModeEnum;
-
-  /** A place such as platform, stance, or quayside where passengers have access to PT vehicles. */
-  maybeToQuay?: Quay;
-  hasToFromQuays?: boolean;
-
-  /** A place such as platform, stance, or quayside where passengers have access to PT vehicles. */
-  maybeFromQuay?: Quay;
-
   /**
    * The aimed date and time this leg starts.
    * @format date-time
-   * @example 2020-05-13T07:19:30.389Z
+   * @example "2020-05-13T07:19:30.389Z"
    */
   aimedStartTime: string;
-
   /**
    * The expected date and time this leg starts.
    * @format date-time
-   * @example 2020-05-13T07:19:30.389Z
+   * @example "2020-05-13T07:19:30.389Z"
    */
   expectedStartTime?: string;
-
   /** Authority involved in public transportation. An organisation under which the responsibility of organising the transport service in a certain area is placed. */
   authority?: Authority;
-
-  /** For ride legs, intermediate quays between the Place where the leg originates and the Place where the leg ends. For non-ride legs, null. */
+  /**
+   * For ride legs, intermediate quays between the Place where the leg originates and the Place where the leg ends. For non-ride legs, null.
+   * @example null
+   */
   intermediateQuays: Quay[];
-
   /** A planned vehicle journey with passengers. */
   datedServiceJourney?: DatedServiceJourney;
-
   /**
    * The expected date and time this leg ends.
    * @format date-time
-   * @example 2020-05-13T09:19:30.389Z
+   * @example "2020-05-13T09:19:30.389Z"
    */
   expectedEndTime?: string;
-
   /** Super type for all places (stop places, quays, car parks, bike parks and bike rental stations) */
   toPlace: Place;
 }
 
 /**
  * Usage validity period type
+ * @example null
  */
 export interface UsageValidityPeriod {
   /**
    * Standard duration. Represented as a string formatted according to ISO-8601
    * @format duration
-   * @example PT1H
+   * @example "PT1H"
    */
   standardDuration?: string;
-
   /**
    * StartDateTime
    * @format date-time
-   * @example 2020-05-13T07:19:30.389Z
+   * @example "2020-05-13T07:19:30.389Z"
    */
   startDateTime?: string;
-
-  /** UsageValidityPeriod id */
+  usageStartConstraintType?: UsageStartConstraintTypeEnum;
+  /**
+   * UsageValidityPeriod id
+   * @example null
+   */
   id: string;
   usageTrigger?: UsageTriggerEnum;
-
   /**
    * EndDate
    * @format date-time
-   * @example 2020-05-13T07:19:30.389Z
+   * @example "2020-05-13T07:19:30.389Z"
    */
   endDateTime?: string;
   usageEnd?: UsageEndEnum;
-
-  /** UsageValidityPeriod version */
+  /**
+   * UsageValidityPeriod version
+   * @example null
+   */
   version: string;
-
-  /** Activation Means. Describes how a product can be activated. */
+  /**
+   * Activation Means. Describes how a product can be activated.
+   * @example null
+   */
   activationMeans?: ActivationMeansEnum[];
+  usageValidityType?: UsageValidityTypeEnum;
 }
 
 /**
  * Quota for the priceable object
+ * @example null
  */
 export interface Quota {
   /**
    * The corresponding service journey id for this stock
-   * @example NSB:ServiceJourney:X
+   * @example "NSB:ServiceJourney:X"
    */
   serviceJourneyId: string;
-
   /**
    * The amount of stock for this priceable object.
    * @format int32
@@ -2282,34 +2704,43 @@ export interface Quota {
 
 /**
  * A list of coordinates encoded as a polyline string (see http://code.google.com/apis/maps/documentation/polylinealgorithm.html)
+ * @example null
  */
 export interface PointsOnLink {
   /**
    * The encoded points of the polyline.
-   * @example uhf_Jg~ahAu~oBye~@w~Ln~CqfkBtpaAelg@dejB
+   * @example "uhf_Jg~ahAu~oBye~@w~Ln~CqfkBtpaAelg@dejB"
    */
   points: string;
 }
 
 /**
+ * OfferToBuy
  * Describes which offer to buy and how many of this offer to buy to satisfy a recommendation
+ * @example null
  */
 export interface OfferToBuy {
-  /** List of selectableIds of supplement products which upgrades a product */
+  /**
+   * List of selectableIds of supplement products which upgrades a product
+   * @example null
+   */
   selectableProductIds: string[];
-
-  /** One possible grouping of travellers for the number of offers to buy */
+  /**
+   * One possible grouping of travellers for the number of offers to buy
+   * @example null
+   */
   possibleTravellerIds: string[][];
-
   /**
    * Id of the offer to buy
-   * @example 00faf83-56c3-4f4e-8be9-e793c255a77b
+   * @example "00faf83-56c3-4f4e-8be9-e793c255a77b"
    */
   id: string;
-
-  /** DEPRECATED: Use selectable ids from selectableProductIds instead. This field contains netexIds of upgradable supplement products */
+  /**
+   * DEPRECATED: Use selectable ids from selectableProductIds instead. This field contains netexIds of upgradable supplement products
+   * @deprecated
+   * @example null
+   */
   withUpgradeProducts: string[];
-
   /**
    * Number of this offer to buy
    * @example 2
@@ -2318,10 +2749,10 @@ export interface OfferToBuy {
 }
 
 /**
-* Basis on which pricing is done - per whole group
-or per member.
-* @example PER_OFFER
-*/
+ * Basis on which pricing is done - per whole group
+ * or per member.
+ * @example "PER_OFFER"
+ */
 export enum PricingBasisEnum {
   PER_OFFER = "PER_OFFER",
   PER_PERSON = "PER_PERSON",

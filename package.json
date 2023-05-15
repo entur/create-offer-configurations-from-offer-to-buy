@@ -1,51 +1,42 @@
 {
-  "name": "@entur/create-offer-configurations-from-offer-to-buy",
-  "version": "4.0.0",
-  "description": "Create an array of offer configurations exactly as prescribed by the possibleTravellerIds field in an OfferToBuy",
-  "type": "module",
-  "files": [
-    "dist"
-  ],
-  "main": "./dist/create-offer-configurations-from-offer-to-buy.cjs",
-  "module": "./dist/create-offer-configurations-from-offer-to-buy.js",
-  "exports": {
-    ".": {
-      "import": "./dist/create-offer-configurations-from-offer-to-buy.js",
-      "require": "./dist/create-offer-configurations-from-offer-to-buy.cjs"
-    }
-  },
-  "types": "./dist/index.d.ts",
-  "repository": "https://github.com/entur/create-offer-configurations-from-offer-to-buy",
-  "author": "Eirik Vageskar <eirik.vageskar@knowit.no>",
-  "license": "EUPL-1.2",
-  "homepage": "https://www.npmjs.com/package/@entur/create-offer-configurations-from-offer-to-buy",
-  "scripts": {
-    "prepack": "npm run build",
-    "build": "vite build",
-    "update-types": "npx swagger-typescript-api --path https://api.staging.entur.io/offers/v2/api-docs/swagger.json --output source/types  -n offersTypes.ts --no-client && npx swagger-typescript-api --path https://api.staging.entur.io/api-docs/reserve-offer?group=public --output source/types  -n reserveOfferTypes.ts --no-client",
-    "test": "vitest run",
-    "lint": "npx prettier --check *.{md,json} .*.cjs; xo",
-    "lint:fix": "npx prettier --write *.{md,json} .*.cjs; xo --fix",
-    "prepublish": "npm run test",
-    "prepare": "husky install",
-    "publish": "npx np"
-  },
-  "devDependencies": {
-    "@sindresorhus/tsconfig": "^1.0.2",
-    "@types/eslint-plugin-prettier": "^3.1.0",
-    "@types/prettier": "^2.3.2",
-    "@types/xo": "^0.39.1",
-    "eslint-plugin-jsdoc": "^36.1.0",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-simple-import-sort": "^7.0.0",
-    "eslint-plugin-sort-keys": "^2.3.5",
-    "husky": "^7.0.1",
-    "np": "^7.6.0",
-    "prettier": "^2.3.2",
-    "typescript": "^4.4.3",
-    "vite": "^4.3.5",
-    "vite-plugin-dts": "^2.3.0",
-    "vitest": "^0.31.0",
-    "xo": "^0.42.0"
-  }
+	"name": "@entur/create-offer-configurations-from-offer-to-buy",
+	"version": "4.0.0",
+	"description": "Create an array of offer configurations exactly as prescribed by the possibleTravellerIds field in an OfferToBuy",
+	"type": "module",
+	"files": ["dist"],
+	"main": "./dist/create-offer-configurations-from-offer-to-buy.cjs",
+	"module": "./dist/create-offer-configurations-from-offer-to-buy.js",
+	"exports": {
+		".": {
+			"import": "./dist/create-offer-configurations-from-offer-to-buy.js",
+			"require": "./dist/create-offer-configurations-from-offer-to-buy.cjs"
+		}
+	},
+	"types": "./dist/index.d.ts",
+	"repository": "https://github.com/entur/create-offer-configurations-from-offer-to-buy",
+	"author": "Eirik Vageskar <eirik.vageskar@knowit.no>",
+	"license": "EUPL-1.2",
+	"homepage": "https://www.npmjs.com/package/@entur/create-offer-configurations-from-offer-to-buy",
+	"scripts": {
+		"prepack": "npm run build",
+		"build": "vite build",
+		"update-types": "npx swagger-typescript-api --path https://api.staging.entur.io/offers/v2/api-docs/swagger.json --output source/types  -n offersTypes.ts --no-client && npx swagger-typescript-api --path https://api.staging.entur.io/api-docs/reserve-offer?group=public --output source/types  -n reserveOfferTypes.ts --no-client",
+		"test": "vitest run",
+		"lint": "npx prettier --check *.{md}; rome check .",
+		"lint:fix": "npx prettier --write *.md; rome check --apply .",
+		"prepublish": "npm run test",
+		"prepare": "husky install",
+		"publish": "npx np"
+	},
+	"devDependencies": {
+		"@types/prettier": "^2.3.2",
+		"husky": "^7.0.1",
+		"np": "^7.6.0",
+		"prettier": "^2.3.2",
+		"rome": "12.1.0",
+		"typescript": "^4.4.3",
+		"vite": "^4.3.5",
+		"vite-plugin-dts": "^2.3.0",
+		"vitest": "^0.31.0"
+	}
 }

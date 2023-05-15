@@ -1,13 +1,9 @@
-const npxPrettierWrite = "npx prettier --write";
-const HIDDEN_JS_FILES = ".*.js";
+/**
+ * This file is used for pre-commit formatting.
+ * Building and testing is performed by the hooks found in .husky/pre-commit
+ */
+
 module.exports = {
-  "*.{js,ts}": (files) => [
-    `xo --fix ${files.join(" ")}`,
-    "npx tsc --noEmit",
-    // Do not add a test step here; they are run by husky
-  ],
-  "*.{md,json}": npxPrettierWrite,
-  [HIDDEN_JS_FILES]:
-    // XO refuses to lint hidden files, so we run prettier on them instead
-    npxPrettierWrite,
+	"*.{js,ts,json}": ["rome format --write", "rome check --apply"],
+	"*.md": "npx prettier --write",
 };

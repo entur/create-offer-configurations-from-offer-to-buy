@@ -1,6 +1,6 @@
 # Changelog
 
-## Next version (????-??-??)
+## 4.0.0 (2023-05-15)
 
 ### Breaking
 

@@ -1,8 +1,8 @@
-import {OfferToBuy} from './types/offersTypes';
-import {OfferConfiguration} from './types/reserveOfferTypes.js';
+import {type OfferToBuy} from './types/offersTypes.js';
+import {type OfferConfiguration} from './types/reserveOfferTypes.js';
 
 export type SetRequired<T, K extends keyof T> = Required<Pick<T, K>> &
-  Omit<T, K>; // eslint-disable-line @typescript-eslint/ban-types
+  Omit<T, K>;
 
 type OfferConfigurationWithCountOne = SetRequired<
   OfferConfiguration,
@@ -19,11 +19,11 @@ type OfferConfigurationWithCountOne = SetRequired<
  * We just avoid setting the count field, because 1 is the default value.
  */
 export function createOfferConfigurationsFromOfferToBuy(
-  offerToBuy: OfferToBuy
+  offerToBuy: OfferToBuy,
 ): OfferConfigurationWithCountOne[] {
   return offerToBuy.possibleTravellerIds.map((selectedTravellerIds) => ({
     offerId: offerToBuy.id,
     selectableProductIds: offerToBuy.selectableProductIds,
-    selectedTravellerIds
+    selectedTravellerIds,
   }));
 }

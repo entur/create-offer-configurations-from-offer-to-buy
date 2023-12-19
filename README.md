@@ -38,7 +38,7 @@ createOfferConfigurationsFromOfferToBuy(
     withUpgradeProducts: [],
     possibleTravellerIds: [["3543283", "3518762"], ["ADULT-0-anonymous"]],
   },
-  offerIfUsingOffersApiV1
+  offerIfUsingOffersApiV1,
 );
 
 /*

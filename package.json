@@ -44,6 +44,7 @@
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-sort-keys": "^2.3.5",
     "husky": "^7.0.1",
+    "lint-staged": "^15.2.0",
     "np": "^7.6.0",
     "pkgroll": "^2.0.1",
     "prettier": "^2.3.2",

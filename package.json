@@ -20,7 +20,7 @@
     }
   },
   "repository": "https://github.com/entur/create-offer-configurations-from-offer-to-buy",
-  "author": "Eirik Vageskar <eirik.vageskar@knowit.no>",
+  "author": "Eirik Vageskar <eirik.vageskar@entur.org>",
   "license": "EUPL-1.2",
   "homepage": "https://www.npmjs.com/package/@entur/create-offer-configurations-from-offer-to-buy",
   "scripts": {

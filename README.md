@@ -72,3 +72,4 @@ from and open a PR.
 ## Authors
 
 - [@vages](https://www.github.com/vages)
+- [@kentandersen](https://github.com/kentandersen)

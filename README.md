@@ -3,6 +3,12 @@
 Create an array of offer configurations exactly as prescribed by the
 possibleTravellerIds field in an OfferToBuy
 
+## This package is deprecated
+
+This package was deprecated on 2023-12-22.
+The team that maintained it at Entur has incorporated it into its (private) monorepo.
+If you want to see public updates to it again, send an email to post@entur.org, and ask for Team betjent.
+
 ## Installation
 
 Install with npm

@@ -1,3 +1,14 @@
+This package has been superseded by the package
+`@entur/offer-configuration-utilities`, which is a combination of
+`@entur/reduce-customers-for-offer-configuration` and
+`@entur/reduce-customers-for-offer-configuration`. This package will remain
+private until someone outside the organization requests it.
+
+If you work outside Entur, want to use `@entur/offer-configuration-utilities`,
+and it is not public when you click the following link, send an email to Entur
+describing the problem (and mention “Team betjent”):
+https://www.npmjs.com/package/@entur/offer-configuration-utilities
+
 # @entur/create-offer-configurations-from-offer-to-buy
 
 Create an array of offer configurations exactly as prescribed by the
